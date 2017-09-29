@@ -167,6 +167,7 @@
      <Compile Include="Assets\Resources\Script\CommonTool\PrefabFactory.cs" />
      <Compile Include="Assets\Resources\Script\CommonTool\UnitySingleton\UnitySingleton.cs" />
      <Compile Include="Assets\Resources\Script\CommonTool\UnitySingleton\UnitySingletonManager.cs" />
+     <Compile Include="Assets\Resources\Script\Model\TestCommit.cs" />
      <None Include="Assets\Resources\Script\AI\AStarPathFindingPro\Editor\EditorAssets\Materials\Navmesh.shader" />
      <None Include="Assets\Resources\3rdPartyAssetPackage\Dwarf And Human Pack\Humans\README.txt" />
      <None Include="Assets\Resources\3rdPartyAssetPackage\Dwarf And Human Pack\Dwarves\README.txt" />
@@ -194,16 +195,16 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.ClipperLib">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Clipper/Pathfinding.ClipperLib.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Clipper/Pathfinding.ClipperLib.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.Ionic.Zip.Reduced">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.JsonFx">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/JsonFx/Pathfinding.JsonFx.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/JsonFx/Pathfinding.JsonFx.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.Poly2Tri">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Poly2Tri/Pathfinding.Poly2Tri.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Poly2Tri/Pathfinding.Poly2Tri.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

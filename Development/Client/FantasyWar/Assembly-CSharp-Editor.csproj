@@ -129,16 +129,16 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.ClipperLib">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Clipper/Pathfinding.ClipperLib.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Clipper/Pathfinding.ClipperLib.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.Ionic.Zip.Reduced">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.JsonFx">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/JsonFx/Pathfinding.JsonFx.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/JsonFx/Pathfinding.JsonFx.dll</HintPath>
  </Reference>
  <Reference Include="Pathfinding.Poly2Tri">
- <HintPath>/Users/hxsd/Desktop/workspace(Unity)/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Poly2Tri/Pathfinding.Poly2Tri.dll</HintPath>
+ <HintPath>/Users/hxsd/Desktop/Fantasy-War/Development/Client/FantasyWar/Assets/Resources/Script/AI/AStarPathFindingPro/Plugins/Poly2Tri/Pathfinding.Poly2Tri.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
