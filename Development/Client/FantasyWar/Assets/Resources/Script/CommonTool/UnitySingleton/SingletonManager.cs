@@ -12,13 +12,17 @@ public static class SingletonManager
         return tmp;
     }
 
-    //public static void RemoveSingleton<T>() where T: Singleton<T>, new()
-    //{
-    //    int tmp=-1;
-    //    for (int i = 0; i < SingletonList.Count; i++)
-    //    {
-    //        if (SingletonList[i] is T)
-    //            tmp = i;
-    //    }
-    //}
+    public static void RemoveSingleton<T>() where T : Singleton<T>, new()
+    {
+        int tmp = -1;
+        for (int i = 0; i < SingletonList.Count; i++)
+        {
+            if (SingletonList[i] is T)
+                tmp = i;
+        }
+        if(tmp>-1)
+        {
+            SingletonList.Remove(SingletonList[tmp]);
+        }
+    }
 }
