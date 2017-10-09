@@ -4,6 +4,13 @@ using UnityEngine;
 
 public sealed partial class InputManager : UnitySingleton<InputManager>
 {
+    private bool _isIputWork;
+    public bool IsInputWork
+    {
+        get { return _isIputWork; }
+        set { _isIputWork = value; }
+    }
+
     #region axis property
     private float _axis_MouseY;
     public float Axis_MouseY
@@ -26,14 +33,14 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
     {
         get
         {
-            return Axis_MouseX != 0;
+            return !Mathf.Approximately(0, Axis_MouseX);
         }
     }
     public bool isAxisMouseYChanged
     {
         get
         {
-            return Axis_MouseY != 0;
+            return !Mathf.Approximately(0, Axis_MouseY);
         }
     }
     public bool isAxisMouseXYChanged
@@ -65,14 +72,14 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
     {
         get
         {
-            return Axis_Horizontal != 0;
+            return !Mathf.Approximately(0, Axis_Horizontal);
         }
     }
     public bool isVerticalAxisChanged
     {
         get
         {
-            return Axis_Vertical != 0;
+            return !Mathf.Approximately(0, Axis_Vertical);
         }
     }
     public bool isHorizontalOrVerticalAxisChanged
@@ -95,7 +102,7 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
     {
         get
         {
-            return Axis_MouseScrollWheel != 0;
+            return !Mathf.Approximately(0, Axis_MouseScrollWheel);
         }
     }
 
@@ -122,11 +129,12 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
     #region mouse position
     public Vector3 MousePosition
     {
-        get {
+        get
+        {
             return Input.mousePosition;
         }
     }
-    
+
     #endregion
 
     /// <summary>
@@ -212,7 +220,7 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
         #endregion
         //
         #region GetKey check
-        if (Input.anyKey)
+        if (Input.anyKey&& IsInputWork)
         {
             //Debug.Log("Input.anyKey");
             foreach (KeyCode keyCode in EventDict_GetKey.Keys)
@@ -255,16 +263,17 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
         foreach (KeyCode keyCode in EventDict_GetKeyUp.Keys)
         {
             if (FlagDict_IsKeyDown.ContainsKey(keyCode))
+            {
+                if (FlagDict_IsKeyDown[keyCode] && !Input.GetKey(keyCode))
                 {
-                if (FlagDict_IsKeyDown[keyCode]&&!Input.GetKey(keyCode)) { 
-                keyCodeDownUpStatusBinding(keyCode, false);
-                if (EventDict_GetKeyUp[keyCode] != null)
-                {
-                    //Debug.LogError(keyCode + "    is Up");
-                    EventDict_GetKeyUp[keyCode].Invoke(keyCode);
+                    keyCodeDownUpStatusBinding(keyCode, false);
+                    if (EventDict_GetKeyUp[keyCode] != null)
+                    {
+                        //Debug.LogError(keyCode + "    is Up");
+                        EventDict_GetKeyUp[keyCode].Invoke(keyCode);
+                    }
                 }
-                }
-                }
+            }
         }
         #endregion
 
