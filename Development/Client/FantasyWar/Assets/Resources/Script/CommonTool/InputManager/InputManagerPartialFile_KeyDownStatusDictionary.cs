@@ -67,7 +67,6 @@ public sealed partial class InputManager
         //keyCodeDownUpStatusBinding(KeyCode.F, false);
         //keyCodeDownUpStatusBinding(KeyCode.H, false);
         //keyCodeDownUpStatusBinding(KeyCode.Space, false);
-        //keyCodeDownUpStatusBinding(KeyCode.Escape, false);
     }
 
     public bool isKeyCodeDownStatusMonitoring(KeyCode keyCode)
@@ -88,10 +87,7 @@ public sealed partial class InputManager
         }
         if (!FlagDict_IsKeyDown.ContainsKey(keyCode))
         {
-            lock (FlagDict_IsKeyDown)
-            {
-                FlagDict_IsKeyDown.Add(keyCode, isDown);
-            }
+            FlagDict_IsKeyDown.Add(keyCode, isDown);
         }
         else
         {

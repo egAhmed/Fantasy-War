@@ -126,6 +126,7 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
             return Input.mousePosition;
         }
     }
+    
     #endregion
 
     /// <summary>
@@ -202,6 +203,7 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
         {
             _axis_MouseX = Input.GetAxis("Mouse X");
             _axis_MouseY = Input.GetAxis("Mouse Y");
+            //
             if (isAxisMouseXYChanged)
             {
                 EventGetAxis_MouseXMouseY.Invoke(Axis_MouseX, Axis_MouseY);
@@ -219,7 +221,7 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
                 {
                     if (EventDict_GetKey[keyCode] != null)
                     {
-                        EventDict_GetKey[keyCode].Invoke();
+                        EventDict_GetKey[keyCode].Invoke(keyCode);
                     }
                 }
             }
@@ -237,7 +239,7 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
                     if (EventDict_GetKeyDown[keyCode] != null)
                     {
                         //Debug.LogError(keyCode + "    is Down");
-                        EventDict_GetKeyDown[keyCode].Invoke();
+                        EventDict_GetKeyDown[keyCode].Invoke(keyCode);
                     }
 
                     if (FlagDict_IsKeyDown.ContainsKey(keyCode))
@@ -252,20 +254,19 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
         #region GetKeyUp check
         foreach (KeyCode keyCode in EventDict_GetKeyUp.Keys)
         {
-            if (Input.GetKeyUp(keyCode))
-            {
+            if (FlagDict_IsKeyDown.ContainsKey(keyCode))
+                {
+                if (FlagDict_IsKeyDown[keyCode]&&!Input.GetKey(keyCode)) { 
+                keyCodeDownUpStatusBinding(keyCode, false);
                 if (EventDict_GetKeyUp[keyCode] != null)
                 {
                     //Debug.LogError(keyCode + "    is Up");
-                    EventDict_GetKeyUp[keyCode].Invoke();
+                    EventDict_GetKeyUp[keyCode].Invoke(keyCode);
                 }
-
-                if (FlagDict_IsKeyDown.ContainsKey(keyCode))
-                {
-                    keyCodeDownUpStatusBinding(keyCode, false);
                 }
-            }
+                }
         }
         #endregion
+
     }
 }

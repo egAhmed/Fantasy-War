@@ -103,8 +103,8 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
                 Templates.Add(templateResourcePath, template);
             }
         }
-        return createClone<T>(template, position, rotation, parent);
         //
+        return createClone<T>(template, position, rotation, parent);
     }
 
     public T createClone<T>(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
