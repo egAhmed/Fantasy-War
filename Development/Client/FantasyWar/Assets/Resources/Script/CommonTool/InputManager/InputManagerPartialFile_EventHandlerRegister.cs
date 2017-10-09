@@ -63,7 +63,7 @@ public sealed partial class InputManager
     }
 
     /// <summary>
-    /// Input.GetAxis("Mouse Y")
+    /// Input.GetAxis("Mouse Y")&Input.GetAxis("Mouse X")
     /// </summary>
     /// <param name="eventHandler"></param>
     public void InputEventHandlerRegister_GetAxis_MouseXMouseY(DInputManagerGetAxis_MouseXMouseY eventHandler)
@@ -135,7 +135,10 @@ public sealed partial class InputManager
         }
         if (!EventDict_GetKey.ContainsKey(keyCode))
         {
-            EventDict_GetKey.Add(keyCode, new DInputManagerGetKey(eventHandler));
+            lock (EventDict_GetKey)
+            {
+                EventDict_GetKey.Add(keyCode, new DInputManagerGetKey(eventHandler));
+            }
         }
         else
         {
@@ -158,11 +161,17 @@ public sealed partial class InputManager
         }
         if (FlagDict_IsKeyDown != null && !FlagDict_IsKeyDown.ContainsKey(keyCode))
         {
-            FlagDict_IsKeyDown.Add(keyCode, false);
+            lock (FlagDict_IsKeyDown)
+            {
+                FlagDict_IsKeyDown.Add(keyCode, false);
+            }
         }
         if (!EventDict_GetKeyDown.ContainsKey(keyCode))
         {
-            EventDict_GetKeyDown.Add(keyCode, new DInputManagerGetKeyDown(eventHandler));
+            lock (EventDict_GetKeyDown)
+            {
+                EventDict_GetKeyDown.Add(keyCode, new DInputManagerGetKeyDown(eventHandler));
+            }
         }
         else
         {
@@ -183,14 +192,20 @@ public sealed partial class InputManager
         {
             return;
         }
-        if (FlagDict_IsKeyDown != null&&!FlagDict_IsKeyDown.ContainsKey(keyCode))
+        if (FlagDict_IsKeyDown != null && !FlagDict_IsKeyDown.ContainsKey(keyCode))
         {
-            FlagDict_IsKeyDown.Add(keyCode, false);
+            lock (FlagDict_IsKeyDown)
+            {
+                FlagDict_IsKeyDown.Add(keyCode, false);
+            }
         }
 
         if (!EventDict_GetKeyUp.ContainsKey(keyCode))
         {
-            EventDict_GetKeyUp.Add(keyCode, new DInputManagerGetKeyUp(eventHandler));
+            lock (EventDict_GetKeyUp)
+            {
+                EventDict_GetKeyUp.Add(keyCode, new DInputManagerGetKeyUp(eventHandler));
+            }
         }
         else
         {

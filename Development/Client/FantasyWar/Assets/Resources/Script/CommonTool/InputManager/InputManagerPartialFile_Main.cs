@@ -267,10 +267,5 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
             }
         }
         #endregion
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //Application.Quit();
-        }
     }
 }

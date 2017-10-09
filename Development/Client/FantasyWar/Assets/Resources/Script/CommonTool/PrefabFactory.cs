@@ -84,7 +84,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         return clone;
     }
     //
-    public GameObject createClone<T>(string templateResourcePath, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
+    public T createClone<T>(string templateResourcePath, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
     {
         if (templateResourcePath == null) { return null; }
 
@@ -103,12 +103,11 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
                 Templates.Add(templateResourcePath, template);
             }
         }
-        clone = createClone<T>(template, position, rotation, parent);
+        return createClone<T>(template, position, rotation, parent);
         //
-        return clone;
     }
 
-    public GameObject createClone<T>(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
+    public T createClone<T>(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
     {
         if (template == null)
         {
@@ -117,9 +116,9 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         GameObject clone = cloneInstantiate(template, position, rotation, parent);
         if (clone != null)
         {
-            clone.AddComponent<T>();
+            return clone.AddComponent<T>();
         }
-        return clone;
+        return null;
     }
 
     public GameObject createClone(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null)
