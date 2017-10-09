@@ -23,7 +23,10 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
             return _templates;
         }
     }
-    //
+
+    /// <summary>
+    /// 根据文本信息，生成路径信息数组
+    /// </summary>
     private void resourcePrefabPathsInitialization()
     {
         resourcePrefabPaths = new string[resourcePrefabNames.Length];
@@ -32,29 +35,18 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
             resourcePrefabPaths[i] = resourcePrefabFolderRootPath + resourcePrefabNames[i];
         }
     }
-    //
+
+    /// <summary>
+    /// Creates the templates.根据路径信息数组，创建模板
+    /// </summary>
+    /// <returns>The templates.</returns>
     private IEnumerator createTemplates()
     {
         if (resourcePrefabNames != null)
         {
             foreach (string path in resourcePrefabPaths)
             {
-                GameObject template = createTemplateSync(path);
-                if (Templates.ContainsKey(path))
-                {
-                    lock (Templates)
-                    {
-                        Templates[path] = template;
-
-                    }
-                }
-                else
-                {
-                    lock (Templates)
-                    {
-                        Templates.Add(path, template);
-                    }
-                }
+                GameObject template = createTemplateCoroutine(path);
                 yield return null;
             }
         }
@@ -66,19 +58,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         GameObject clone = null;
         GameObject template = null;
         //
-        if (Templates.ContainsKey(templateResourcePath))
-        {
-            template = Templates[templateResourcePath];
-        }
-        else
-        {
-            template = createTemplateSync(templateResourcePath);
-            lock (Templates)
-            {
-                Templates.Add(templateResourcePath, template);
-            }
-
-        }
+            template = createTemplateCoroutine(templateResourcePath);
         clone = createClone(template, position, rotation, parent);
         //
         return clone;
@@ -87,22 +67,10 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
     public T createClone<T>(string templateResourcePath, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
     {
         if (templateResourcePath == null) { return null; }
-
-        GameObject clone = null;
+        
         GameObject template = null;
         //
-        if (Templates.ContainsKey(templateResourcePath))
-        {
-            template = Templates[templateResourcePath];
-        }
-        else
-        {
-            template = createTemplateSync(templateResourcePath);
-            lock (Templates)
-            {
-                Templates.Add(templateResourcePath, template);
-            }
-        }
+            template = createTemplateCoroutine(templateResourcePath);
         //
         return createClone<T>(template, position, rotation, parent);
     }
@@ -147,7 +115,12 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         return clone;
     }
 
-    private GameObject createTemplateSync(string resourcePath)
+    /// <summary>
+    /// Creates the template sync.同步创建模板
+    /// </summary>
+    /// <returns>The template sync.</returns>
+    /// <param name="resourcePath">Resource path.</param>
+    private GameObject createTemplateCoroutine(string resourcePath)
     {
         GameObject template = null;
         //
@@ -159,12 +132,17 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
                 return template;
             }
         }
+
         //
         template = (GameObject)Resources.Load(resourcePath);
         if (template != null)
         {
             GameObject.DontDestroyOnLoad(template);
             template.SetActive(false);
+            lock (Templates)
+            {
+                Templates.Add(resourcePath, template);
+            }
         }
         //
         return template;
