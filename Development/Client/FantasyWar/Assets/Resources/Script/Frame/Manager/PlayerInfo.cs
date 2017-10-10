@@ -4,7 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 public class PlayerInfo{
-	
+
+	public Racial racial;
+
 	public string name;
 
 	public Transform location;
@@ -13,13 +15,13 @@ public class PlayerInfo{
 
 	public List<GameObject> StartingUnits = new List<GameObject>();
 
-	private List<GameObject> buildingUnits = new List<GameObject> ();
+	//private List<GameObject> buildingUnits = new List<GameObject> ();
 
-	public List<GameObject> BuildingUnits { get { return buildingUnits; } }
+	//public List<GameObject> BuildingUnits { get { return buildingUnits; } }
 
-	private List<GameObject> armyUnits = new List<GameObject> ();
+	//private List<GameObject> armyUnits = new List<GameObject> ();
 
-	public List<GameObject> ArmyUnits { get { return armyUnits; } }
+	//public List<GameObject> ArmyUnits { get { return armyUnits; } }
 
 	public bool IsCurrentPlayer;
 

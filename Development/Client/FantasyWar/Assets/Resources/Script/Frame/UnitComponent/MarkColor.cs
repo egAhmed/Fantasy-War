@@ -11,7 +11,7 @@ public class MarkColor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Color color = GetComponent<BelongPlayer> ().Info.accentColor;
+		Color color = GetComponent<UnitInfo> ().belong.accentColor;
 		foreach (var r in Renderers) {
 			r.material.color = color;
 		}

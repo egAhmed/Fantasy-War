@@ -5,6 +5,7 @@ using UnityEngine;
 public class RTSManager : MonoBehaviour {
 
 	public static RTSManager Current = null;
+	public PlayerInfo currentPlayer;
 
 	public List<PlayerInfo> Players = new List<PlayerInfo>();
 
@@ -22,15 +23,16 @@ public class RTSManager : MonoBehaviour {
 	private void BuildOriginal(){
 		foreach (PlayerInfo p in Players) {
 			if (p.IsCurrentPlayer) {
-				BelongPlayer.Default = p;
+				currentPlayer = p;
 			}
+			UnitManager.Current.Buildings.Add(p,new List<GameObject> ());
+			UnitManager.Current.Armys.Add(p,new List<GameObject> ());
 			foreach (GameObject u in p.StartingUnits)
 			{
 				//把初始建築群初始化出來
 				//每個對象添加所屬玩家信息
 				GameObject go = (GameObject)GameObject.Instantiate(u, p.location.position, p.location.rotation);
-				BelongPlayer bp = go.AddComponent<BelongPlayer> ();
-				bp.Info = p;
+				go.GetComponent<UnitInfo> ().belong = p;
 				if (p.IsCurrentPlayer) {
 					go.AddComponent<ActionUpdate> ();
 				}
@@ -41,10 +43,10 @@ public class RTSManager : MonoBehaviour {
 
 	public Vector3? ScreenPointToMapPosition(Vector2 point)
 	{
+		Debug.Log("轉換坐標");
 		return null;
 		//TODO
 		//得到屏幕上的點的3D坐標對應的地面坐標點
-		Debug.Log("轉換坐標");
 
 	}
 

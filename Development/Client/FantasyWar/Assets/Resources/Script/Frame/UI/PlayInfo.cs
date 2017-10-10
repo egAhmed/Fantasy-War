@@ -18,7 +18,7 @@ public class PlayInfo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		resources.text = BelongPlayer.Default.Resources +"";
-		population.text = BelongPlayer.Default.ArmyUnits.Count+"";
+		resources.text = UnitManager.Current.Armys[RTSManager.Current.currentPlayer] +"";
+		//population.text = BelongPlayer.Default.ArmyUnits.Count+"";
 	}
 }
