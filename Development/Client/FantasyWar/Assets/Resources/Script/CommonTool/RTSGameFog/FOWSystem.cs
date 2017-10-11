@@ -186,11 +186,11 @@ public class FOWSystem : MonoBehaviour
 		mTrans = transform;
 		mHeights = new int[textureSize, textureSize];
 		mSize = new Vector3(worldSize, heightRange.y - heightRange.x, worldSize);
-
+		//
 		mOrigin = mTrans.position;
 		mOrigin.x -= worldSize * 0.5f;
 		mOrigin.z -= worldSize * 0.5f;
-
+		//
 		int size = textureSize * textureSize;
 		mBuffer0 = new Color32[size];
 		mBuffer1 = new Color32[size];

@@ -27,6 +27,7 @@ public class MapBlip : MonoBehaviour {
       
     }
   
+    [SerializeField]
 	public Color UnitColor
     {
         get
