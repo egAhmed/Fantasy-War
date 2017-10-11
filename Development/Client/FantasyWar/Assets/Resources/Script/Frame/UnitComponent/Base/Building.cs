@@ -7,7 +7,7 @@ public class Building : UnitInfo {
 	protected override void Start ()
 	{
 		base.Start ();
-		UnitManager.Current.Buildings[belong].Add (gameObject);
+		UnitManager.ShareInstance.Buildings[belong].Add (gameObject);
 	}
 
 }

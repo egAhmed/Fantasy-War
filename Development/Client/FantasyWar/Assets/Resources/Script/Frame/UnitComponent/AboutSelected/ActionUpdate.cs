@@ -6,14 +6,14 @@ public class ActionUpdate : Interaction {
 
 	public override void Deselect ()
 	{
-		ActionManager.Current.ClearButtons ();
+		ActionManager.ShareInstance.ClearButtons ();
 	}
 
 	public override void Select ()
 	{
-		ActionManager.Current.ClearButtons ();
+		ActionManager.ShareInstance.ClearButtons ();
 		foreach (ActionBehaviour ab in GetComponents<ActionBehaviour>()) {
-			ActionManager.Current.AddButton(
+			ActionManager.ShareInstance.AddButton(
 				ab.index,
 				ab.actionIcon, 
 				ab.GetClickAction());

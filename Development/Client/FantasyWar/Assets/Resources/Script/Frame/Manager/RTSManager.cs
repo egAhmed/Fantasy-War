@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RTSManager : MonoBehaviour {
+public class RTSManager : UnitySingleton<RTSManager> {
 
-	public static RTSManager Current = null;
 	public PlayerInfo currentPlayer;
 
 	public List<PlayerInfo> Players = new List<PlayerInfo>();
-
-	void Awake(){
-		Current = this;
-	}
 
 	void Start(){
 		BuildOriginal ();
@@ -25,8 +20,8 @@ public class RTSManager : MonoBehaviour {
 			if (p.IsCurrentPlayer) {
 				currentPlayer = p;
 			}
-			UnitManager.Current.Buildings.Add(p,new List<GameObject> ());
-			UnitManager.Current.Armys.Add(p,new List<GameObject> ());
+			UnitManager.ShareInstance.Buildings.Add(p,new List<GameObject> ());
+			UnitManager.ShareInstance.Armys.Add(p,new List<GameObject> ());
 			foreach (GameObject u in p.StartingUnits)
 			{
 				//把初始建築群初始化出來

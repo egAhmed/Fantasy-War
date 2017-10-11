@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class UnitInfo : MonoBehaviour {
 
+	protected List<Interaction> interactionList = new List<Interaction> ();
+	protected List<ActionBehaviour> ActionList = new List<ActionBehaviour> ();
+
 	public bool selected = true;
 	public int HP;
 	public int maxHP;
@@ -13,8 +16,10 @@ public abstract class UnitInfo : MonoBehaviour {
 	//public UnitType unitType;
 
 	protected virtual void Start(){
-		gameObject.AddComponent<HightLight> ();
-		gameObject.AddComponent<ShowInfoUI> ();
+		Interaction hl = gameObject.AddComponent<HightLight> ();
+		interactionList.Add (hl);
+		Interaction si = gameObject.AddComponent<ShowInfoUI> ();
+		interactionList.Add (si);
 
 	}
 }

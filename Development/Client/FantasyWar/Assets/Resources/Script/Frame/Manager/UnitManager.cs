@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitManager :MonoBehaviour {
-
-	public static UnitManager Current = null;
-
-	void Awake(){
-		Current = this;
-	}
+public class UnitManager :UnitySingleton<UnitManager> {
 
 	private Dictionary<PlayerInfo,List<GameObject>> buildings = new Dictionary<PlayerInfo, List<GameObject>> ();
 

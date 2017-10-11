@@ -5,16 +5,11 @@ using UnityEngine.UI;
 
 public delegate void Action ();
 
-public class ActionManager : MonoBehaviour {
+public class ActionManager : UnitySingleton<ActionManager> {
 
-	public static ActionManager Current;
 	public Button[] Buttons;
 	//private List<Action> actionCalls = new List<Action>();
 	private Action[] actionCalls = new Action[9] ;
-
-	void Awake(){
-		Current = this;
-	}
 
 	void Start () {
 		for (int i = 0; i < Buttons.Length; i++) {

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeamManager : MonoBehaviour {
+public class TeamManager : UnitySingleton<TeamManager> {
 
-	public static TeamManager Current;
 
 	public List<GameObject> currentSelections = new List<GameObject>();	//當前已選中的單位
 
@@ -16,12 +15,6 @@ public class TeamManager : MonoBehaviour {
 	public List<GameObject> Team6 = new List<GameObject>();
 	public List<GameObject> Team7 = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
-		Current = this;
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		
 	}
