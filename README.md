@@ -27,6 +27,11 @@ Team Member:
 <br>  Contact Email   : s412326968@gmail.com</br>
 <br>  Development Duty: Programmer,Game Designer</br>
 ----------------------------------------------------------------------------------------------------------------------------
+<br>  Member[4] >>>>>>         </br>
+<br>  Github  ID      : leslie4</br>
+<br>  Contact Email   : zgoddess@126.com</br>
+<br>  Development Duty: Programmer,Game Designer</br>
+----------------------------------------------------------------------------------------------------------------------------
 <br></br>
 <br></br>
 <br></br>
