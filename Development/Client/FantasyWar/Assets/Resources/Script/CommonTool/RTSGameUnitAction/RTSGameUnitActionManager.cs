@@ -33,9 +33,12 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         {
             return;
         }
+        if (eventHandler == null) {
+            return;
+        }
         if (ShareInstance.targetPositionEvent == null)
         {
-            ShareInstance.targetPositionEvent = new DGameUnitActionTargetPosition(eventHandler);
+            ShareInstance.targetPositionEvent = eventHandler;
         }
         else
         {
@@ -47,6 +50,9 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
     {
         if (ShareInstance == null)
         {
+            return;
+        }
+        if (eventHandler == null) {
             return;
         }
         if (ShareInstance.targetPositionEvent == null)
@@ -65,9 +71,12 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         {
             return;
         }
+        if (eventHandler == null) {
+            return;
+        }
         if (ShareInstance.targetUnitEvent == null)
         {
-            ShareInstance.targetUnitEvent = new DGameUnitActionTargetUnit(eventHandler);
+            ShareInstance.targetUnitEvent = eventHandler;
         }
         else
         {
@@ -79,6 +88,9 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
     {
         if (ShareInstance == null)
         {
+            return;
+        }
+        if (eventHandler == null) {
             return;
         }
         if (ShareInstance.targetUnitEvent == null)
