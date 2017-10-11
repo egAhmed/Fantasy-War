@@ -192,6 +192,7 @@ public class RTSGameUnit : MonoBehaviour
             RTSGameUnitActionManager.eventUnRegister(OnSetTargetPosition);
             RTSGameUnitActionManager.eventUnRegister(OnSetTargetUnit);
         }
+        //
     }
 
     protected virtual void OnSetTargetPosition(Vector3 pos)

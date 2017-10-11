@@ -223,16 +223,19 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
         if (Input.anyKey&& IsInputWork)
         {
             //Debug.Log("Input.anyKey");
-            foreach (KeyCode keyCode in EventDict_GetKey.Keys)
-            {
-                if (Input.GetKey(keyCode))
-                {
-                    if (EventDict_GetKey[keyCode] != null)
+            KeyCode[] keyCodes=new KeyCode[EventDict_GetKey.Keys.Count];
+            EventDict_GetKey.Keys.CopyTo(keyCodes, 0);
+            for (int i = 0; i < keyCodes.Length; i++) {
+                KeyCode keyCode = keyCodes[i];
+               if (Input.GetKey(keyCode))
                     {
-                        EventDict_GetKey[keyCode].Invoke(keyCode);
+                        if (EventDict_GetKey[keyCode] != null)
+                        {
+                            EventDict_GetKey[keyCode].Invoke(keyCode);
+                        }
                     }
-                }
             }
+            //
         }
         #endregion
         //
@@ -240,9 +243,12 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
         if (Input.anyKeyDown)//Including mouse click
         {
             //Debug.Log("Input.anyKeyDown");
-            foreach (KeyCode keyCode in EventDict_GetKeyDown.Keys)
-            {
-                if (Input.GetKeyDown(keyCode))
+            KeyCode[] keyCodes=new KeyCode[EventDict_GetKeyDown.Keys.Count];
+            EventDict_GetKeyDown.Keys.CopyTo(keyCodes, 0);
+            for (int i = 0; i < keyCodes.Length; i++) {
+                KeyCode keyCode = keyCodes[i];
+               //
+                    if (Input.GetKeyDown(keyCode))
                 {
                     if (EventDict_GetKeyDown[keyCode] != null)
                     {
@@ -256,12 +262,18 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
                     }
                 }
             }
+            //
         }
         #endregion
         //
         #region GetKeyUp check
-        foreach (KeyCode keyCode in EventDict_GetKeyUp.Keys)
-        {
+        //Debug.Log("GetKeyUp check");
+        //
+         KeyCode[] keyCodesArr=new KeyCode[EventDict_GetKeyUp.Keys.Count];
+            EventDict_GetKeyUp.Keys.CopyTo(keyCodesArr, 0);
+            for (int i = 0; i < keyCodesArr.Length; i++) {
+                KeyCode keyCode = keyCodesArr[i];
+               //
             if (FlagDict_IsKeyDown.ContainsKey(keyCode))
             {
                 if (FlagDict_IsKeyDown[keyCode] && !Input.GetKey(keyCode))
@@ -274,7 +286,9 @@ public sealed partial class InputManager : UnitySingleton<InputManager>
                     }
                 }
             }
-        }
+                //
+            }
+            //
         #endregion
 
     }

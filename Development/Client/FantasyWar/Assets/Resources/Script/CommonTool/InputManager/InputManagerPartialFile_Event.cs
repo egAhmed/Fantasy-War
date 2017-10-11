@@ -48,4 +48,6 @@ public sealed partial class InputManager
         set { _eventGetAxis_MouseScrollWheel = value; }
     }
     #endregion
+
+    
 }

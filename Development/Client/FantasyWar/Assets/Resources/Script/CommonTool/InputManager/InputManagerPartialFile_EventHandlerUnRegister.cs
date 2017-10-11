@@ -10,6 +10,7 @@ public sealed partial class InputManager
         {
             return;
         }
+        //lock (EventGetAxis_HorizontalVertical)
         EventGetAxis_HorizontalVertical -= eventHandler;
     }
     public void InputEventHandlerUnRegister_GetAxis_Vertical(DInputManagerGetAxis_Vertical eventHandler)
@@ -18,6 +19,7 @@ public sealed partial class InputManager
         {
             return;
         }
+        //lock (EventGetAxis_Vertical)
         EventGetAxis_Vertical -= eventHandler;
     }
     public void InputEventHandlerUnRegister_GetAxis_Horizontal(DInputManagerGetAxis_Horizontal eventHandler)
@@ -26,7 +28,9 @@ public sealed partial class InputManager
         {
             return;
         }
+        //lock (EventGetAxis_Horizontal) 
         EventGetAxis_Horizontal -= eventHandler;
+        
     }
     public void InputEventHandlerUnRegister_GetAxis_MouseX(DInputManagerGetAxis_MouseX eventHandler)
     {
@@ -34,7 +38,9 @@ public sealed partial class InputManager
         {
             return;
         }
+        //lock (EventGetAxis_MouseX) 
         EventGetAxis_MouseX -= eventHandler;
+        
     }
     public void InputEventHandlerUnRegister_GetAxis_MouseY(DInputManagerGetAxis_MouseY eventHandler)
     {
@@ -42,7 +48,9 @@ public sealed partial class InputManager
         {
             return;
         }
+        //lock (EventGetAxis_MouseY)  
         EventGetAxis_MouseY -= eventHandler;
+        
     }
     public void InputEventHandlerUnRegister_GetAxis_MouseXMouseY(DInputManagerGetAxis_MouseXMouseY eventHandler)
     {
@@ -58,12 +66,7 @@ public sealed partial class InputManager
         {
             return;
         }
-        DInputManagerGetKey d = EventDict_GetKey[keyCode];
-        if (d == null)
-        {
-            return;
-        }
-        d -= eventHandler;
+        EventDict_GetKey[keyCode] -= eventHandler;
     }
     public void InputEventHandlerUnRegister_GetKeyDown(KeyCode keyCode, DInputManagerGetKeyDown eventHandler)
     {
@@ -71,12 +74,7 @@ public sealed partial class InputManager
         {
             return;
         }
-        DInputManagerGetKeyDown d = EventDict_GetKeyDown[keyCode];
-        if (d == null)
-        {
-            return;
-        }
-        d -= eventHandler;
+        EventDict_GetKeyDown[keyCode] -= eventHandler;
     }
     public void InputEventHandlerUnRegister_GetKeyUp(KeyCode keyCode, DInputManagerGetKeyUp eventHandler)
     {
@@ -84,12 +82,7 @@ public sealed partial class InputManager
         {
             return;
         }
-        DInputManagerGetKeyUp d = EventDict_GetKeyUp[keyCode];
-        if (d == null)
-        {
-            return;
-        }
-        d -= eventHandler;
+        EventDict_GetKeyUp[keyCode] -= eventHandler;
     }
     public void InputEventHandlerUnRegister_GetAxis_MouseScrollWheel(DInputManagerGetAxis_MouseScrollWheel eventHandler)
     {

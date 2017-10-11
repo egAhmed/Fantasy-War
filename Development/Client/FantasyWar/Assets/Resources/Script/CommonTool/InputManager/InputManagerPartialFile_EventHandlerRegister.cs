@@ -16,7 +16,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_Vertical == null)
         {
-            EventGetAxis_Vertical = new DInputManagerGetAxis_Vertical(eventHandler);
+            EventGetAxis_Vertical = eventHandler;
         }
         else
         {
@@ -35,7 +35,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_Horizontal == null)
         {
-            EventGetAxis_Horizontal = new DInputManagerGetAxis_Horizontal(eventHandler);
+            EventGetAxis_Horizontal = eventHandler;
         }
         else
         {
@@ -54,7 +54,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_HorizontalVertical == null)
         {
-            EventGetAxis_HorizontalVertical = new DInputManagerGetAxis_HorizontalVertical(eventHandler);
+            EventGetAxis_HorizontalVertical = eventHandler;
         }
         else
         {
@@ -74,7 +74,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_MouseXMouseY == null)
         {
-            EventGetAxis_MouseXMouseY = new DInputManagerGetAxis_MouseXMouseY(eventHandler);
+            EventGetAxis_MouseXMouseY = eventHandler;
         }
         else
         {
@@ -93,7 +93,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_MouseX == null)
         {
-            EventGetAxis_MouseX = new DInputManagerGetAxis_MouseX(eventHandler);
+            EventGetAxis_MouseX = eventHandler;
         }
         else
         {
@@ -112,7 +112,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_MouseY == null)
         {
-            EventGetAxis_MouseY = new DInputManagerGetAxis_MouseY(eventHandler);
+            EventGetAxis_MouseY = eventHandler;
         }
         else
         {
@@ -135,10 +135,12 @@ public sealed partial class InputManager
         }
         if (!EventDict_GetKey.ContainsKey(keyCode))
         {
-            EventDict_GetKey.Add(keyCode, new DInputManagerGetKey(eventHandler));
+            lock(EventDict_GetKey)
+            EventDict_GetKey.Add(keyCode, eventHandler);
         }
         else
         {
+            lock(EventDict_GetKey)
             EventDict_GetKey[keyCode] += eventHandler;
         }
     }
@@ -158,14 +160,17 @@ public sealed partial class InputManager
         }
         if (FlagDict_IsKeyDown != null && !FlagDict_IsKeyDown.ContainsKey(keyCode))
         {
+            lock (FlagDict_IsKeyDown)
             FlagDict_IsKeyDown.Add(keyCode, false);
         }
         if (!EventDict_GetKeyDown.ContainsKey(keyCode))
         {
-            EventDict_GetKeyDown.Add(keyCode, new DInputManagerGetKeyDown(eventHandler));
+            lock (EventDict_GetKeyDown)
+            EventDict_GetKeyDown.Add(keyCode, eventHandler);
         }
         else
         {
+            lock (EventDict_GetKeyDown)
             EventDict_GetKeyDown[keyCode] += eventHandler;
         }
     }
@@ -185,15 +190,19 @@ public sealed partial class InputManager
         }
         if (FlagDict_IsKeyDown != null&&!FlagDict_IsKeyDown.ContainsKey(keyCode))
         {
+            lock (FlagDict_IsKeyDown) 
             FlagDict_IsKeyDown.Add(keyCode, false);
         }
 
         if (!EventDict_GetKeyUp.ContainsKey(keyCode))
         {
-            EventDict_GetKeyUp.Add(keyCode, new DInputManagerGetKeyUp(eventHandler));
+            lock (EventDict_GetKeyUp)
+            EventDict_GetKeyUp.Add(keyCode, eventHandler);
+            
         }
         else
         {
+            lock (EventDict_GetKeyUp)
             EventDict_GetKeyUp[keyCode] += eventHandler;
         }
     }
@@ -210,7 +219,7 @@ public sealed partial class InputManager
         }
         if (EventGetAxis_MouseScrollWheel == null)
         {
-            EventGetAxis_MouseScrollWheel = new DInputManagerGetAxis_MouseScrollWheel(eventHandler);
+            EventGetAxis_MouseScrollWheel = eventHandler;
         }
         else
         {
