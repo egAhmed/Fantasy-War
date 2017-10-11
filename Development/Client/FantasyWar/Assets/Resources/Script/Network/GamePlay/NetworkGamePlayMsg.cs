@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class NetworkMsg{
+public class NetworkGamePlayMsg{
     public string msgHeader;
     //
-    public string username;
+    public string msgContent;
 	//
 }

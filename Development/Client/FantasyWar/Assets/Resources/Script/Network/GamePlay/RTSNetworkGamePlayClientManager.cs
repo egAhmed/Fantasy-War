@@ -7,7 +7,8 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-public class ChatClientManager : UnitySingleton<ChatClientManager>
+
+public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlayClientManager>
 {
     public bool IsServerConnected{ 
         get {
@@ -25,12 +26,9 @@ public class ChatClientManager : UnitySingleton<ChatClientManager>
         }
     }
     //
-    public List<ChatMessage> chatMsgObjectList = new List<ChatMessage>();
-    public List<string> chatMsgStrList = new List<string>();
     //
     Socket clientSocket;
     Thread receiveThread;
-    Thread heartBeatThread;
 
     const int HEARTBEAT_FREQUENCY = 15000;//15sec
     byte[] result = new byte[1024 * 1024];
@@ -38,20 +36,17 @@ public class ChatClientManager : UnitySingleton<ChatClientManager>
     void connect()
     {
         //  
-        IPAddress ip = IPAddress.Parse(NetworkConfig.CHAT_SERVER_HOST);
+        IPAddress ip = IPAddress.Parse(NetworkConfig.GAMEPLAY_SERVER_HOST);
         clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         //
         try
         {
-            clientSocket.Connect(new IPEndPoint(ip, NetworkConfig.CHAT_SERVER_PORT)); //binding ip and port config  
+            clientSocket.Connect(new IPEndPoint(ip, NetworkConfig.GAMEPLAY_SERVER_PORT)); //binding ip and port config  
             //
             Debug.Log("Connecting Success!");
             //
             receiveThread = new Thread(receiveMsg);
             receiveThread.Start();
-            //
-            heartBeatThread = new Thread(heartBeat);
-            heartBeatThread.Start();
             //
         }
         catch (Exception e)
@@ -63,22 +58,16 @@ public class ChatClientManager : UnitySingleton<ChatClientManager>
         }
     }
 
-    private void heartBeat()
-    {
-        while (clientSocket != null && clientSocket.Connected)
+    public void send(NetworkGamePlayMsg msg) { 
+        if (clientSocket != null && clientSocket.Connected)
         {
-            Thread.Sleep(HEARTBEAT_FREQUENCY);//wait  
-            try
-            {
-                clientSocket.Send(new byte[] { 0 });
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-                break;
-            }
+            //
+            clientSocket.Send(Encoding.UTF8.GetBytes(msg.msgHeader+msg.msgContent));
+            //
+        }else
+        {
+            login();
         }
-        clientClose();
     }
 
     private string generateChatMsgJSON(ChatMessage msg)
@@ -103,29 +92,8 @@ public class ChatClientManager : UnitySingleton<ChatClientManager>
         }
     }
 
-    public void sendChatMsg(string msgStr)
-    {
-        if (!IsServerConnected) {
-            return;
-        }
-        if (msgStr != null)
-            {
-                ChatMessage msg = new ChatMessage();
-                msg.name = NetworkUserInfoStorage.UserName;
-                msg.msg = msgStr;
-                if (msg != null)
-                {
-                    sendChatMsgJSON(generateChatMsgJSON(msg));
-                }
-           }
-    }
+    private void serverMsgReader(string msgStr) { 
 
-    private string chatMsgReader(ChatMessage msg) {
-        if (msg == null) {
-            return null;
-        }
-        string msgString = msg.name + ":" + msg.msg;
-        return msgString;
     }
 
     private void receiveMsg()
@@ -135,25 +103,13 @@ public class ChatClientManager : UnitySingleton<ChatClientManager>
             int receiveLength = clientSocket.Receive(result);
             if (receiveLength > 0)
             {
-                string msgStr = Encoding.UTF8.GetString(result, 0, receiveLength);
-                ChatMessage msg = null;
                 try
                 {
-                    msg = JsonUtility.FromJson<ChatMessage>(msgStr);
-                    if (msg == null)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        string msgString = chatMsgReader(msg);
-                        //
-                        Debug.Log("received server msg => " + msgString);
-                        //
-                        chatMsgObjectList.Add(msg);
-                        chatMsgStrList.Add(msgString);
-                        //
-                    }
+                    //
+                    string msgStr = Encoding.UTF8.GetString(result, 0, receiveLength);
+                    serverMsgReader(msgStr);
+                    Debug.Log("received server msg => " + msgStr);
+                    //
                 }
                 catch (Exception e)
                 {
@@ -177,21 +133,8 @@ public class ChatClientManager : UnitySingleton<ChatClientManager>
         }
     }
 
-    private void heartBeatThreadClose()
-    {
-        if (heartBeatThread != null)
-        {
-            if (heartBeatThread.IsAlive)
-            {
-                heartBeatThread.Abort();
-            }
-            heartBeatThread = null;
-        }
-    }
-
     private void clientClose()
     {
-        heartBeatThreadClose();
         receiveThreadClose();
         //
         if (clientSocket != null)
