@@ -12,30 +12,33 @@ public class Map : MonoBehaviour {
     public Button MapButton;
     private Vector2 terrainSize;//地形大小
 	private RectTransform mapRect;
-    public GameObject MainCramer;
-    //public float scaleFactor = 1f;
+    private TerrainData terrainData;
+
     public Map()
 	{
 		Current = this;
 
 	}
-    private void Awake()
-    {
-      
-        
-    }
+
     // Use this for initialization
     void Start () {
-            //计算地形大小
-		    terrainSize = new Vector2 (
-			Corner2.position.x - Corner1.position.x,
-			Corner2.position.z - Corner1.position.z);
+        #region 半自动计算地形大小(废弃)
+        //计算地形大小, Corner1放到左下角, Corner2放到右上角
+        //terrainSize = new Vector2 (
+        //Corner2.position.x - Corner1.position.x,
+        //Corner2.position.z - Corner1.position.z);
+        #endregion
 
-        MapButton= GetComponent<Button>();
+        //获取地形大小
+        terrainData = GameObject.Find("Terrain").GetComponent<Terrain>().terrainData;
+        terrainSize = new Vector2(terrainData.size.x, terrainData.size.z);
+
+
+        MapButton = GetComponent<Button>();
         mapRect = GetComponent<RectTransform> ();
        
         MapButton.onClick.AddListener(MoveTo);
-     
+       
     }
 
   
@@ -71,7 +74,7 @@ public class Map : MonoBehaviour {
        
         Vector2 miniMapOffset=new Vector2(Map.Current.transform.position.x, Map.Current.transform.position.y);//小地图原点相对于屏幕坐标原点的偏移值,用于自适应
 
-        ViewPort.position = (WorldPositionToMap(MainCramer.transform.position) + miniMapOffset);//摄像机在小地图上的视线范围
+        ViewPort.position = (WorldPositionToMap(Camera.main.transform.position) + miniMapOffset);//摄像机在小地图上的视线范围
 
        
 
@@ -84,7 +87,7 @@ public class Map : MonoBehaviour {
 
         //小地图坐标系转世界坐标系
         Vector3 map2world = new Vector3(MapToWorldPosition((Input.mousePosition - this.transform.position)).x , Camera.main.transform.position.y, MapToWorldPosition((Input.mousePosition - this.transform.position)).z);
-        MainCramer.transform.position = map2world ;
+        Camera.main.transform.position = map2world ;
     }
 
     //private void OnGUI()

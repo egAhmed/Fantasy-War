@@ -2,7 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
+
+//用来显示小地图上的点,脚本挂到单位上即可生效
 public class MapBlip : MonoBehaviour {
+        
 
 	private GameObject blip;
 
@@ -61,7 +64,6 @@ public class MapBlip : MonoBehaviour {
     void Update () {
        
         Vector2 miniMapOffset = new Vector2(Map.Current.transform.position.x, Map.Current.transform.position.y);//小地图原点相对于屏幕坐标原点的偏移值
-
         blip.transform.position = Map.Current.WorldPositionToMap(transform.position) + miniMapOffset;
         
 
