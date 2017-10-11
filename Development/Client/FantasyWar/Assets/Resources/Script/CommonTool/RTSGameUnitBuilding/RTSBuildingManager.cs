@@ -18,9 +18,12 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         {
             return;
         }
+        if (eventHandler == null) {
+            return;
+        }
         if (ShareInstance.buildingStartedEvent == null)
         {
-            ShareInstance.buildingStartedEvent = new DGameUnitBuildingModeStarted(eventHandler);
+            ShareInstance.buildingStartedEvent = eventHandler;
         }
         else
         {
@@ -32,6 +35,9 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
     {
         if (ShareInstance == null)
         {
+            return;
+        }
+        if (eventHandler == null) {
             return;
         }
         if (ShareInstance.buildingStartedEvent == null)
@@ -50,9 +56,12 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         {
             return;
         }
+        if (eventHandler == null) {
+            return;
+        }
         if (ShareInstance.buildingStoppedEvent == null)
         {
-            ShareInstance.buildingStoppedEvent = new DGameUnitBuildingModeStopped(eventHandler);
+            ShareInstance.buildingStoppedEvent = eventHandler;
         }
         else
         {
@@ -64,6 +73,9 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
     {
         if (ShareInstance == null)
         {
+            return;
+        }
+        if (eventHandler == null) {
             return;
         }
         if (ShareInstance.buildingStoppedEvent == null)

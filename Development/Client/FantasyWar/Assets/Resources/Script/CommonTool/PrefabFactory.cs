@@ -58,7 +58,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         GameObject clone = null;
         GameObject template = null;
         //
-            template = createTemplateCoroutine(templateResourcePath);
+        template = createTemplateCoroutine(templateResourcePath);
         clone = createClone(template, position, rotation, parent);
         //
         return clone;
@@ -70,7 +70,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         
         GameObject template = null;
         //
-            template = createTemplateCoroutine(templateResourcePath);
+        template = createTemplateCoroutine(templateResourcePath);
         //
         return createClone<T>(template, position, rotation, parent);
     }
