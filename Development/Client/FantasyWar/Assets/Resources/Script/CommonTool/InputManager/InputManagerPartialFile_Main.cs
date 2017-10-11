@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed partial class InputManager : UnitySingleton<InputManager>
 {
-    private bool _isIputWork;
+    private bool _isIputWork=true;
     public bool IsInputWork
     {
         get { return _isIputWork; }
