@@ -146,18 +146,21 @@ public class PoolItemGameObject : PoolItem {
     /// </summary>  
     public void BeyondObject()
     {
-        IList<PoolItemNode> beyondTimeList = new List<PoolItemNode>();
+        IList<PoolItemNodeGameObject> beyondTimeList = new List<PoolItemNodeGameObject>();
         foreach (PoolItemNode poolIT in this.objectList.Values)
         {
-            if (poolIT.IsBeyondAliveTime())
+            if (poolIT.IsBeyondAliveTime(this.Alive_Time))
             {
-                beyondTimeList.Add(poolIT);
+                beyondTimeList.Add((PoolItemNodeGameObject)poolIT);
+
+                
+                
             }
         }
         int beyondTimeCount = beyondTimeList.Count;
         for (int i = 0; i < beyondTimeCount; i++)
         {
-            this.RemoveObject(((PoolItemNodeGameObject)beyondTimeList[i]).gameObject);
+            this.RemoveObject((beyondTimeList[i]).gameObject);
         }
     }
 }

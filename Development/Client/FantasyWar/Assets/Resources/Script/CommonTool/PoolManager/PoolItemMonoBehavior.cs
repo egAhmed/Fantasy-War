@@ -136,7 +136,7 @@ public class PoolItemMonoBehavior : PoolItem {
         IList<PoolItemNode> beyondTimeList = new List<PoolItemNode>();
         foreach (PoolItemNode poolIT in this.objectList.Values)
         {
-            if (poolIT.IsBeyondAliveTime())
+            if (poolIT.IsBeyondAliveTime(this.Alive_Time))
             {
                 beyondTimeList.Add(poolIT);
             }
