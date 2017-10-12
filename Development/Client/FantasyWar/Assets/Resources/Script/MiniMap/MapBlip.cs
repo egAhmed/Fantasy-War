@@ -4,31 +4,30 @@ using System.Collections;
 
 
 //用来显示小地图上的点,脚本挂到单位上即可生效
-public class MapBlip : MonoBehaviour {
-        
+public class MapBlip : MonoBehaviour
+{
 
-	private GameObject blip;
 
-	public GameObject Blip { get { return blip; } }
+    private GameObject blip;
+
+    public GameObject Blip { get { return blip; } }
     private Color unitColor = Color.red;
     private Image BlipImage;
-    private float scaleFactor;
-    // Use this for initialization
+    private RectTransform BlipRect;
+
+    void Start()
+    {
 
 
-    void Start() {
-      
-        blip = GameObject.Instantiate (Map.Current.BlipPrefab);      
+        blip = GameObject.Instantiate(Map.Current.BlipPrefab);
         blip.transform.SetParent(Map.Current.transform);
 
         BlipImage = blip.GetComponent<Image>();
         BlipImage.color = unitColor;
-       
-      
+        BlipRect = blip.GetComponent<RectTransform>();
     }
-  
-    [SerializeField]
-	public Color UnitColor
+
+    public Color UnitColor
     {
         get
         {
@@ -58,20 +57,20 @@ public class MapBlip : MonoBehaviour {
             temp.a = 0;
             UnitColor = temp;
         }
-        if (blip!=null)
-        BlipImage.color = unitColor;
+        if (blip != null)
+            BlipImage.color = unitColor;
     }
-    // Update is called once per frame
-    void Update () {
-       
+
+    void Update()
+    {
+
         Vector2 miniMapOffset = new Vector2(Map.Current.transform.position.x, Map.Current.transform.position.y);//小地图原点相对于屏幕坐标原点的偏移值
         blip.transform.position = Map.Current.WorldPositionToMap(transform.position) + miniMapOffset;
-        
-
+        BlipRect.sizeDelta = new Vector2(1*Map.Current.ScaleFactor, 1 * Map.Current.ScaleFactor);//分辨率自适应
     }
 
-	void OnDestroy()
-	{
-		GameObject.Destroy (blip);
-	}
+    void OnDestroy()
+    {
+        GameObject.Destroy(blip);
+    }
 }
