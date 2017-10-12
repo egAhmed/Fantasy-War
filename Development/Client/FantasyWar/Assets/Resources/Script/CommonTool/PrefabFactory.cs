@@ -51,6 +51,15 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
             }
         }
     }
+
+    /// <summary>
+    /// 根据prefab的路径名实例化一个gameobject对象
+    /// </summary>
+    /// <param name="templateResourcePath"></param>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <param name="parent"></param>
+    /// <returns></returns>
     //
     public GameObject createClone(string templateResourcePath, Vector3 position, Quaternion rotation, Transform parent = null)
     {
@@ -63,7 +72,15 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         //
         return clone;
     }
-    //
+    /// <summary>
+    /// 根据prefab的路径名实例化一个gameobject对象，并添加名为T的组件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="templateResourcePath"></param>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <param name="parent"></param>
+    /// <returns></returns>
     public T createClone<T>(string templateResourcePath, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
     {
         if (templateResourcePath == null) { return null; }
@@ -75,7 +92,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         return createClone<T>(template, position, rotation, parent);
     }
 
-    public T createClone<T>(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
+    private T createClone<T>(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null) where T : MonoBehaviour
     {
         if (template == null)
         {
@@ -89,7 +106,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
         return null;
     }
 
-    public GameObject createClone(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null)
+    private GameObject createClone(GameObject template, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         if (template == null)
         {
