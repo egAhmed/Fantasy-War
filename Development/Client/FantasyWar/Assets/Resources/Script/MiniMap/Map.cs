@@ -18,7 +18,7 @@ public class Map : MonoBehaviour
     private Vector2 terrainSize;//地形大小
     private Vector3 terrainPos;
     private RectTransform mapRect;
-
+    public bool saveTrack = true;
 
     private TerrainData terrainData;
     private float scaleFactor = 1;
@@ -103,6 +103,15 @@ public class Map : MonoBehaviour
         MaskCarmera.orthographicSize = 128 * scaleFactor;
         MaskCarmera.transform.position = new Vector3(128 * scaleFactor, 128 * scaleFactor,0);
         // Debug.Log(scaleFactor);
+
+        if (saveTrack)
+        {
+            MaskCarmera.clearFlags = CameraClearFlags.Nothing;
+        }
+        else
+        {
+            MaskCarmera.clearFlags = CameraClearFlags.SolidColor;
+        }
     }
     /// <summary>
     /// 移动到摄像机到点击位置
