@@ -9,7 +9,8 @@ public class MapBlip : MonoBehaviour
 
 
     private GameObject blip;
-
+    private GameObject mask;
+    private float radius = 20;
     public GameObject Blip { get { return blip; } }
     private Color unitColor = Color.red;
     private Image BlipImage;
@@ -20,13 +21,17 @@ public class MapBlip : MonoBehaviour
 
 
         blip = GameObject.Instantiate(Map.Current.BlipPrefab);
+        mask = GameObject.Instantiate(Map.Current.MaskPrefab);
         blip.transform.SetParent(Map.Current.transform);
+        mask.transform.SetParent(Map.Current.transform);
+       
 
         BlipImage = blip.GetComponent<Image>();
         BlipImage.color = unitColor;
         BlipRect = blip.GetComponent<RectTransform>();
     }
 
+    //单位颜色
     public Color UnitColor
     {
         get
@@ -36,6 +41,27 @@ public class MapBlip : MonoBehaviour
         set
         {
             unitColor = value;
+        }
+    }
+
+    //单位半径
+    public float UnitRadius
+    {
+        get
+        {
+            return radius;
+        }
+        set
+        {
+            if (radius<=0)
+            {
+                radius = 1;
+            }
+            else
+            {
+                radius = value;
+            }
+          
         }
     }
 
@@ -66,6 +92,8 @@ public class MapBlip : MonoBehaviour
 
         Vector2 miniMapOffset = new Vector2(Map.Current.transform.position.x, Map.Current.transform.position.y);//小地图原点相对于屏幕坐标原点的偏移值
         blip.transform.position = Map.Current.WorldPositionToMap(transform.position) + miniMapOffset;
+        mask.transform.position = Map.Current.WorldPositionToMap(transform.position) + miniMapOffset;
+        mask.transform.localScale = new Vector3(radius * Map.Current.ScaleFactor, radius * Map.Current.ScaleFactor, 0);
         BlipRect.sizeDelta = new Vector2(1*Map.Current.ScaleFactor, 1 * Map.Current.ScaleFactor);//分辨率自适应
     }
 
