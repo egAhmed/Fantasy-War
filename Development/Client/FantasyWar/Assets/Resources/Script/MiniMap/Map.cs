@@ -9,12 +9,16 @@ public class Map : MonoBehaviour
     public RectTransform ViewPort;//小地图上的摄像机视野范围
     //public Transform Corner1, Corner2;//地形左下角和地形右上角的标记点
     public GameObject BlipPrefab;//小地图上的单位预制体
+    public GameObject MaskPrefab;
     public static Map Current;
-    public Button MapButton;
+    public Camera MaskCarmera;
+    private Button MapButton;
     public RectTransform Border;
+    public RectTransform MaskMap;
     private Vector2 terrainSize;//地形大小
     private Vector3 terrainPos;
     private RectTransform mapRect;
+    public bool saveTrack = true;
 
     private TerrainData terrainData;
     private float scaleFactor = 1;
@@ -48,6 +52,7 @@ public class Map : MonoBehaviour
 
         MapButton = GetComponent<Button>();
         mapRect = GetComponent<RectTransform>();
+
 
         MapButton.onClick.AddListener(MoveTo);
 
@@ -94,7 +99,19 @@ public class Map : MonoBehaviour
         Border.sizeDelta = mapRect.sizeDelta;
         Border.position = mapRect.position;
         ViewPort.sizeDelta = new Vector2(80 * scaleFactor, 50 * scaleFactor);
+        MaskMap.sizeDelta = mapRect.sizeDelta;
+        MaskCarmera.orthographicSize = 128 * scaleFactor;
+        MaskCarmera.transform.position = new Vector3(128 * scaleFactor, 128 * scaleFactor,0);
         // Debug.Log(scaleFactor);
+
+        if (saveTrack)
+        {
+            MaskCarmera.clearFlags = CameraClearFlags.Nothing;
+        }
+        else
+        {
+            MaskCarmera.clearFlags = CameraClearFlags.SolidColor;
+        }
     }
     /// <summary>
     /// 移动到摄像机到点击位置
