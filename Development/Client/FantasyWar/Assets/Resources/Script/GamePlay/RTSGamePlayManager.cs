@@ -31,8 +31,7 @@ public class RTSGamePlayManager : UnitySingleton<RTSGamePlayManager>
 
     private void beginToBuildTheBuilding(Vector3 pos)
     {
-        RTSGameUnit gameUnit=PrefabFactory.ShareInstance.createClone<RTSGameUnit>(@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house", pos, Quaternion.identity);
-        gameUnit.gameObject.AddComponent<RVOObstacle>();
+        RTSBuilding gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuilding>(@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house", pos, Quaternion.identity);
         MeshCollider collider=gameUnit.gameObject.AddComponent<MeshCollider>();
         collider.convex = true;
         //collider.isTrigger = true;

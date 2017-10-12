@@ -20,4 +20,16 @@ public class DieInNoLife : MonoBehaviour {
 	void UnitDie(){
 		
 	}
+
+    /// <summary>
+    /// 死亡特效
+    /// </summary>
+    void DestoryEffect()
+    {
+        RTSBuilding rtsBuilding = transform.GetComponent<RTSBuilding>();
+        if (rtsBuilding != null)
+        {
+            rtsBuilding.DestoryShaderEffect();
+        }
+    }
 }
