@@ -5,10 +5,8 @@ using UnityEngine;
 
 
 
-[RequireComponent(typeof(RTSGameUnitPathFindingController))]
-public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
+public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 {
-    protected RTSGameUnitPathFindingController unitPathFindingController;
     //
     #region work type
     protected enum RTSWorkerJobType
@@ -53,24 +51,6 @@ public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
         }
     }
     //
-    public float MovingSpeed
-    {
-        get
-        {
-            throw new NotImplementedException();
-        }
-
-        set
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public void move()
-    {
-        throw new NotImplementedException();
-    }
-
     protected override void OnSetTargetPosition(Vector3 pos)
     {
         base.OnSetTargetPosition(pos);
@@ -80,7 +60,6 @@ public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
             stopWork();
         }
         //
-        unitPathFindingController.SetTarget(pos);
     }
 
     protected override void OnSetTargetUnit(RTSGameUnit unit)
@@ -128,7 +107,7 @@ public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
             }
         }
         //
-        unitPathFindingController.SetTarget(unit.transform.position);
+        move(unit.transform.position);
     }
 
     protected virtual void goHome()
@@ -185,7 +164,7 @@ public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
             {
                 if (targetGameUnit)
                 {
-                    unitPathFindingController.SetTarget(targetGameUnit.transform.position);
+                    move(targetGameUnit.transform.position);
                 }
             }
             Debug.Log("miningAchievement = > " + miningAchievement);
@@ -254,7 +233,7 @@ public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
     {
         if (homeBuilding)
         {
-            unitPathFindingController.SetTarget(homeBuilding.transform.position);
+            move(homeBuilding.transform.position);
             //
             bool returnSuccess = false;
             //
@@ -324,13 +303,6 @@ public class RTSWorker : RTSGameUnit, IGameUnitMovable, IGameUnitResourceMining
                 break;
         }
         //
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        //
-        unitPathFindingController = gameObject.GetComponent<RTSGameUnitPathFindingController>();
     }
 
     protected override void Update()
