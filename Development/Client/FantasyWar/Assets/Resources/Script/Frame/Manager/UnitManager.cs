@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 所有单位的实例都储存在这里
+/// </summary>
 public class UnitManager :UnitySingleton<UnitManager> {
 
 	private Dictionary<PlayerInfo,List<GameObject>> buildings = new Dictionary<PlayerInfo, List<GameObject>> ();

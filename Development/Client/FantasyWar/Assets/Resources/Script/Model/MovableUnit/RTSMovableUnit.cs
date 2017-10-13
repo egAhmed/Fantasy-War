@@ -9,7 +9,7 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
 
     public float MovingSpeed { get;set; }
 
-    public void move(Vector3 pos)
+    public virtual void move(Vector3 pos)
     {
 		//
         unitPathFindingController.SetTarget(pos);

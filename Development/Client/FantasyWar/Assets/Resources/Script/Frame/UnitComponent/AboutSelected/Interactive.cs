@@ -11,19 +11,35 @@ public class Interactive : MonoBehaviour {
 
 	public bool Selected { get { return _Selected; } }
 
+	/// <summary>
+	/// 当被选定时调用，将所有interaction激活
+	/// </summary>
 	public void Select()
 	{
 		_Selected = true;
-		foreach (Interaction selection in GetComponents<Interaction>()) {
-			selection.Select();
+		TeamManager.ShareInstance.currentSelections.Add (this.gameObject);
+		gameObject.GetComponent<UnitInfo> ().ActiveInteractions ();
+	}
+
+	/// <summary>
+	/// 取消选定时调用，将所有interaction失活
+	/// </summary>
+	public void Deselect()
+	{
+		if (Selected) {
+			Debug.Log ("进取消选择函数");
+			_Selected = false;
+			gameObject.GetComponent<UnitInfo> ().InactiveInteractions ();
+			if (TeamManager.ShareInstance.currentSelections.Contains (gameObject)) {
+				TeamManager.ShareInstance.currentSelections.Remove (gameObject);
+			}
 		}
 	}
 
-	public void Deselect()
-	{
-		_Selected = false;
-		foreach (var selection in GetComponents<Interaction>()) {
-			selection.Deselect();
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Deselect ();
 		}
 	}
+
 }

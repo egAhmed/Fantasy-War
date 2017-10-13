@@ -5,16 +5,18 @@ using UnityEngine;
 public class ShowInfoUI : Interaction {
 
 	ObjectInfoShow showPanel;
+	UnitInfo unitinfo;
 	bool isShow;
 
 	void Start(){
+		unitinfo = gameObject.GetComponent<UnitInfo> ();
 		showPanel = ObjectInfoShow.Current;
 		isShow = false;
 	}
 
 	void Update(){
-		if (isShow) {
-			//在UI面板上显示单位信息
+		if (isShow && TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
+			showPanel.SetText (unitinfo.unitName, unitinfo.HP.ToString(), unitinfo.belong.accentColor.ToString());
 		}
 	}
 
@@ -27,5 +29,11 @@ public class ShowInfoUI : Interaction {
 	{
 		showPanel.Clear ();
 		isShow = false;
+	}
+
+	void OnDestroy(){
+		if (showPanel == null)
+			return;
+		showPanel.Clear ();
 	}
 }

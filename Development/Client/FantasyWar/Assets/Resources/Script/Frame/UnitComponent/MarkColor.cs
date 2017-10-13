@@ -7,13 +7,17 @@ using UnityEngine;
 /// </summary>
 public class MarkColor : MonoBehaviour {
 
-	public MeshRenderer[] Renderers;
+	public MeshRenderer render;
 
 	// Use this for initialization
 	void Start () {
-		Color color = GetComponent<UnitInfo> ().belong.accentColor;
-		foreach (var r in Renderers) {
-			r.material.color = color;
+		render = gameObject.GetComponent<MeshRenderer> ();
+		if (GetComponent<UnitInfo> () != null) {
+			Color color = GetComponent<UnitInfo> ().belong.accentColor;
+			render.material.color = color;
+		}
+		else {
+			render.material.color = Color.white;
 		}
 	}
 }

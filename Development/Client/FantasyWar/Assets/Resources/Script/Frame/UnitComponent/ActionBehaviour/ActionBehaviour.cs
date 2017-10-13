@@ -4,8 +4,16 @@ using UnityEngine;
 
 public abstract class ActionBehaviour : MonoBehaviour {
 
-	public abstract Action GetClickAction ();
-	public int index;
-	public Sprite actionIcon;
+	public KeyCode shortCutKey;
 
+	public abstract Action GetClickAction ();
+
+	public int index;	//图标对应第几个按键
+
+	public Sprite actionIcon;	//图标图片
+
+	public void RunAction(KeyCode d){
+		Action ac = GetClickAction ();
+		ac ();
+	}
 }

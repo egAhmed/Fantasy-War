@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 没血死亡
+/// </summary>
 public class DieInNoLife : MonoBehaviour {
 
 	UnitInfo info;
@@ -18,18 +21,17 @@ public class DieInNoLife : MonoBehaviour {
 	}
 
 	void UnitDie(){
-		
+		//TODO
+		//在对象池中隐藏
+		UnitInfo unitinfo = gameObject.GetComponent<UnitInfo>();
+		if (unitinfo is Building) {
+			UnitManager.ShareInstance.Buildings [unitinfo.belong].Remove(gameObject);
+		}
+		if (unitinfo is Building) {
+			UnitManager.ShareInstance.Armys [unitinfo.belong].Remove (gameObject);
+		}
+		else {
+			return;
+		}
 	}
-
-    /// <summary>
-    /// 死亡特效
-    /// </summary>
-    void DestoryEffect()
-    {
-        RTSBuilding rtsBuilding = transform.GetComponent<RTSBuilding>();
-        if (rtsBuilding != null)
-        {
-            rtsBuilding.DestoryShaderEffect();
-        }
-    }
 }

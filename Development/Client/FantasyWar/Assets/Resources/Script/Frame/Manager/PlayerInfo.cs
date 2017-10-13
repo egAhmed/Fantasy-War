@@ -9,11 +9,11 @@ public class PlayerInfo{
 
 	public string name;
 
-	public Transform location;
+	public Vector3 location;
 
 	public Color accentColor;
 
-	public List<GameObject> StartingUnits = new List<GameObject>();
+	//public List<GameObject> StartingUnits = new List<GameObject>();
 
 	//private List<GameObject> buildingUnits = new List<GameObject> ();
 
