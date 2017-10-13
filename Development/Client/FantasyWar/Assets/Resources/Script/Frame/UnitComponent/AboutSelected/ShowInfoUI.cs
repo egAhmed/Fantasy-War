@@ -5,20 +5,27 @@ using UnityEngine;
 public class ShowInfoUI : Interaction {
 
 	ObjectInfoShow showPanel;
-	UnitInfo unitinfo;
+	RTSGameUnit RTSGameUnit;
 	bool isShow;
 
 	void Start(){
-		unitinfo = gameObject.GetComponent<UnitInfo> ();
+		RTSGameUnit = gameObject.GetComponent<RTSGameUnit> ();
 		showPanel = ObjectInfoShow.Current;
 		isShow = false;
 	}
-
 	void Update(){
-		if (isShow && TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
-			showPanel.SetText (unitinfo.unitName, unitinfo.HP.ToString(), unitinfo.belong.accentColor.ToString());
-		}
-	}
+        //if (isShow && TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
+//        Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
+        //
+        if (gameObject.GetComponent<Interactive>().Selected)
+        {
+            if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits[0] == this.gameObject)
+            {
+
+                showPanel.SetText(RTSGameUnit.unitName, RTSGameUnit.HP.ToString(), RTSGameUnit.playerInfo.accentColor.ToString());
+            }
+        }
+    }
 
 	public override void Select ()
 	{

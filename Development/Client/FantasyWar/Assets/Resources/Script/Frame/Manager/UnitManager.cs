@@ -7,17 +7,34 @@ using UnityEngine;
 /// </summary>
 public class UnitManager :UnitySingleton<UnitManager> {
 
-	private Dictionary<PlayerInfo,List<GameObject>> buildings = new Dictionary<PlayerInfo, List<GameObject>> ();
+	public Dictionary<PlayerInfo,List<GameObject>> buildings;
 
 	public Dictionary<PlayerInfo,List<GameObject>> Buildings{
-		get { return buildings; }
+		get {
+            if (buildings == null) {
+                buildings = new Dictionary<PlayerInfo, List<GameObject>>();
+            }
+            return buildings; }
 	}
 
-	private Dictionary<PlayerInfo,List<GameObject>> armys = new Dictionary<PlayerInfo, List<GameObject>>();
+    public Dictionary<PlayerInfo,List<GameObject>> armys;
 
 	public Dictionary<PlayerInfo,List<GameObject>> Armys{
-		get { return armys; }
+		get {
+			if (armys==null) {
+                armys = new Dictionary<PlayerInfo, List<GameObject>>();
+            }
+            return armys;
+			  }
 	}
 
-	public Dictionary<Racial,List<GameObject>> initialBuilds = new Dictionary<Racial, List<GameObject>> ();
+	private Dictionary<Racial,List<GameObject>> initialBuilds;
+	public Dictionary<Racial,List<GameObject>> InitialBuilds{
+		get {
+			if (initialBuilds==null) {
+                initialBuilds = new Dictionary<Racial, List<GameObject>>();
+            }
+            return initialBuilds;
+			  }
+	}
 }

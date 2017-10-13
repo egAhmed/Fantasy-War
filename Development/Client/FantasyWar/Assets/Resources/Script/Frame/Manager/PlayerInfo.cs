@@ -13,17 +13,18 @@ public class PlayerInfo{
 
 	public Color accentColor;
 
-	//public List<GameObject> StartingUnits = new List<GameObject>();
+    //public List<GameObject> StartingUnits = new List<GameObject>();
 
-	//private List<GameObject> buildingUnits = new List<GameObject> ();
+    //private List<GameObject> buildingUnits = new List<GameObject> ();
 
-	//public List<GameObject> BuildingUnits { get { return buildingUnits; } }
+    //public List<GameObject> BuildingUnits { get { return buildingUnits; } }
 
-	//private List<GameObject> armyUnits = new List<GameObject> ();
+    //private List<GameObject> armyUnits = new List<GameObject> ();
 
-	//public List<GameObject> ArmyUnits { get { return armyUnits; } }
+    //public List<GameObject> ArmyUnits { get { return armyUnits; } }
 
-	public bool IsCurrentPlayer;
+    public RTSGameUnitBelongSide gameUnitBelongSide;
+    public bool IsCurrentPlayer;
 
 	public float Resources;
 }

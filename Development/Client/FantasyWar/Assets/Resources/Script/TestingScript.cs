@@ -9,7 +9,9 @@ public class TestingScript : MonoBehaviour {
         InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
         //
         RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
-
+        //
+        RTSManager.ShareInstance.testingCreatePlayInfo();
+        //
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,close);
     }
@@ -29,5 +31,25 @@ public class TestingScript : MonoBehaviour {
 
     // private void p(KeyCode key) {
     //     Debug.LogError("按下了P");
+    // }
+
+    // void Update()
+    // {
+    //     Dictionary<PlayerInfo,List<GameObject>> dic=UnitManager.ShareInstance.Armys;
+    //     if (dic == null) {
+    //         Debug.LogError("dic null");
+    //         return;
+    //     }
+
+    //     foreach (var key in dic.Keys) {
+    //         List<GameObject> list=dic[key];
+    //         if (list == null) {
+    //         Debug.LogError("list null");
+    //         return;
+    //         }else { 
+    //              Debug.LogError("list count :"+list.Count);
+    //         }
+    //     }
+
     // }
 }

@@ -20,10 +20,10 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
         set
         {
             _enabled = value;
-            if (!value)
-            {
-                selectionRelease();
-            }
+            // if (!value)
+            // {
+            //     selectionRelease();
+            // }
         }
     }
     //
@@ -245,7 +245,7 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
     //    }
     //}
     //
-    private static void selectionRelease()
+    public static void selectionRelease()
     {
         if (singleSelectedUnit != null)
         {
@@ -314,7 +314,12 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 GameObject hitObj = hitInfo.collider.gameObject;
                 // Debug.Log("hit");
                 // Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
-                // RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
+                if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI) {
+                    Debug.LogError("hit UI");
+                    return;
+                }else { 
+                    selectionRelease();
+                    // RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
                 RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
                 //            
                 if (gameUnit)
@@ -337,6 +342,7 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 // { 
                 // }else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberFriendlyGameUnit) { 
                 // }
+                }
             }
         }
     }
@@ -473,7 +479,6 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
         IsMouseLeftDown = true;
         mousePositionStartPos = InputManager.ShareInstance.MousePosition;
         //
-        selectionRelease();
         //        
     }
     //

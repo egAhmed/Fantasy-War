@@ -5,23 +5,31 @@ using UnityEngine;
 public class RTSManager : UnitySingleton<RTSManager> {
 
 	public PlayerInfo currentPlayer;
+    public List<PlayerInfo> Players = new List<PlayerInfo>();
 
-	public List<PlayerInfo> Players = new List<PlayerInfo>();
+    public void testingCreatePlayInfo() {
+        //
+        List<RTSGameUnit> testingUnits = RTSGameUnitManager.ShareInstance.PlayerUnits;
+        //
+        PlayerInfo p1=new PlayerInfo();
+        p1.name = "p1";
+        p1.gameUnitBelongSide = RTSGameUnitBelongSide.Player;
+		UnitManager.ShareInstance.Buildings.Add(p1,new List<GameObject> ());
+		UnitManager.ShareInstance.Armys.Add(p1,new List<GameObject> ());
 
-	void Start(){
-		BuildOriginal ();
-		RegistInput ();
+        // RTSManager.ShareInstance.Players.Add(p1);
+        if (testingUnits != null) {
+            foreach (RTSGameUnit unit in testingUnits) {
+                unit.playerInfo = p1;
+            }
+        }
+		//
+    }
 
-	}
+    void Start(){
+		//BuildOriginal ();
+		//RegistInput ();
 
-	void vvv(KeyCode d){
-	}
-
-	void Update(){
-		if (Input.GetKeyDown (KeyCode.Y)) {
-			Debug.Log ("注册");
-			InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.F10, vvv);
-		}
 	}
 
 	void RegistInput(){
@@ -41,7 +49,7 @@ public class RTSManager : UnitySingleton<RTSManager> {
 	/// </summary>
 	private void BuildOriginal(){
 		foreach (PlayerInfo p in Players) {
-			if (p.IsCurrentPlayer) {
+			if (p.gameUnitBelongSide==RTSGameUnitBelongSide.Player) {
 				currentPlayer = p;
 			}
 			UnitManager.ShareInstance.Buildings.Add(p,new List<GameObject> ());
@@ -56,7 +64,7 @@ public class RTSManager : UnitySingleton<RTSManager> {
 				prefeb = (GameObject)Resources.Load ("Prefab/GameObject/Cube");
 
 				go = (GameObject)GameObject.Instantiate (prefeb, p.location, Quaternion.identity);
-				go.GetComponent<UnitInfo> ().belong = p;
+				go.GetComponent<RTSGameUnit> ().playerInfo = p;
 				Debug.Log("初始建筑建造");
 				break;
 			case Racial.human:
@@ -64,7 +72,7 @@ public class RTSManager : UnitySingleton<RTSManager> {
 				prefeb = (GameObject)Resources.Load ("Prefab/GameObject/Base");
 
 				go = (GameObject)GameObject.Instantiate(prefeb, p.location, Quaternion.identity);
-				go.GetComponent<UnitInfo> ().belong = p;
+				go.GetComponent<RTSGameUnit> ().playerInfo = p;
 				Debug.Log("初始建筑建造");
 				break;
 			default:

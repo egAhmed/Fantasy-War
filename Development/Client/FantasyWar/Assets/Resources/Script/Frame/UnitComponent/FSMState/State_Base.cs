@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class State_Base  {
 
-	protected UnitInfo master;
+	protected RTSGameUnit master;
 
-	public void SetMaster(UnitInfo m){
+	public void SetMaster(RTSGameUnit m){
 		master = m;
 	}
 
@@ -15,6 +15,6 @@ public abstract class State_Base  {
 
 	public abstract void Update ();
 
-	public virtual void RemoveTarget(UnitInfo t){
+	public virtual void RemoveTarget(RTSGameUnit t){
 	}
 }

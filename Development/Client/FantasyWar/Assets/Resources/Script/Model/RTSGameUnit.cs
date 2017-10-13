@@ -14,6 +14,17 @@ public enum RTSGameUnitBelongSide
 [RequireComponent(typeof(RTSGameUnitFogController))]
 public class RTSGameUnit : MonoBehaviour
 {
+	public int maxHP;
+	public string unitName;
+    public Sprite unitIcom;
+    //
+    [SerializeField]
+    public PlayerInfo playerInfo;
+//
+	protected List<Interaction> interactionList = new List<Interaction> ();
+	public List<ActionBehaviour> ActionList = new List<ActionBehaviour> ();
+    //
+
     public string UnitTag
     {
         get
@@ -123,6 +134,9 @@ public class RTSGameUnit : MonoBehaviour
         set
         {
             _isSelected = value;
+            //
+            interactionAutoSwitch();
+            //
             selectionSpriteSwitch();
             unitActionEventControl();
         }
@@ -240,7 +254,7 @@ public class RTSGameUnit : MonoBehaviour
     //
     protected virtual void Awake()
     {
-
+        //
     }
 
     // Use this for initialization
@@ -249,6 +263,8 @@ public class RTSGameUnit : MonoBehaviour
         selectionBottomCircleControllerInit();
         //
         RTSGameUnitManager.ShareInstance.unitRegister(this);
+        //
+        actionBehaviourInit();
     }
 
     protected virtual void OnDestroy()
@@ -261,5 +277,68 @@ public class RTSGameUnit : MonoBehaviour
     {
 
     }
+    
     //
+    private void testingCreatePlayInfo() { 
+        PlayerInfo p1=new PlayerInfo();
+        p1.name = "p1";
+        p1.gameUnitBelongSide = RTSGameUnitBelongSide.Player;
+        playerInfo = p1;
+        if (!UnitManager.ShareInstance.Buildings.ContainsKey(p1)) { 
+        UnitManager.ShareInstance.Buildings.Add(p1,new List<GameObject> ());
+        }
+        if (!UnitManager.ShareInstance.Armys.ContainsKey(p1))
+        {
+            UnitManager.ShareInstance.Armys.Add(p1, new List<GameObject>());
+        }
+    }
+
+    protected virtual void actionBehaviourInit() {
+        testingCreatePlayInfo();
+        //
+        gameObject.AddComponent<DieInNoLife> ();
+		gameObject.AddComponent<MapBip> ();
+		// gameObject.AddComponent<MarkColor> ();
+//
+		// Debug.Log ("我是" + this.GetType ().ToString());
+        if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+			Debug.Log (this.GetType () + "是自己人");
+			Interaction au = gameObject.AddComponent<ActionUpdate> ();
+			interactionList.Add (au);
+		}
+//
+		if (IsAllowSingleSelection||IsAllowMultipleSelection) {
+			gameObject.AddComponent<Interactive> ();
+		}
+//
+		// Interaction hl = gameObject.AddComponent<HightLight> ();
+		// interactionList.Add (hl);
+		Interaction si = gameObject.AddComponent<ShowInfoUI> ();
+		interactionList.Add (si);
+        //
+    }
+    //
+    public void ActiveInteractions(){
+		//Debug.Log ("组件数量:"+interactionList.Count);
+		foreach (Interaction selection in interactionList) {
+			selection.Select();
+		}
+	}
+
+	public void InactiveInteractions(){
+		foreach (Interaction selection in interactionList) {
+			Debug.Log ("取消"+selection.GetType());
+			selection.Deselect();
+		}
+	}
+    //
+    private void interactionAutoSwitch() {
+        if (IsSelected) {
+            //activate
+            ActiveInteractions();
+        }else {
+            //
+            InactiveInteractions();
+        }
+    }
 }

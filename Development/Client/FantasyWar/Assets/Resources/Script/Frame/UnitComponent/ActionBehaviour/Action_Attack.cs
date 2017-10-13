@@ -20,9 +20,14 @@ public class Action_Attack : ActionBehaviour {
 	/// 将鼠标左击事件转换为寻找攻击目标
 	/// </summary>
 	public void SelectTarget(){
+		RTSGameUnitSelectionManager.Enabled = false;
+		//
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
-		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
-		Debug.Log ("改委托");
+		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
+        // InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
+        //
+        //
+        Debug.Log ("改委托");
 	}
 
 	public void FindAttackTarget(KeyCode k){
@@ -30,8 +35,12 @@ public class Action_Attack : ActionBehaviour {
 		//得到鼠标点击到的对象
 
 		//将鼠标左击事件改回选取单位
-		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
+		// InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
+
 		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
+		//
+        //
+		//		
 
 		Vector3 mousePos = Input.mousePosition;
 
@@ -40,13 +49,24 @@ public class Action_Attack : ActionBehaviour {
 		if (!Physics.Raycast (ray, out hit))
 			return;
 
-		UnitInfo targetinfo = hit.transform.GetComponent<UnitInfo> ();
+		RTSGameUnit targetinfo = hit.transform.GetComponent<RTSGameUnit> ();
 		if (targetinfo == null)
 			return;
 
-		//TODO
-		//攻击方法
-		Debug.Log(gameObject.GetComponent<UnitInfo>().belong.name + "攻击" + targetinfo.belong.name);
+        //
+        // if (targetinfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
+		// }
+        //TODO
+        //攻击方法
+        Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
+		//
+		//
+	}
+
+    private void activateSelection(KeyCode key) { 
+		RTSGameUnitSelectionManager.Enabled = true;
+		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
+		
 	}
 
 }

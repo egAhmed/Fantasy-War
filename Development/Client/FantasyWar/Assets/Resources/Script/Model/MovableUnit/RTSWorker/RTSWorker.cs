@@ -380,4 +380,15 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         if(animatorStateController==null)
             animatorStateController = GetComponent<WorkerAnimatorStateController>();
     }
+
+    //
+    protected override void actionBehaviourInit() {
+        base.actionBehaviourInit();
+        //
+        //
+        if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+			ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
+			ActionList.Add (ac);
+		}
+    }
 }

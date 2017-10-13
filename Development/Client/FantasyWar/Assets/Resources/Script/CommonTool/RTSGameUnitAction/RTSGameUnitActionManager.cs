@@ -168,7 +168,10 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
                     //
                     //Debug.LogError("hit obj");
                     //
-                    if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentGround)
+                    if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI) {
+                        Debug.LogError("hit UI");
+                    }
+                    else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentGround)
                     {
                         //Debug.LogError("hit Ground");
                         //

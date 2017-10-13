@@ -12,8 +12,8 @@ public class MarkColor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		render = gameObject.GetComponent<MeshRenderer> ();
-		if (GetComponent<UnitInfo> () != null) {
-			Color color = GetComponent<UnitInfo> ().belong.accentColor;
+		if (GetComponent<RTSGameUnit> () != null) {
+			Color color = GetComponent<RTSGameUnit> ().playerInfo.accentColor;
 			render.material.color = color;
 		}
 		else {

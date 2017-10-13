@@ -7,10 +7,13 @@ using UnityEngine;
 /// </summary>
 public class DieInNoLife : MonoBehaviour {
 
-	UnitInfo info;
+	//UnitInfo info;
+    RTSGameUnit info;
 
-	void Start () {
-		info = gameObject.GetComponent<UnitInfo> ();
+    void Start () {
+		//info = gameObject.GetComponent<UnitInfo> ();
+		info = gameObject.GetComponent<RTSGameUnit> ();
+		
 	}
 	
 	// Update is called once per frame
@@ -23,12 +26,18 @@ public class DieInNoLife : MonoBehaviour {
 	void UnitDie(){
 		//TODO
 		//在对象池中隐藏
-		UnitInfo unitinfo = gameObject.GetComponent<UnitInfo>();
-		if (unitinfo is Building) {
-			UnitManager.ShareInstance.Buildings [unitinfo.belong].Remove(gameObject);
+//		UnitInfo unitinfo = gameObject.GetComponent<UnitInfo>();
+		RTSGameUnit unitinfo = gameObject.GetComponent<RTSGameUnit>();
+		
+		// if (unitinfo is Building) {
+		if (unitinfo is RTSBuilding) {
+			
+			UnitManager.ShareInstance.Buildings [unitinfo.playerInfo].Remove(gameObject);
 		}
-		if (unitinfo is Building) {
-			UnitManager.ShareInstance.Armys [unitinfo.belong].Remove (gameObject);
+//		if (unitinfo is Building) {
+		if (unitinfo is RTSBuilding) {
+			
+			UnitManager.ShareInstance.Armys [unitinfo.playerInfo].Remove (gameObject);
 		}
 		else {
 			return;

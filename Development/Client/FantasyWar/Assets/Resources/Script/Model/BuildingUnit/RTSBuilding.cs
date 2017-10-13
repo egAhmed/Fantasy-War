@@ -94,4 +94,15 @@ public class RTSBuilding : RTSGameUnit
             yield return null;
         }
     }
+    //
+    protected override void actionBehaviourInit() {
+        base.actionBehaviourInit();
+        //
+        UnitManager.ShareInstance.Buildings[playerInfo].Add (gameObject);
+        //
+		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
+		ActionList.Add (aa);
+		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
+		ActionList.Add (ab);
+    }
 }
