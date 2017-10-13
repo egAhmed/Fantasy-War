@@ -126,7 +126,7 @@ public class RTSGameUnit : MonoBehaviour
         }
     }
     //
-    private bool _isVisible;
+    private bool _isVisible=true;
     public bool IsVisible
     {
         get
