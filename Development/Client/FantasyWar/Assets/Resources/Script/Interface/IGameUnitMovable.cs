@@ -9,6 +9,6 @@ public interface IGameUnitMovable : IGameUnitBehaviour {
         set;
     }
 	//
-	void move();
+	void move(Vector3 pos);
 	//
 }
