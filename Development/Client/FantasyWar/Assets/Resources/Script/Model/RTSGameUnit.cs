@@ -9,7 +9,9 @@ public enum RTSGameUnitBelongSide
     FriendlyGroup = 1 << 2,
     Neutrality = 1 << 3,
 }
-
+//
+[RequireComponent(typeof(MapBlip))]
+[RequireComponent(typeof(RTSGameUnitFogController))]
 public class RTSGameUnit : MonoBehaviour
 {
     public string UnitTag
