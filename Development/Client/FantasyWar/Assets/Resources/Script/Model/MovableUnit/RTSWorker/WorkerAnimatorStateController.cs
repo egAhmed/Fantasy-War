@@ -12,36 +12,91 @@ public class WorkerAnimatorStateController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Test ();
+		//Test ();
 	}
 	public  void WorkerAnimator_dig(){
-		if (WorkerAnimator.GetBool ("IsDigging")) {
+		if (WorkerAnimator.GetBool ("IsDigging")&&!WorkerAnimator.GetBool ("IsHarvest")) {
 			return;
-		}else{
-			WorkerAnimator.SetTrigger("DoDig");
-			WorkerAnimator.SetBool ("IsDigging",true );
 		}
+		//
+			WorkerAnimator.SetBool ("IsDigging",true);
+            WorkerAnimator.SetBool("IsHarvest",false);
+			WorkerAnimator.SetTrigger("DoDig");
+	}
+	public  void WorkerAnimator_digHarvest(){
+		if (WorkerAnimator.GetBool ("IsDigging")&&WorkerAnimator.GetBool ("IsHarvest")) {
+			return;
+		}
+		//
+		WorkerAnimator.SetBool ("IsDigging",true );
+        WorkerAnimator.SetBool("IsHarvest",true);
+        WorkerAnimator.SetTrigger("DoDig");
 	}
 	public void WorkerAnimator_idle(){
-		WorkerAnimator.SetInteger  ("Speed",0 );
+        if (WorkerAnimator.GetInteger("Speed") == 0&&!WorkerAnimator.GetBool ("IsHarvest")&&!WorkerAnimator.GetBool ("IsDigging")) {
+            return;
+        }
+		//
+		WorkerAnimator.SetBool("IsHarvest",false);
+        WorkerAnimator.SetInteger  ("Speed",0 );
+		WorkerAnimator.SetBool ("IsDigging",false );
+	}
+	public  void WorkerAnimator_idleHarvest(){
+		if (WorkerAnimator.GetInteger("Speed") == 0&&WorkerAnimator.GetBool ("IsHarvest")&&!WorkerAnimator.GetBool ("IsDigging")) {
+			return;
+		}else{
+			//
+            WorkerAnimator.SetBool("IsHarvest",true);
+            WorkerAnimator.SetInteger  ("Speed",0 );
+			WorkerAnimator.SetBool ("IsDigging",false );
+			//
+		}
 	}
 	public void WorkerAnimator_walk(){
-		WorkerAnimator.SetInteger  ("Speed",1);
+        if (WorkerAnimator.GetInteger("Speed") == 1 &&!WorkerAnimator.GetBool ("IsHarvest")&&!WorkerAnimator.GetBool ("IsDigging")) {
+            return;
+        }
+		//
+        WorkerAnimator.SetBool("IsHarvest",false);
+		WorkerAnimator.SetBool ("IsDigging",false);
+        WorkerAnimator.SetInteger  ("Speed",1);
+		//
+	}
+	public void WorkerAnimator_walkHarvest(){
+		if (WorkerAnimator.GetInteger("Speed") == 1&&WorkerAnimator.GetBool ("IsHarvest")&&!WorkerAnimator.GetBool ("IsDigging")) {
+			return;
+		}
+		//
+        	WorkerAnimator.SetBool("IsHarvest",true);
+			WorkerAnimator.SetBool ("IsDigging",false);
+        	WorkerAnimator.SetInteger  ("Speed",1);
+		//
+		
 	}
 	public void WorkerAnimator_run(){
-		WorkerAnimator.SetInteger ("Speed",2 );
+		 if (WorkerAnimator.GetInteger("Speed") == 2 &&!WorkerAnimator.GetBool ("IsHarvest")&&!WorkerAnimator.GetBool ("IsDigging")) {
+            return;
+        }
+		//
+        WorkerAnimator.SetBool("IsHarvest",false);
+		WorkerAnimator.SetBool ("IsDigging",false);
+        WorkerAnimator.SetInteger("Speed",2);
+	}
+	public void WorkerAnimator_runHarvest(){
+		if (WorkerAnimator.GetInteger("Speed") == 2&&WorkerAnimator.GetBool ("IsHarvest")&&!WorkerAnimator.GetBool ("IsDigging")) {
+			return;
+		}
+		//
+        WorkerAnimator.SetBool("IsHarvest",true);
+		WorkerAnimator.SetBool ("IsDigging",false);
+        WorkerAnimator.SetInteger  ("Speed",2);
 	}
 	public void WorkerAnimator_death(){
-		WorkerAnimator.SetBool  ("Death",true );
-	}
-	public void WorkerAnimator_HarvestIdle(){
-		WorkerAnimator.SetTrigger  ("HarvestIdle");
-	}
-	public void WorkerAnimator_HarvestWalk(){
-		WorkerAnimator.SetInteger ("HarvestSpeed",1);
-	}
-	public void WorkerAnimator_HarvestRun(){
-		WorkerAnimator.SetInteger ("HarvestSpeed",2);
+        if (WorkerAnimator.GetBool("Death")) {
+            return;
+        }
+		//
+        WorkerAnimator.SetBool  ("Death",true );
 	}
     void Test()
 	{
@@ -54,15 +109,15 @@ public class WorkerAnimatorStateController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode .E )) {
 			WorkerAnimator_run ();
 		}
-		if (Input .GetKeyDown (KeyCode .R )) {
-			WorkerAnimator_HarvestIdle ();
-		}
-		if (Input .GetKeyDown (KeyCode .A )) {
-			WorkerAnimator_HarvestWalk ();
-		}
-		if (Input .GetKeyDown (KeyCode .S )) {
-			WorkerAnimator_HarvestRun ();
-		}
+		// if (Input .GetKeyDown (KeyCode .R )) {
+		// 	WorkerAnimator_HarvestIdle ();
+		// }
+		// if (Input .GetKeyDown (KeyCode .A )) {
+		// 	WorkerAnimator_HarvestWalk ();
+		// }
+		// if (Input .GetKeyDown (KeyCode .S )) {
+		// 	WorkerAnimator_HarvestRun ();
+		// }
 		if (Input .GetKey (KeyCode .D )) {
 			WorkerAnimator_death ();
 		}

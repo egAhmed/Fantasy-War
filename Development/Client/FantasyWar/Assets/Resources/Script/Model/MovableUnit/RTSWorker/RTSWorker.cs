@@ -4,16 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
+[RequireComponent(typeof(WorkerAnimatorStateController))]
 public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 {
+    //
+    WorkerAnimatorStateController animatorStateController = null;
     //
     #region work type
     protected enum RTSWorkerJobType
     {
+        //
         Mining = 1,
         Building = 1 << 1,
         Repairing = 1 << 2,
+        OnTheWayToMine=1<<3,
+        OnTheWayToBuilding=1<<4,
+        Idle=1<<5,
+        //
     }
     protected RTSWorkerJobType currentWorkingJobType;
     #endregion
@@ -26,11 +33,17 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     protected float miningAchievementAddingFrequency = 1f;
     protected int miningAchievementLimit = 3;
     protected int miningAchievement = 0;
-    protected bool IsMiningAchievementFull
+    protected bool IsMiningHarvestedFull
     {
         get
         {
             return miningAchievement >= miningAchievementLimit;
+        }
+    }
+    protected bool IsMiningHarvested{
+        get
+        {
+            return miningAchievement > 0;
         }
     }
     #endregion 
@@ -50,6 +63,23 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             return TargetDistance <= workerActionAvailabeDistance && targetGameUnit != null;
         }
     }
+    //
+    public override void move(Vector3 pos)
+    {
+        //
+        base.move(pos);
+        //
+        if (IsMiningHarvested) {
+            //
+            animatorStateController.WorkerAnimator_walkHarvest();
+            //
+        }else { 
+            //
+            animatorStateController.WorkerAnimator_walk();
+            //            
+        }
+    }
+
     //
     protected override void OnSetTargetPosition(Vector3 pos)
     {
@@ -74,9 +104,10 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         if (unit is RTSResource)
         {
             //
-            if (IsMiningAchievementFull)
+            if (IsMiningHarvestedFull)
             {
                 startReturning();
+                //
             }
             else
             {
@@ -152,13 +183,21 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     {
         Debug.Log("doMining");
         //
-        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningAchievementFull)
+        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningHarvestedFull)
         {
             Debug.Log("doMining inside while");
             //
             if (IsTargetClosingEnoughToWork)
             {
+                if (IsMiningHarvested) { 
+                    animatorStateController.WorkerAnimator_digHarvest();
+                }else { 
+                    animatorStateController.WorkerAnimator_dig();
+                }
+                //
                 miningAchievement++;
+                //
+                //
             }
             else
             {
@@ -171,7 +210,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             yield return new WaitForSeconds(miningAchievementAddingFrequency);
         }
         //
-        if (IsMiningAchievementFull)
+        if (IsMiningHarvestedFull)
         {
             startReturning();
         }
@@ -255,6 +294,8 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
                 //
                 miningAchievement = 0;
                 //
+                animatorStateController.WorkerAnimator_idle();
+                //
                 OnSetTargetUnit(targetGameUnit);
                 //
             }
@@ -303,6 +344,16 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
                 break;
         }
         //
+            if (IsMiningHarvested) {
+            //
+            animatorStateController.WorkerAnimator_idleHarvest();
+            //
+            }else { 
+            //
+            animatorStateController.WorkerAnimator_idle();
+            //            
+            }
+        //
     }
 
     protected override void Update()
@@ -320,5 +371,13 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             //Debug.Log("IsTargetClosingEnoughToWork");
             startWork();
         }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        //
+        if(animatorStateController==null)
+            animatorStateController = GetComponent<WorkerAnimatorStateController>();
     }
 }

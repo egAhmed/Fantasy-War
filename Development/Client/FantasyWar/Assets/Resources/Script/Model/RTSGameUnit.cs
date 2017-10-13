@@ -213,7 +213,9 @@ public class RTSGameUnit : MonoBehaviour
 
     private void selectionBottomCircleControllerInit()
     {
-        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, transform.position, Quaternion.Euler(0, 0, 0), gameObject.transform);
+        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
+        //
+        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
         unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
     }
     //
