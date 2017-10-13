@@ -87,7 +87,6 @@ public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManage
     // Use this for initialization
     void Start()
     {
-        Debug.Log("Start");
         //
         InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(TEAMING_CONTROL_KEY, OnLeftControlKeyDown);
         InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp(TEAMING_CONTROL_KEY, OnLeftControlKeyUp);
