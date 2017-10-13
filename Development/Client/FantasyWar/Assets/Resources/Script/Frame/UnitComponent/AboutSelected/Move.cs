@@ -20,7 +20,10 @@ public class Move : Interaction {
 		//被選擇后，註冊鼠標右鍵移動事件
 	}
 
-	void MoveTo(){
+	public void MoveTo(){
+		if (selected) {
+			Debug.Log ("假装移动");
+		}
 		//TODO
 		//移動到鼠標右鍵點擊的的位置
 	}

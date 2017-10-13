@@ -8,6 +8,11 @@ public class Building : UnitInfo {
 	{
 		base.Start ();
 		UnitManager.ShareInstance.Buildings[belong].Add (gameObject);
+
+		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
+		ActionList.Add (aa);
+		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
+		ActionList.Add (ab);
 	}
 
 }

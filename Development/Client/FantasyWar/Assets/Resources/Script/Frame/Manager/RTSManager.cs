@@ -10,8 +10,32 @@ public class RTSManager : UnitySingleton<RTSManager> {
 
 	void Start(){
 		BuildOriginal ();
+		RegistInput ();
+
 	}
-		
+
+	void vvv(KeyCode d){
+	}
+
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.Y)) {
+			Debug.Log ("注册");
+			InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.F10, vvv);
+		}
+	}
+
+	void RegistInput(){
+		//TODO
+		//在InputManager中
+		//註冊點選方法
+		//註冊框選方法
+		//註冊編隊方法
+		//註冊選隊方法
+
+		//测试用点选
+		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Mouse0,RTSOperations.PointSelect);
+	}
+
 	/// <summary>
 	/// 建造初始单位
 	/// </summary>
@@ -22,16 +46,29 @@ public class RTSManager : UnitySingleton<RTSManager> {
 			}
 			UnitManager.ShareInstance.Buildings.Add(p,new List<GameObject> ());
 			UnitManager.ShareInstance.Armys.Add(p,new List<GameObject> ());
-			foreach (GameObject u in p.StartingUnits)
-			{
-				//把初始建築群初始化出來
-				//每個對象添加所屬玩家信息
-				GameObject go = (GameObject)GameObject.Instantiate(u, p.location.position, p.location.rotation);
+
+			GameObject prefeb;
+			GameObject go;
+
+			switch (p.racial) {
+			case Racial.deemo:
+				//实际加载什么就是什么
+				prefeb = (GameObject)Resources.Load ("Prefab/GameObject/Cube");
+
+				go = (GameObject)GameObject.Instantiate (prefeb, p.location, Quaternion.identity);
 				go.GetComponent<UnitInfo> ().belong = p;
-				if (p.IsCurrentPlayer) {
-					go.AddComponent<ActionUpdate> ();
-				}
 				Debug.Log("初始建筑建造");
+				break;
+			case Racial.human:
+				//实际加载什么就是什么
+				prefeb = (GameObject)Resources.Load ("Prefab/GameObject/Base");
+
+				go = (GameObject)GameObject.Instantiate(prefeb, p.location, Quaternion.identity);
+				go.GetComponent<UnitInfo> ().belong = p;
+				Debug.Log("初始建筑建造");
+				break;
+			default:
+				break;
 			}
 		}
 	}

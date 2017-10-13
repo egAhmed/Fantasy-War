@@ -6,17 +6,16 @@ public class HightLight : Interaction {
 
 	public override void Select ()
 	{
-		//TODO
-		//顯示被選框
+		transform.GetChild (0).gameObject.SetActive (true);
 	}
 
 	public override void Deselect ()
 	{
-		//TODO
-		//取消被選框顯示
+		transform.GetChild (0).gameObject.SetActive (false);
 	}
 
-	public void Start(){
+	void Start(){
 		Deselect ();
 	}
+
 }
