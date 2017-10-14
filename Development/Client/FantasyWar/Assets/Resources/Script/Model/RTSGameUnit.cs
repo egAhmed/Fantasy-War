@@ -135,7 +135,7 @@ public class RTSGameUnit : MonoBehaviour
         {
             _isSelected = value;
             //
-            interactionAutoSwitch();
+            //interactionAutoSwitch();
             //
             selectionSpriteSwitch();
             unitActionEventControl();
@@ -264,7 +264,7 @@ public class RTSGameUnit : MonoBehaviour
         //
         RTSGameUnitManager.ShareInstance.unitRegister(this);
         //
-        actionBehaviourInit();
+        //actionBehaviourInit();
     }
 
     protected virtual void OnDestroy()
@@ -302,7 +302,7 @@ public class RTSGameUnit : MonoBehaviour
 //
 		// Debug.Log ("我是" + this.GetType ().ToString());
         if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-			Debug.Log (this.GetType () + "是自己人");
+			//Debug.Log (this.GetType () + "是自己人");
 			Interaction au = gameObject.AddComponent<ActionUpdate> ();
 			interactionList.Add (au);
 		}
@@ -327,7 +327,7 @@ public class RTSGameUnit : MonoBehaviour
 
 	public void InactiveInteractions(){
 		foreach (Interaction selection in interactionList) {
-			Debug.Log ("取消"+selection.GetType());
+			//Debug.Log ("取消"+selection.GetType());
 			selection.Deselect();
 		}
 	}

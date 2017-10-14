@@ -21,6 +21,19 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         }
     }
     //
+    private bool _isRayCastingOnGUI = false;
+    private bool IsRayCastingOnGUI
+    {
+        get
+        {
+            return _isRayCastingOnGUI;
+        }
+        set
+        {
+            _isRayCastingOnGUI = value;
+        }
+    }
+    //
     //
     private event DGameUnitActionTargetPosition targetPositionEvent;
     private event DGameUnitActionTargetUnit targetUnitEvent;
@@ -33,7 +46,8 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         {
             return;
         }
-        if (eventHandler == null) {
+        if (eventHandler == null)
+        {
             return;
         }
         if (ShareInstance.targetPositionEvent == null)
@@ -52,7 +66,8 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         {
             return;
         }
-        if (eventHandler == null) {
+        if (eventHandler == null)
+        {
             return;
         }
         if (ShareInstance.targetPositionEvent == null)
@@ -71,7 +86,8 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         {
             return;
         }
-        if (eventHandler == null) {
+        if (eventHandler == null)
+        {
             return;
         }
         if (ShareInstance.targetUnitEvent == null)
@@ -90,7 +106,8 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         {
             return;
         }
-        if (eventHandler == null) {
+        if (eventHandler == null)
+        {
             return;
         }
         if (ShareInstance.targetUnitEvent == null)
@@ -131,7 +148,12 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
         //
         if (!isMouseRightKeyRayCasting)
         {
-            StartCoroutine(mouseRightKeyRayCast());
+            IsRayCastingOnGUI = UIRayCastInterceptor.ShareInstance.IsRayCastingGUI(InputManager.ShareInstance.MousePosition);
+            //
+            if (!IsRayCastingOnGUI)
+            {
+                StartCoroutine(mouseRightKeyRayCast());
+            }
         }
         //
     }
@@ -168,7 +190,8 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
                     //
                     //Debug.LogError("hit obj");
                     //
-                    if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI) {
+                    if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI)
+                    {
                         Debug.LogError("hit UI");
                     }
                     else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentGround)

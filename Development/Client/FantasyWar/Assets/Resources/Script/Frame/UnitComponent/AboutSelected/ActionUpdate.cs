@@ -23,7 +23,7 @@ public class ActionUpdate : Interaction {
         if (RTSGameUnitManager.ShareInstance.SelectedUnits != null && RTSGameUnitManager.ShareInstance.SelectedUnits.Count == 0) { 
 			 //Debug.Log("清空面板1");
         //if(RTSGameUnitManager.ShareInstance.SelectedUnits[0].gameObject == this.gameObject){
-			 Debug.Log("清空面板");
+			 //Debug.Log("清空面板");
 			ActionManager.ShareInstance.ClearButtons ();
 		//}
 
@@ -37,9 +37,9 @@ public class ActionUpdate : Interaction {
 	/// </summary>
 	public override void Select ()
 	{
-        Debug.Log("组件数量:"+gameObject.GetComponent<RTSGameUnit>().ActionList.Count);
+        //Debug.Log("组件数量:"+gameObject.GetComponent<RTSGameUnit>().ActionList.Count);
         // if (TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
-        Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
+        //Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
         // if (RTSGameUnitManager.ShareInstance.SelectedUnits [0] == this.gameObject) {
         if (RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
 			
@@ -47,7 +47,7 @@ public class ActionUpdate : Interaction {
 			//将所有ActionBehaviour组件映射到操作面板上
 			foreach (ActionBehaviour ab in gameObject.GetComponent<RTSGameUnit>().ActionList) {
 				ActionManager.ShareInstance.ActionBehaviours [ab.index] = ab;
-                Debug.Log("加面板");
+                //Debug.Log("加面板");
                 ActionManager.ShareInstance.AddButton (
 					ab.index,
 					ab.actionIcon, 

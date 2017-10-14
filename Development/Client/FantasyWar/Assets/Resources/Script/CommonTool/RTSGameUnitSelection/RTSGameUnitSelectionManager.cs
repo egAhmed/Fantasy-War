@@ -27,6 +27,19 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
         }
     }
     //
+    private bool _isRayCastingOnGUI = false;
+    private bool IsRayCastingOnGUI
+    {
+        get
+        {
+            return _isRayCastingOnGUI;
+        }
+        set
+        {
+            _isRayCastingOnGUI = value;
+        }
+    }
+    //
     static RTSGameUnit singleSelectedUnit = null;
     //
     #region event define
@@ -309,19 +322,23 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
             // Debug.DrawLine(ray.origin, ray.origin+1000f*ray.direction, Color.red);
             // Debug.Log("RTSLayerManager.ShareInstance.LayerMaskRayCastMouse0 = "+RTSLayerManager.ShareInstance.LayerMaskRayCastMouse0);
             //
-            if (Physics.Raycast(ray.origin, ray.direction, out hitInfo, 1000f, RTSLayerManager.ShareInstance.LayerMaskRayCastMouse0, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray.origin, ray.direction, out hitInfo, 2000f, RTSLayerManager.ShareInstance.LayerMaskRayCastMouse0, QueryTriggerInteraction.Ignore))
             {
                 GameObject hitObj = hitInfo.collider.gameObject;
                 // Debug.Log("hit");
                 // Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
-                if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI) {
-                    Debug.LogError("hit UI");
-                    return;
-                }else { 
-                    selectionRelease();
-                    // RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
+                //if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI) {
+                //    Debug.LogError("hit UI");
+                //    return;
+                //}else {
+                //
+                //Debug.LogError("hit => " + hitObj.name);
+                //
+                //selectionRelease();
+                // RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
                 RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
                 //            
+                //
                 if (gameUnit)
                 {
                     if (gameUnit.IsAllowSingleSelection)
@@ -342,7 +359,7 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 // { 
                 // }else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberFriendlyGameUnit) { 
                 // }
-                }
+                //}
             }
         }
     }
@@ -471,36 +488,47 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
     //
     private void OnMouseLeftKeyPressed(KeyCode keyCode)
     {
+        IsMouseLeftDown = true;
+        //
         if (!Enabled)
         {
             return;
         }
         //
-        IsMouseLeftDown = true;
         mousePositionStartPos = InputManager.ShareInstance.MousePosition;
         //
-        //        
+        IsRayCastingOnGUI = UIRayCastInterceptor.ShareInstance.IsRayCastingGUI(mousePositionStartPos);
+        //
+        if (!IsRayCastingOnGUI) {
+            selectionRelease();
+        }
+        //
     }
     //
     private void OnMouseLeftKeyRelease(KeyCode keyCode)
     {
-        if (!Enabled)
-        {
-            return;
-        }
         //
         IsMouseLeftDown = false;
         //
-        if (IsSingleSelection)
+        if (Enabled)
         {
-            singleSelectionEventInvoke();
-        }
-        else
-        {
-            multipleSelectionEventInvoke();
+            if (!IsRayCastingOnGUI)
+            {
+                if (IsSingleSelection)
+                {
+                    singleSelectionEventInvoke();
+                }
+                else
+                {
+                    multipleSelectionEventInvoke();
+                }
+            }
         }
         //
+        IsRayCastingOnGUI = false;
+        //
         mouseLeftPressingCounter = 0;
+        //
     }
     //
     void OnPostRender()
