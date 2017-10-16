@@ -15,15 +15,30 @@ public class FootmanAnimatorStateController : MonoBehaviour {
 	}
 	public void Footman_Idle()
 	{
+		if (FootmanAnimator .GetInteger ("Speed")==0&&!FootmanAnimator .GetBool ("Attacking")) {
+			return;
+		}
 		FootmanAnimator.SetInteger ("Speed", 0);
+		FootmanAnimator.SetBool ("Attacking", false);
+		FootmanAnimator.SetTrigger ("DoIdle");
 	}
 	public void Footman_Walk()
 	{
+		if (FootmanAnimator .GetInteger ("Speed")==1&&!FootmanAnimator .GetBool ("Attacking")) {
+			return;
+		}
 		FootmanAnimator.SetInteger ("Speed", 1);
+		FootmanAnimator.SetBool ("Attacking", false);
+		FootmanAnimator.SetTrigger ("DoWalk");
 	}
 	public void Footman_Run()
 	{
+		if (FootmanAnimator .GetInteger ("Speed")==2&&!FootmanAnimator .GetBool ("Attacking")) {
+			return;
+		}
 		FootmanAnimator.SetInteger ("Speed", 2);
+		FootmanAnimator.SetBool ("Attacking", false);
+		FootmanAnimator.SetTrigger ("DoRun");
 	}
 	public void Footman_Attack()
 	{
@@ -36,7 +51,13 @@ public class FootmanAnimatorStateController : MonoBehaviour {
 	}
 	public void Footman_Death()
 	{
-		FootmanAnimator.SetBool ("Death", true);
+		if (FootmanAnimator.GetBool("Death"))
+		{
+			return;
+		}
+		//
+		FootmanAnimator.SetBool("Death", true);
+		FootmanAnimator.SetTrigger ("DoDead");
 	}
 	void Test()
 	{

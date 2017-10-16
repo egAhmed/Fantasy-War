@@ -15,17 +15,32 @@ public class CavalrymanAnimatorStateController : MonoBehaviour {
 	}
 	public void Cavalryman_Idle()
 	{
+		if (CavalryAnimator .GetInteger ("Speed")==0&&!CavalryAnimator .GetBool ("Attacking")) {
+			return;
+		}
 		CavalryAnimator.SetInteger ("Speed", 0);
+		CavalryAnimator.SetBool ("Attacking", false);
+		CavalryAnimator.SetTrigger ("DoIdle");
 	}
-	public void Cavalryman_Walk()
+	public void  Cavalryman_Walk()
 	{
+		if (CavalryAnimator .GetInteger ("Speed")==1&&!CavalryAnimator .GetBool ("Attacking")) {
+			return;
+		}
 		CavalryAnimator.SetInteger ("Speed", 1);
+		CavalryAnimator.SetBool ("Attacking", false);
+		CavalryAnimator.SetTrigger ("DoWalk");
 	}
-	public void Cavalryman_Run()
+	public void  Cavalryman_Run()
 	{
+		if (CavalryAnimator .GetInteger ("Speed")==2&&!CavalryAnimator .GetBool ("Attacking")) {
+			return;
+		}
 		CavalryAnimator.SetInteger ("Speed", 2);
+		CavalryAnimator.SetBool ("Attacking", false);
+		CavalryAnimator.SetTrigger ("DoRun");
 	}
-	public void Cavalryman_Attack()
+	public void  Cavalryman_Attack()
 	{
 		if (CavalryAnimator.GetBool ("Attacking")) {
 			return;
@@ -34,9 +49,15 @@ public class CavalrymanAnimatorStateController : MonoBehaviour {
 			CavalryAnimator.SetBool ("Attacking", true);
 		}
 	}
-	public void Cavalryman_Death()
+	public void  Cavalryman_Death()
 	{
-		CavalryAnimator.SetBool ("Death", true);
+		if (CavalryAnimator.GetBool("Death"))
+		{
+			return;
+		}
+		//
+		CavalryAnimator.SetBool("Death", true);
+		CavalryAnimator.SetTrigger ("DoDead");
 	}
 	void Test()
 	{
