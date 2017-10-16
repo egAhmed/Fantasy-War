@@ -52,11 +52,12 @@ public class Action_Attack : ActionBehaviour {
 		RaycastHit hit;
 		if (!Physics.Raycast (ray, out hit))
 			return;
-
+		//
 		RTSGameUnit targetinfo = hit.transform.GetComponent<RTSGameUnit> ();
+		// RTSGameUnit targetinfo =(RTSGameUnit)hit.transform.GetComponent("RTSGameUnit");
+		//		
 		if (targetinfo == null)
 			return;
-
 		//
 		// if (targetinfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
 		// }
