@@ -16,6 +16,7 @@ public class ActionManager : UnitySingleton<ActionManager> {
 	public ActionBehaviour[] ActionBehaviours = new ActionBehaviour[9]; 
 	private Action[] actionCalls = new Action[9] ;
 
+	public GameObject[] Board = new GameObject[2]; 
 	//为按键注册委托
 	public void Start () {
 		for (int i = 0; i < actionCalls.Length; i++) {
@@ -40,6 +41,9 @@ public class ActionManager : UnitySingleton<ActionManager> {
 	//为按钮添加图标，在委托列表注册相应事件
 	public void AddButton(int index, Sprite pic, Action onClick)
 	{
+		for (int i = 0; i < Board.Length; i++) {
+			Board [i].SetActive (true);
+		}
 		//Debug.Log ("添加按键");
 		Buttons [index].gameObject.SetActive (true);
 		Buttons [index].GetComponent<Image> ().sprite = pic;
@@ -71,6 +75,9 @@ public class ActionManager : UnitySingleton<ActionManager> {
 
 		for (int i = 0; i < actionCalls.Length; i++) {
 			actionCalls [i] = null;
+		}
+		for (int i = 0; i < Board.Length; i++) {
+			Board [i].SetActive (false);
 		}
 	}
 }
