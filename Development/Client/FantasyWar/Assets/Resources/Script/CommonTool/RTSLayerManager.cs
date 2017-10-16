@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class RTSLayerManager : UnitySingleton<RTSLayerManager>
 {
+
+    private int _layerMaskUI;
+    private int LayerMaskUI
+    {
+        get
+        {
+            return _layerMaskUI;
+        }
+    }
+    private int _layerNumberUI;
+    public int LayerNumberUI
+    {
+        get
+        {
+            return _layerNumberUI;
+        }
+    }
+
     private int _layerMaskPlayerMovableUnit;
     private int LayerMaskPlayerMovableUnit
     {
@@ -156,6 +174,7 @@ public class RTSLayerManager : UnitySingleton<RTSLayerManager>
         _layerNumberEnvironmentObstacle = LayerMask.NameToLayer("EnvironmentObstacle");
         _layerNumberEnvironmentResource = LayerMask.NameToLayer("EnvironmentResource");
         _layerNumberPlayerBuildingUnit = LayerMask.NameToLayer("PlayerBuildingUnit");
+        _layerNumberUI = LayerMask.NameToLayer("RTSUI");
         //
         _layerMaskEnemyGameUnit = 1 << LayerNumberEnemyGameUnit;
         _layerMaskFriendlyGameUnit = 1 << LayerNumberFriendlyGameUnit;
@@ -164,9 +183,10 @@ public class RTSLayerManager : UnitySingleton<RTSLayerManager>
         _layerMaskEnvironmentObstacle = 1 << LayerNumberEnvironmentObstacle;
         _layerMaskEnvironmentResource = 1 << LayerNumberEnvironmentResource;
         _layerMaskPlayerBuildingUnit = 1 << LayerNumberPlayerBuildingUnit;
+        _layerMaskUI = 1 << LayerNumberUI;
         //
-        _layerMaskRayCastMouse0 = LayerMaskEnemyGameUnit | LayerMaskFriendlyGameUnit | LayerMaskPlayerMovableUnit | LayerMaskEnvironmentResource | LayerMaskPlayerBuildingUnit;
-        _layerMaskRayCastMouse1 = LayerMaskEnemyGameUnit | LayerMaskEnvironmentGround | LayerMaskEnvironmentObstacle | LayerMaskEnvironmentResource | LayerMaskPlayerBuildingUnit;
+        _layerMaskRayCastMouse0 = LayerMaskEnemyGameUnit | LayerMaskFriendlyGameUnit | LayerMaskPlayerMovableUnit | LayerMaskEnvironmentResource | LayerMaskPlayerBuildingUnit| LayerMaskUI | LayerMaskEnvironmentGround;
+        _layerMaskRayCastMouse1 = LayerMaskEnemyGameUnit | LayerMaskEnvironmentGround | LayerMaskEnvironmentObstacle | LayerMaskEnvironmentResource | LayerMaskPlayerBuildingUnit|LayerMaskUI;
         //
     }
 }

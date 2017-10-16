@@ -17,8 +17,11 @@ public class Interactive : MonoBehaviour {
 	public void Select()
 	{
 		_Selected = true;
-		TeamManager.ShareInstance.currentSelections.Add (this.gameObject);
-		gameObject.GetComponent<UnitInfo> ().ActiveInteractions ();
+        // if (RTSGameUnitManager.ShareInstance.SelectedUnits != null) { 
+
+        // TeamManager.ShareInstance.currentSelections.Add (this.gameObject);
+		// }
+		gameObject.GetComponent<RTSGameUnit> ().ActiveInteractions ();
 	}
 
 	/// <summary>
@@ -27,19 +30,19 @@ public class Interactive : MonoBehaviour {
 	public void Deselect()
 	{
 		if (Selected) {
-			Debug.Log ("进取消选择函数");
+			//Debug.Log ("进取消选择函数");
 			_Selected = false;
-			gameObject.GetComponent<UnitInfo> ().InactiveInteractions ();
-			if (TeamManager.ShareInstance.currentSelections.Contains (gameObject)) {
-				TeamManager.ShareInstance.currentSelections.Remove (gameObject);
-			}
+			gameObject.GetComponent<RTSGameUnit> ().InactiveInteractions ();
+			// if (TeamManager.ShareInstance.currentSelections.Contains (gameObject)) {
+			// 	TeamManager.ShareInstance.currentSelections.Remove (gameObject);
+			// }
 		}
 	}
 
-	void Update(){
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Deselect ();
-		}
-	}
+	// void Update(){
+	// 	if (Input.GetKeyDown (KeyCode.Escape)) {
+	// 		Deselect ();
+	// 	}
+	// }
 
 }

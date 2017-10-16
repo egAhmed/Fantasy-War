@@ -91,14 +91,14 @@ public class Map : MonoBehaviour
     {
 
         Vector2 miniMapOffset = new Vector2(Map.Current.transform.position.x, Map.Current.transform.position.y);//小地图原点相对于屏幕坐标原点的偏移值,用于自适应
-        ViewPort.position = WorldPositionToMap(Camera.main.transform.position) + miniMapOffset;//摄像机在小地图上的视线范围
+        ViewPort.position = WorldPositionToMap(Camera.main.transform.position) + miniMapOffset - new Vector2(20,0);//摄像机在小地图上的视线范围
 
         //分辨率自适应
         scaleFactor = Screen.width / 1024f;
         mapRect.sizeDelta = new Vector2(256 * scaleFactor, 256 * scaleFactor);
         Border.sizeDelta = mapRect.sizeDelta;
         Border.position = mapRect.position;
-        ViewPort.sizeDelta = new Vector2(80 * scaleFactor, 50 * scaleFactor);
+        ViewPort.sizeDelta = new Vector2(50 * scaleFactor, 80 * scaleFactor);
         MaskMap.sizeDelta = mapRect.sizeDelta;
         MaskCarmera.orthographicSize = 128 * scaleFactor;
         MaskCarmera.transform.position = new Vector3(128 * scaleFactor, 128 * scaleFactor,0);
@@ -121,7 +121,7 @@ public class Map : MonoBehaviour
 
         //小地图坐标系转世界坐标系
         Vector3 map2world = new Vector3(MapToWorldPosition((Input.mousePosition - this.transform.position)).x, Camera.main.transform.position.y, MapToWorldPosition((Input.mousePosition - this.transform.position)).z);
-        Camera.main.transform.position= map2world + terrainPos;
+        Camera.main.transform.position= map2world + terrainPos + new Vector3(20,0,0);
     }
 
     //private void OnGUI()

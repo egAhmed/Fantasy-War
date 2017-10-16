@@ -16,10 +16,17 @@ public class ActionUpdate : Interaction {
 			InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown(ab.shortCutKey,ab.RunAction);
 		}
 
-		Debug.Log (gameObject.GetComponent<UnitInfo>().GetType()+"检测"+TeamManager.ShareInstance.currentSelections.Count);
+        // Debug.Log (gameObject.GetComponent<RTSGameUnit>().GetType()+"检测"+TeamManager.ShareInstance.currentSelections.Count);
 
-		if(TeamManager.ShareInstance.currentSelections[0] == this.gameObject){
+        // if(TeamManager.ShareInstance.currentSelections[0] == this.gameObject){
+        //Debug.Log("selected数量"+RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
+        if (RTSGameUnitManager.ShareInstance.SelectedUnits != null && RTSGameUnitManager.ShareInstance.SelectedUnits.Count == 0) { 
+			 //Debug.Log("清空面板1");
+        //if(RTSGameUnitManager.ShareInstance.SelectedUnits[0].gameObject == this.gameObject){
+			 //Debug.Log("清空面板");
 			ActionManager.ShareInstance.ClearButtons ();
+		//}
+
 		}
 
 		hasIntoDelete.Clear ();
@@ -30,12 +37,18 @@ public class ActionUpdate : Interaction {
 	/// </summary>
 	public override void Select ()
 	{
-		if (TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
+        //Debug.Log("组件数量:"+gameObject.GetComponent<RTSGameUnit>().ActionList.Count);
+        // if (TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
+        //Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
+        // if (RTSGameUnitManager.ShareInstance.SelectedUnits [0] == this.gameObject) {
+        if (RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
+			
 			ActionManager.ShareInstance.ClearButtons ();
 			//将所有ActionBehaviour组件映射到操作面板上
-			foreach (ActionBehaviour ab in gameObject.GetComponent<UnitInfo>().ActionList) {
+			foreach (ActionBehaviour ab in gameObject.GetComponent<RTSGameUnit>().ActionList) {
 				ActionManager.ShareInstance.ActionBehaviours [ab.index] = ab;
-				ActionManager.ShareInstance.AddButton (
+                //Debug.Log("加面板");
+                ActionManager.ShareInstance.AddButton (
 					ab.index,
 					ab.actionIcon, 
 					ab.GetClickAction ());
@@ -45,8 +58,11 @@ public class ActionUpdate : Interaction {
 				InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (ab.shortCutKey, ab.RunAction);
 			}
 		}
-		if (TeamManager.ShareInstance.currentSelections [0] != this.gameObject) {
-			foreach (ActionBehaviour ab in gameObject.GetComponent<UnitInfo>().ActionList) {
+		// if (TeamManager.ShareInstance.currentSelections [0] != this.gameObject) {
+		if (RTSGameUnitManager.ShareInstance.SelectedUnits [0] != this.gameObject) {
+			
+			
+			foreach (ActionBehaviour ab in gameObject.GetComponent<RTSGameUnit>().ActionList) {
 				if (ActionManager.ShareInstance.ActionBehaviours [ab.index] != null) {
 					if (ActionManager.ShareInstance.ActionBehaviours [ab.index].GetType () == ab.GetType ()) {
 						ActionManager.ShareInstance.AddButtonDelegate (ab.index, ab.GetClickAction ());
@@ -62,8 +78,16 @@ public class ActionUpdate : Interaction {
 		if (!gameObject.GetComponent<Interactive> ().Selected)
 			return;
 
-		if (TeamManager.ShareInstance.currentSelections.Count > 0) {
-			if (TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
+        if (RTSGameUnitManager.ShareInstance.SelectedUnits == null) {
+            return;
+        }
+
+        // if (TeamManager.ShareInstance.currentSelections.Count > 0) {
+        if (RTSGameUnitManager.ShareInstance.SelectedUnits.Count > 0) {
+			
+			// if (TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
+			if (RTSGameUnitManager.ShareInstance.SelectedUnits [0] == this.gameObject) {
+				
 				ActionManager.ShareInstance.ClearButtons ();
 			}
 		}

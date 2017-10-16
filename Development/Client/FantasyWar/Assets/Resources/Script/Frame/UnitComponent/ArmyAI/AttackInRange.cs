@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackInRange : MonoBehaviour {
 
-	UnitInfo target;
+	RTSGameUnit target;
 
 	/// <summary>
 	/// 寻找一个攻击目标，赋值到target

@@ -7,6 +7,7 @@ public class Action_Collect : ActionBehaviour {
 	void Awake(){
 		index = 3;
 		shortCutKey = KeyCode.G;
+		actionIcon = Resources.Load<Sprite> ("Texture/CollectIcon");
 	}
 
 	public override Action GetClickAction ()
@@ -41,7 +42,7 @@ public class Action_Collect : ActionBehaviour {
 
 		//TODO
 		//采集方法
-		Debug.Log(gameObject.GetComponent<UnitInfo>().belong.name+"挖矿");
+		Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name+"挖矿");
 	}
 
 }
