@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RTSBuilding : RTSGameUnit
 {
-
     public float BuildTime = 3;
     public float DestoryTime = 3;
 
@@ -22,7 +21,9 @@ public class RTSBuilding : RTSGameUnit
     protected override void Start()
     {
         materials = GetMaterials();
+        //
         BuildShaderEffect();
+        //
     }
 
 
@@ -104,5 +105,6 @@ public class RTSBuilding : RTSGameUnit
 		ActionList.Add (aa);
 		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
 		ActionList.Add (ab);
+        //
     }
 }

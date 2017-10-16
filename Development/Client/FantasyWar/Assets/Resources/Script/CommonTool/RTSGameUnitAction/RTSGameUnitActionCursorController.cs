@@ -17,6 +17,7 @@ public class RTSGameUnitActionCursorController : UnitySingleton<RTSGameUnitActio
         clickEffectAttack = PrefabFactory.ShareInstance.createClone<RTSGameUnitActionClickEffect>(PREFAB_PATH_ATTACK, Vector3.zero, Quaternion.identity);
         //
         hideAll();
+        //
     }
     //
     private void hideAll() {

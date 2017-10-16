@@ -31,7 +31,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     #region mining
     public RTSBuilding homeBuilding;
     protected float miningAchievementAddingFrequency = 1f;
-    protected int miningAchievementLimit = 3;
+    protected int miningAchievementLimit = 5;
     protected int miningAchievement = 0;
     protected bool IsMiningHarvestedFull
     {
@@ -117,22 +117,25 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         }
         else if (unit is RTSBuilding)
         {
+            // Debug.Log("Is RTSBuilding");
+            //
             RTSBuilding building = (RTSBuilding)unit;
             //
-            if (miningAchievement > 0 && homeBuilding != null && building == homeBuilding)
+            if (IsMiningHarvested && homeBuilding != null && building == homeBuilding)
             {
+                Debug.Log("Is home");
+                //
                 startReturning();
+                //
             }
             else
             {
+                // Debug.Log("Is not home");
                 //
                 if (building.IsNeedRepair)
                 {
+                    Debug.Log("IsNeedRepair");
                     goRepair();
-                }
-                else
-                {
-                    goMine();
                 }
                 //
             }
@@ -144,7 +147,6 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     protected virtual void goHome()
     {
         //Debug.LogError("goHome");
-
     }
 
     protected virtual void goMine()
@@ -167,30 +169,31 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 
     protected virtual void startMining()
     {
-        Debug.Log("startMining");
+        // Debug.Log("startMining");
         isWorking = true;
         StartCoroutine(doMining());
     }
 
     protected virtual void stopMining()
     {
-        Debug.Log("stopMining");
+        // Debug.Log("stopMining");
         isWorking = false;
         StopCoroutine(doMining());
     }
 
     protected virtual IEnumerator doMining()
     {
-        Debug.Log("doMining");
+        // Debug.Log("doMining");
         //
-        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningHarvestedFull)
+        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningHarvestedFull&&targetGameUnit!=null&&targetGameUnit is RTSResource)
         {
-            Debug.Log("doMining inside while");
+            // Debug.Log("doMining inside while");
             //
             if (IsTargetClosingEnoughToWork)
             {
                 //
                 transform.LookAt(targetGameUnit.transform);
+                //
                 //
                 if (IsMiningHarvested) { 
                     animatorStateController.WorkerAnimator_digHarvest();
@@ -216,6 +219,8 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         if (IsMiningHarvestedFull)
         {
             startReturning();
+        }else {
+            stopWork();
         }
     }
 
@@ -253,21 +258,58 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 
     protected virtual IEnumerator doRepairing()
     {
-        while (true)
+        // Debug.Log("doRepairing");
+        //
+        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Repairing &&targetGameUnit!=null&&targetGameUnit is RTSBuilding)
         {
+            // Debug.Log("doMining inside while");
+            //
+            if (IsTargetClosingEnoughToWork)
+            {
+                //
+                RTSBuilding building = (RTSBuilding)targetGameUnit;
+                //
+                //
+                if (building.IsNeedRepair) {
+                    //
+                    Debug.LogError("IsTargetClosingEnoughToWork && IsNeedRepair");
+                    //
+                    transform.LookAt(targetGameUnit.transform);
+                //
+                if (IsMiningHarvested) { 
+                    //
+                    animatorStateController.WorkerAnimator_digHarvest();
+                    //
+                }else { 
+                    //
+                    animatorStateController.WorkerAnimator_dig();
+                    //
+                }
+                //
+                }
+                //
+            }
+            else
+            {
+                move(targetGameUnit.transform.position);
+            }
+            //Debug.Log("repairingAchievementAddingFrequency = > " + repairingAchievementAddingFrequency);
             yield return new WaitForSeconds(repairingAchievementAddingFrequency);
         }
+        //
+        stopWork();
+        //
     }
 
     protected virtual void startReturning()
     {
-        Debug.Log("startReturning");
+        // Debug.Log("startReturning");
         StartCoroutine(doReturning());
     }
 
     protected virtual void stopReturning()
     {
-        Debug.Log("stopReturning");
+        // Debug.Log("stopReturning");
         StopCoroutine(doReturning());
     }
 
@@ -384,6 +426,9 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             animatorStateController = GetComponent<WorkerAnimatorStateController>();
         //
         animatorStateController.WorkerAnimator_idle();
+        //
+        HPMax = 100;
+        HP = HPMax;
         //
     }
 
