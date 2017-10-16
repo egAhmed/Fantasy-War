@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Action_Attack : ActionBehaviour {
 
+
+	public delegate void AttackDelegate();
+	public AttackDelegate attackDelegate;
+
 	void Awake(){
 		index = 2;
 		shortCutKey = KeyCode.A;
+		actionIcon = Resources.Load<Sprite> ("Texture/AtkIcon");
 	}
 
 	public override Action GetClickAction ()
@@ -23,10 +28,10 @@ public class Action_Attack : ActionBehaviour {
 		RTSGameUnitSelectionManager.Enabled = false;
 		//
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
-        // InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
-        //
-        //
-        Debug.Log ("寻找攻击目标");
+		// InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
+		//
+		//
+		Debug.Log ("寻找攻击目标");
 	}
 
 	public void FindAttackTarget(KeyCode k){
@@ -38,7 +43,7 @@ public class Action_Attack : ActionBehaviour {
 
 		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
 		//
-        //
+		//
 		//		
 
 		Vector3 mousePos = Input.mousePosition;
@@ -52,18 +57,19 @@ public class Action_Attack : ActionBehaviour {
 		if (targetinfo == null)
 			return;
 
-        //
-        // if (targetinfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
+		//
+		// if (targetinfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
 		// }
-        //TODO
-        //攻击方法
-        Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
+		//TODO
+		//攻击方法
+		Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
+		attackDelegate ();
 		//
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
 		//
 	}
 
-    private void activateSelection(KeyCode key) { 
+	private void activateSelection(KeyCode key) { 
 		Debug.Log("Mouse 0 released");
 		RTSGameUnitSelectionManager.Enabled = true;
 		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);

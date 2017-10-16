@@ -7,6 +7,7 @@ public class Action_Collect : ActionBehaviour {
 	void Awake(){
 		index = 3;
 		shortCutKey = KeyCode.G;
+		actionIcon = Resources.Load<Sprite> ("Texture/CollectIcon");
 	}
 
 	public override Action GetClickAction ()

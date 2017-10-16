@@ -312,8 +312,8 @@ public class RTSGameUnit : MonoBehaviour
 			gameObject.AddComponent<Interactive> ();
 		}
 //
-		// Interaction hl = gameObject.AddComponent<HightLight> ();
-		// interactionList.Add (hl);
+		Interaction hl = gameObject.AddComponent<HightLight> ();
+		interactionList.Add (hl);
 		Interaction si = gameObject.AddComponent<ShowInfoUI> ();
 		interactionList.Add (si);
         //
