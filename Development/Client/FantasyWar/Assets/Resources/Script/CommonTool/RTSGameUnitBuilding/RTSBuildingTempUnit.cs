@@ -109,6 +109,6 @@ public class RTSBuildingTempUnit : MonoBehaviour
         }
         //
         setValid();
-
+        //
     }
 }

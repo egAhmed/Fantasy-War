@@ -8,12 +8,6 @@ public class RTSGameUnitNetworkData{
 	public float positionY;
 	public float positionZ;
 	//
-	public int battleID;
-	//
-	public int groupID;
-	//	
-	public int playerID;
-	//
 	public int unitID;
 	//
 	public float eulerX;

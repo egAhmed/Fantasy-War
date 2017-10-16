@@ -58,42 +58,39 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         }
     }
 
-    public void send(NetworkGamePlayMsg msg) { 
-        if (clientSocket != null && clientSocket.Connected)
+    private void send(NetworkGamePlayMsg msg) { 
+        if (IsServerConnected)
         {
             //
             clientSocket.Send(Encoding.UTF8.GetBytes(msg.msgHeader+msg.msgContent));
             //
         }else
         {
-            login();
+            connect();
         }
     }
 
-    private string generateChatMsgJSON(ChatMessage msg)
-    {
-        if (msg != null)
-        {
-            return JsonUtility.ToJson(msg);
-        }
-        else{
-            return null;
-        }
+    private string networkGamePlayMsgHeaderGeneration() {
+        string headerStr = "";
+        
+        return headerStr;
     }
 
-    private void sendChatMsgJSON(string msg) { 
-        if (clientSocket != null && clientSocket.Connected)
+    public void send(RTSGameUnitNetworkData data) { 
+        if (IsServerConnected)
         {
-            clientSocket.Send(Encoding.UTF8.GetBytes(msg));
-        }
-        else
+            NetworkGamePlayMsg msg = new NetworkGamePlayMsg();
+            //
+            clientSocket.Send(Encoding.UTF8.GetBytes(msg.msgHeader+msg.msgContent));
+            //
+        }else
         {
             connect();
         }
     }
 
     private void serverMsgReader(string msgStr) { 
-
+                    Debug.Log("received server msg => " + msgStr);
     }
 
     private void receiveMsg()
@@ -108,7 +105,6 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
                     //
                     string msgStr = Encoding.UTF8.GetString(result, 0, receiveLength);
                     serverMsgReader(msgStr);
-                    Debug.Log("received server msg => " + msgStr);
                     //
                 }
                 catch (Exception e)

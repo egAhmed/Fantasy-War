@@ -49,7 +49,7 @@ public class RTSGamePlayManager : UnitySingleton<RTSGamePlayManager>
         //
 
         RTSGameUnitSelectionManager.Enabled = false;
-        RTSGameUnitSelectionManager.selectionRelease();
+        // RTSGameUnitSelectionManager.selectionRelease();
         RTSGameUnitActionManager.Enabled = false;
         //
 		Debug.Log("建造方法");

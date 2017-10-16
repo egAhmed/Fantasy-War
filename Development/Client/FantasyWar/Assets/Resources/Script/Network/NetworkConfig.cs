@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class NetworkConfig{
     public static readonly string CHAT_SERVER_HOST = @"10.20.70.141";
-    public static readonly string GAMEPLAY_SERVER_HOST = @"10.20.70.141";
+    public static readonly string GAMEPLAY_SERVER_HOST = @"10.20.70.204";
     public static readonly int CHAT_SERVER_PORT = 8686;
 	public static readonly int GAMEPLAY_SERVER_PORT = 6868;
 	//

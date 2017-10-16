@@ -9,7 +9,7 @@ public class TestingScript : MonoBehaviour {
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
         //
 
-		RTSGamePlayManager.ShareInstance.build();
+		// RTSGamePlayManager.ShareInstance.build();
         //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
         RTSManager.ShareInstance.testingCreatePlayInfo();

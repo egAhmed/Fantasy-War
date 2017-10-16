@@ -208,16 +208,20 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
     //
     public void startBuildingMode(RTSBuildingTempUnit tempUnit)
     {
+        // Debug.Log("startBuildingMode");
+        //
         if (tempUnit == null)
         {
+            Debug.Log("tempUnit == null");
+            //
             return;
         }
         if (!isBuildingMode)
         {
+            Debug.Log("!isBuildingMode");
             //
-            if (buildingStartedEvent != null)
-            {
                 isBuildingMode = true;
+                //
                 //
                 InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Mouse0, OnMouseLeftDown);
                 InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Escape, OnEscDown);
@@ -227,7 +231,12 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
                 //
                 StartCoroutine(buildingLocating());
                 //
+                if (buildingStartedEvent != null)
+            {
+                Debug.Log("buildingStartedEvent != null");
                 buildingStartedEvent.Invoke();
+            }else { 
+                Debug.Log("buildingStartedEvent == null");
             }
             //
         }
