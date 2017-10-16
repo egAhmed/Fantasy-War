@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PoolItemNode {  
+public class PoolItemNode {
 
-
-
-	///<summary>  
-	/// 存取时间  
-	/// </summary>  
-	public float aliveTime;  
+    /// <summary>
+    /// 所属的对象池
+    /// </summary>
+    public PoolItem _poolItem;
+    
+    /// <summary>
+    /// 激活时间
+    /// </summary>
+    public float startActiveTime;
 
 	///<summary>  
 	/// 销毁状态  
@@ -27,10 +30,10 @@ public class PoolItemNode {
 	///<summary>  
 	/// 检测是否超时，返回true或false，没有其他的操作，具体操作在Poolitem中  
 	/// </summary>  
-	public bool IsBeyondAliveTime(float Alive_Time){
+	public bool IsBeyondAliveTime(){
 		if (this.destoryStatus)  
 			return false;  
-		if (Time.time - this.aliveTime >= Alive_Time) {  
+		if (Time.time - startActiveTime >= _poolItem.Alive_Time) {  
 			Debug.Log ("已超时!!!!!!");  
 			return true;  
 		}  

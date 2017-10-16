@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolItemMonoBehavior : PoolItem {
+public class PoolItemMonoBehavior : PoolItem
+{
 
     /// <summary>
     /// 使用默认超时时间和默认最大对象池数量初始化
     /// </summary>
     /// <param name="_name">Name.</param>
-    public PoolItemMonoBehavior(string _name):base(_name)
+    public PoolItemMonoBehavior(string _name) : base(_name)
     {
 
     }
@@ -18,7 +19,7 @@ public class PoolItemMonoBehavior : PoolItem {
     /// </summary>
     /// <param name="_name"></param>
     /// <param name="Alive_Time"></param>
-    public PoolItemMonoBehavior(string _name, int Alive_Time):base(_name,Alive_Time)
+    public PoolItemMonoBehavior(string _name, float Alive_Time) : base(_name, Alive_Time)
     {
 
     }
@@ -28,7 +29,7 @@ public class PoolItemMonoBehavior : PoolItem {
     /// </summary>
     /// <param name="_name"></param>
     /// <param name="Alive_Time"></param>
-    public PoolItemMonoBehavior(int PoolItemMaxNum, string _name):base(PoolItemMaxNum,_name)
+    public PoolItemMonoBehavior(int PoolItemMaxNum, string _name) : base(PoolItemMaxNum, _name)
     {
 
     }
@@ -39,26 +40,50 @@ public class PoolItemMonoBehavior : PoolItem {
     /// <param name="PoolItemMaxNum"></param>
     /// <param name="_name"></param>
     /// <param name="Alive_Time"></param>
-    public PoolItemMonoBehavior(int PoolItemMaxNum, string _name, int Alive_Time):base(PoolItemMaxNum,_name,Alive_Time)
+    public PoolItemMonoBehavior(int PoolItemMaxNum, string _name, float Alive_Time) : base(PoolItemMaxNum, _name, Alive_Time)
     {
 
     }
 
     /// <summary>  
-    /// 添加对象，往同意对象池里添加对象  
+    /// 添加对象，往同一对象池里添加对象  
     /// </summary>  
-    public void PushObject(MonoBehaviour _mono)
+    public bool PushObject(MonoBehaviour _mono)
     {
         int hashKey = _mono.GetHashCode();
-        if (!this.objectList.ContainsKey(hashKey))
+        if (!this.ObjectList.ContainsKey(hashKey))
         {
-            this.objectList.Add(hashKey, new PoolItemNodeMonoBehavior(_mono));
-            if (this.objectList.Count > PoolItemMaxNum)
-                Debug.LogWarning("已超出对象池最大容量");
+            if (this.ObjectList.Count > PoolItemMaxNum)
+                return false;
+            this.ObjectList.Add(hashKey, new PoolItemNodeMonoBehavior(_mono, this));
+            return true;
         }
         else
         {
-            ((PoolItemNodeMonoBehavior)this.objectList[hashKey]).Active();
+            ((PoolItemNodeMonoBehavior)this.ObjectList[hashKey]).Active();
+            return true;
+        }
+    }
+
+    /// <summary>  
+    /// 添加对象，往同一对象池里添加对象。并修改该池子中的存在时间  
+    /// </summary>  
+    public bool PushObject(MonoBehaviour _mono, float aliveTime)
+    {
+        int hashKey = _mono.GetHashCode();
+        if (!this.ObjectList.ContainsKey(hashKey))
+        {
+            if (this.ObjectList.Count > PoolItemMaxNum)
+                return false;
+            this.ObjectList.Add(hashKey, new PoolItemNodeMonoBehavior(_mono, this));
+            Alive_Time = aliveTime;
+            return true;
+        }
+        else
+        {
+            Alive_Time = aliveTime;
+            ((PoolItemNodeMonoBehavior)this.ObjectList[hashKey]).Active();
+            return true;
         }
     }
 
@@ -68,9 +93,9 @@ public class PoolItemMonoBehavior : PoolItem {
 	public void DestoryObject(MonoBehaviour _mono)
     {
         int hashKey = _mono.GetHashCode();
-        if (this.objectList.ContainsKey(hashKey))
+        if (this.ObjectList.ContainsKey(hashKey))
         {
-            ((PoolItemNodeMonoBehavior)this.objectList[hashKey]).Destroy();
+            ((PoolItemNodeMonoBehavior)this.ObjectList[hashKey]).Destroy();
         }
     }
 
@@ -79,11 +104,11 @@ public class PoolItemMonoBehavior : PoolItem {
     /// </summary>  
     public MonoBehaviour GetObject()
     {
-        if (this.objectList == null || this.objectList.Count == 0)
+        if (this.ObjectList == null || this.ObjectList.Count == 0)
         {
             return null;
         }
-        foreach (PoolItemNode poolIT in this.objectList.Values)
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
         {
             if (poolIT.destoryStatus)
             {
@@ -94,15 +119,37 @@ public class PoolItemMonoBehavior : PoolItem {
     }
 
     /// <summary>  
+    /// 返回没有真正销毁的第一个对象（即池中的destoryStatus为true的对象） ，并改变对象池组的存在时间   
+    /// </summary>  
+    public MonoBehaviour GetObject(float aliveTime)
+    {
+        if (this.ObjectList == null || this.ObjectList.Count == 0)
+        {
+            return null;
+        }
+        MonoBehaviour tmp = null;
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
+        {
+            if (poolIT.destoryStatus)
+            {
+                return ((PoolItemNodeMonoBehavior)poolIT).Active();
+            }
+        }
+        if (tmp != null)
+            Alive_Time = aliveTime;
+        return null;
+    }
+
+    /// <summary>  
     /// 移除并销毁单个对象，真正的销毁对象!!  
     /// </summary>  
     public void RemoveObject(Object obj)
     {
         int hashKey = obj.GetHashCode();
-        if (this.objectList.ContainsKey(hashKey))
+        if (this.ObjectList.ContainsKey(hashKey))
         {
             Object.Destroy(obj);
-            this.objectList.Remove(hashKey);
+            this.ObjectList.Remove(hashKey);
         }
     }
 
@@ -112,7 +159,7 @@ public class PoolItemMonoBehavior : PoolItem {
     public void Destory()
     {
         IList<PoolItemNode> poolIList = new List<PoolItemNode>();
-        foreach (PoolItemNode poolIT in this.objectList.Values)
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
         {
             poolIList.Add(poolIT);
         }
@@ -124,7 +171,7 @@ public class PoolItemMonoBehavior : PoolItem {
                 poolIList.RemoveAt(0);
             }
         }
-        this.objectList = new Dictionary<int, PoolItemNode>();
+        this.ObjectList = new Dictionary<int, PoolItemNode>();
     }
 
 
@@ -134,9 +181,9 @@ public class PoolItemMonoBehavior : PoolItem {
     public void BeyondObject()
     {
         IList<PoolItemNode> beyondTimeList = new List<PoolItemNode>();
-        foreach (PoolItemNode poolIT in this.objectList.Values)
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
         {
-            if (poolIT.IsBeyondAliveTime(this.Alive_Time))
+            if (poolIT.IsBeyondAliveTime())
             {
                 beyondTimeList.Add(poolIT);
             }

@@ -9,20 +9,30 @@ public class PoolItemNodeGameObject : PoolItemNode
     /// </summary>  
     public GameObject gameObject;
 
-    public PoolItemNodeGameObject(GameObject _gameObject)
+    /// <summary>
+    /// 设定对象在对象池中存在的时间
+    /// </summary>
+    /// <param name="_gameObject"></param>
+    /// <param name="aliveTime"></param>
+    public PoolItemNodeGameObject(GameObject _gameObject,PoolItem _poolItem)
     {
         this.gameObject = _gameObject;
         this.destoryStatus = false;
+        this._poolItem = _poolItem;
+        startActiveTime = Time.time;
     }
 
-    ///<summary>  
-    /// 激活对象，将对象显示  
-    /// </summary>  
+
+    /// <summary>
+    /// 激活对象，将对象显示 
+    /// </summary>
+    /// <param name="aliveTime"></param>
+    /// <returns></returns>
     public GameObject Active()
     {
         this.gameObject.SetActive(true);
         this.destoryStatus = false;
-        aliveTime = 0;
+        startActiveTime = Time.time;
         return this.gameObject;
 
     }
@@ -34,6 +44,5 @@ public class PoolItemNodeGameObject : PoolItemNode
     {//重置对象状态  
         this.gameObject.SetActive(false);
         this.destoryStatus = true;
-        this.aliveTime = Time.time;
     }
 }

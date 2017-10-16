@@ -18,7 +18,7 @@ public class PoolItemGameObject : PoolItem {
     /// </summary>
     /// <param name="_name"></param>
     /// <param name="Alive_Time"></param>
-    public PoolItemGameObject(string _name, int Alive_Time):base(_name,Alive_Time)
+    public PoolItemGameObject(string _name, float Alive_Time):base(_name,Alive_Time)
     {
 
     }
@@ -39,7 +39,7 @@ public class PoolItemGameObject : PoolItem {
     /// <param name="PoolItemMaxNum"></param>
     /// <param name="_name"></param>
     /// <param name="Alive_Time"></param>
-    public PoolItemGameObject(int PoolItemMaxNum, string _name, int Alive_Time):base(PoolItemMaxNum,_name,Alive_Time)
+    public PoolItemGameObject(int PoolItemMaxNum, string _name, float Alive_Time):base(PoolItemMaxNum,_name,Alive_Time)
     {
 
     }
@@ -47,20 +47,46 @@ public class PoolItemGameObject : PoolItem {
     /// <summary>  
     /// 添加对象，往同意对象池里添加对象  
     /// </summary>  
-    public void PushObject(GameObject _gameObject)
+    public bool PushObject(GameObject _gameObject)
     {
         int hashKey = _gameObject.GetHashCode();
-        if (!this.objectList.ContainsKey(hashKey))
+        if (!this.ObjectList.ContainsKey(hashKey))
         {
-            this.objectList.Add(hashKey, new PoolItemNodeGameObject(_gameObject));
-            if (this.objectList.Count > PoolItemMaxNum)
-                Debug.LogWarning("已超出对象池最大容量");
+            if (this.ObjectList.Count > PoolItemMaxNum)
+                return false;
+            this.ObjectList.Add(hashKey, new PoolItemNodeGameObject(_gameObject,this));
+            return true;
         }
         else
         {
-            ((PoolItemNodeGameObject)this.objectList[hashKey]).Active();
+            ((PoolItemNodeGameObject)this.ObjectList[hashKey]).Active();
+            return true;
         }
     }
+
+    /// <summary>  
+    /// 添加对象，往同意对象池里添加对象，并修改该池子的存在时间  
+    /// </summary>  
+    public bool PushObject(GameObject _gameObject,float aliveTime)
+    {
+
+            int hashKey = _gameObject.GetHashCode();
+        if (!this.ObjectList.ContainsKey(hashKey))
+        {
+            if (this.ObjectList.Count > PoolItemMaxNum)
+                return false;
+            this.ObjectList.Add(hashKey, new PoolItemNodeGameObject(_gameObject, this));
+            Alive_Time = aliveTime;
+            return true;
+        }
+        else
+        {
+            ((PoolItemNodeGameObject)this.ObjectList[hashKey]).Active();
+            Alive_Time = aliveTime;
+            return true;
+        }
+    }
+
 
     /// <summary>  
 	/// 销毁对象，调用PoolItemTime中的destroy，即也没有真正销毁  
@@ -68,9 +94,9 @@ public class PoolItemGameObject : PoolItem {
 	public void DestoryObject(GameObject _gameObject)
     {
         int hashKey = _gameObject.GetHashCode();
-        if (this.objectList.ContainsKey(hashKey))
+        if (this.ObjectList.ContainsKey(hashKey))
         {
-            ((PoolItemNodeGameObject)this.objectList[hashKey]).Destroy();
+            ((PoolItemNodeGameObject)this.ObjectList[hashKey]).Destroy();
         }
     }
 
@@ -79,11 +105,11 @@ public class PoolItemGameObject : PoolItem {
     /// </summary>  
     public GameObject GetObject()
     {
-        if (this.objectList == null || this.objectList.Count == 0)
+        if (this.ObjectList == null || this.ObjectList.Count == 0)
         {
             return null;
         }
-        foreach (PoolItemNode poolIT in this.objectList.Values)
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
         {
             if (poolIT.destoryStatus)
             {
@@ -94,15 +120,37 @@ public class PoolItemGameObject : PoolItem {
     }
 
     /// <summary>  
+    /// 返回没有真正销毁的第一个对象（即池中的destoryStatus为true的对象），并改变对象池组的存在时间  
+    /// </summary>  
+    public GameObject GetObject(float aliveTime)
+    {
+        if (this.ObjectList == null || this.ObjectList.Count == 0)
+        {
+            return null;
+        }
+        GameObject tmp=null;
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
+        {
+            if (poolIT.destoryStatus)
+            {
+                tmp= ((PoolItemNodeGameObject)poolIT).Active();
+            }
+        }
+        if (tmp != null)
+            Alive_Time = aliveTime;
+        return tmp;
+    }
+
+    /// <summary>  
     /// 移除并销毁单个对象，真正的销毁对象!!  
     /// </summary>  
     public void RemoveObject(GameObject _gameObject)
     {
         int hashKey = _gameObject.GetHashCode();
-        if (this.objectList.ContainsKey(hashKey))
+        if (this.ObjectList.ContainsKey(hashKey))
         {
             GameObject.Destroy(_gameObject);
-            this.objectList.Remove(hashKey);
+            this.ObjectList.Remove(hashKey);
         }
     }
 
@@ -112,10 +160,10 @@ public class PoolItemGameObject : PoolItem {
     public void RemoveObject(Object obj)
     {
         int hashKey = obj.GetHashCode();
-        if (this.objectList.ContainsKey(hashKey))
+        if (this.ObjectList.ContainsKey(hashKey))
         {
             Object.Destroy(obj);
-            this.objectList.Remove(hashKey);
+            this.ObjectList.Remove(hashKey);
         }
     }
 
@@ -125,7 +173,7 @@ public class PoolItemGameObject : PoolItem {
     public void Destory()
     {
         IList<PoolItemNode> poolIList = new List<PoolItemNode>();
-        foreach (PoolItemNode poolIT in this.objectList.Values)
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
         {
             poolIList.Add(poolIT);
         }
@@ -137,7 +185,7 @@ public class PoolItemGameObject : PoolItem {
                 poolIList.RemoveAt(0);
             }
         }
-        this.objectList = new Dictionary<int, PoolItemNode>();
+        this.ObjectList = new Dictionary<int, PoolItemNode>();
     }
 
 
@@ -147,14 +195,13 @@ public class PoolItemGameObject : PoolItem {
     public void BeyondObject()
     {
         IList<PoolItemNodeGameObject> beyondTimeList = new List<PoolItemNodeGameObject>();
-        foreach (PoolItemNode poolIT in this.objectList.Values)
+        if (ObjectList == null)
+            return;
+        foreach (PoolItemNode poolIT in this.ObjectList.Values)
         {
-            if (poolIT.IsBeyondAliveTime(this.Alive_Time))
+            if (poolIT.IsBeyondAliveTime())
             {
                 beyondTimeList.Add((PoolItemNodeGameObject)poolIT);
-
-                
-                
             }
         }
         int beyondTimeCount = beyondTimeList.Count;
