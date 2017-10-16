@@ -6,7 +6,7 @@ public class Singleton<T> where T : Singleton<T>, new()
     private static T _shareInstance;
     private static readonly object syslock = new object();
 
-    public static T ShareInstanceance
+    public static T ShareInstance
     {
         get
         {
