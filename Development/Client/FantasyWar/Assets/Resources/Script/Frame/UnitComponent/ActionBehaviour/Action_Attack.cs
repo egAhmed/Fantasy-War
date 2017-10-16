@@ -23,11 +23,10 @@ public class Action_Attack : ActionBehaviour {
 		RTSGameUnitSelectionManager.Enabled = false;
 		//
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
-		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
         // InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
         //
         //
-        Debug.Log ("改委托");
+        Debug.Log ("寻找攻击目标");
 	}
 
 	public void FindAttackTarget(KeyCode k){
@@ -60,13 +59,14 @@ public class Action_Attack : ActionBehaviour {
         //攻击方法
         Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
 		//
+		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
 		//
 	}
 
     private void activateSelection(KeyCode key) { 
+		Debug.Log("Mouse 0 released");
 		RTSGameUnitSelectionManager.Enabled = true;
 		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
-		
 	}
 
 }

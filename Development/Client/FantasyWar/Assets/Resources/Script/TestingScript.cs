@@ -15,13 +15,12 @@ public class TestingScript : MonoBehaviour {
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,close);
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, poolManagerTesting);
-
     }
 
     private void poolManagerTesting(KeyCode key) {
         //
         GameObject obj = new GameObject();
-        PoolManager.ShareInstanceance.PushObject("testing",obj);
+        // PoolManager.ShareInstanceance.PushObject("testing",1,obj);
         //
     }
 

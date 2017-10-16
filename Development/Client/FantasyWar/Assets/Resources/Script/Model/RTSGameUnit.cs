@@ -135,7 +135,7 @@ public class RTSGameUnit : MonoBehaviour
         {
             _isSelected = value;
             //
-            //interactionAutoSwitch();
+            interactionAutoSwitch();
             //
             selectionSpriteSwitch();
             unitActionEventControl();
@@ -264,7 +264,7 @@ public class RTSGameUnit : MonoBehaviour
         //
         RTSGameUnitManager.ShareInstance.unitRegister(this);
         //
-        //actionBehaviourInit();
+        actionBehaviourInit();
     }
 
     protected virtual void OnDestroy()
@@ -294,6 +294,7 @@ public class RTSGameUnit : MonoBehaviour
     }
 
     protected virtual void actionBehaviourInit() {
+        //
         testingCreatePlayInfo();
         //
         gameObject.AddComponent<DieInNoLife> ();
