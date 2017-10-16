@@ -6,8 +6,10 @@ public class TestingScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
+        //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
         //
+
+		RTSGamePlayManager.ShareInstance.build();
         //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
         RTSManager.ShareInstance.testingCreatePlayInfo();

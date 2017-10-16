@@ -7,6 +7,8 @@ public class Action_Build : ActionBehaviour {
 	void Awake(){
 		index = 6;
 		shortCutKey = KeyCode.B;
+		actionIcon = Resources.Load<Sprite> ("Texture/BuildIcon");
+		canRepeat = false;
 	}
 
 	public override Action GetClickAction ()
@@ -14,8 +16,14 @@ public class Action_Build : ActionBehaviour {
 		return delegate() {
 			//TODO
 			//建造方法
-			Debug.Log("加载建造列表");
+			Debug.Log("加载建筑");
+			//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
+			RTSGamePlayManager.ShareInstance.build();
 		};
 	}
+
+//	private void buildingTesting(KeyCode key) {
+//		RTSGamePlayManager.ShareInstance.build();
+//	}
 
 }

@@ -11,6 +11,7 @@ public class Action_Collect : ActionBehaviour {
 		index = 3;
 		shortCutKey = KeyCode.G;
 		actionIcon = Resources.Load<Sprite> ("Texture/CollectIcon");
+		canRepeat = true;
 	}
 
 	public override Action GetClickAction ()

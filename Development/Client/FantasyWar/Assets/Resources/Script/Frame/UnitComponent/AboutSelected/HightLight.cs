@@ -44,10 +44,7 @@ public class HightLight : Interaction {
 		circle = go;
 		//Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
 		circle.transform.position = transform.position + new Vector3 (0,0.1f,0);
-		//
 
 	}
-
-	
 
 }

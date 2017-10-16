@@ -440,6 +440,8 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
 			ActionList.Add (ac);
+			ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
+			ActionList.Add (ab);
 		}
     }
 }

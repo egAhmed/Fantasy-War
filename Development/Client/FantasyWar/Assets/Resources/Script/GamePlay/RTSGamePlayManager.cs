@@ -47,10 +47,12 @@ public class RTSGamePlayManager : UnitySingleton<RTSGamePlayManager>
     public void build()
     {
         //
+
         RTSGameUnitSelectionManager.Enabled = false;
         RTSGameUnitSelectionManager.selectionRelease();
         RTSGameUnitActionManager.Enabled = false;
         //
+		Debug.Log("建造方法");
         RTSBuildingManager.ShareInstance.startBuildingMode(PrefabFactory.ShareInstance.createClone<RTSBuildingTempUnit>(@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house", Vector3.zero, Quaternion.identity));
         //
     }

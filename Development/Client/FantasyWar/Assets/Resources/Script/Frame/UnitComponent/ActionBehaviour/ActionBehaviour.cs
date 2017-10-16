@@ -6,6 +6,8 @@ public abstract class ActionBehaviour : MonoBehaviour {
 
 	public KeyCode shortCutKey;
 
+	public bool canRepeat;
+
 	public abstract Action GetClickAction ();
 
 	public int index;	//图标对应第几个按键
