@@ -8,12 +8,21 @@ public class TestingScript : MonoBehaviour {
 	void Start () {
         InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
         //
-        RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
+        //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
         RTSManager.ShareInstance.testingCreatePlayInfo();
         //
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,close);
+        //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, poolManagerTesting);
+
+    }
+
+    private void poolManagerTesting(KeyCode key) {
+        //
+        GameObject obj = new GameObject();
+        PoolManager.ShareInstanceance.PushObject("testing",obj);
+        //
     }
 
     private void buildingTesting(KeyCode key) {

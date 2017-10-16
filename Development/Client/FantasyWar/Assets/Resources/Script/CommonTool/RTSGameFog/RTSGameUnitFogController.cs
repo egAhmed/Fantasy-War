@@ -14,8 +14,10 @@ public class RTSGameUnitFogController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (HaveVision) {
-			// Debug.Log ("视野开启"); 
-		} else {
+            // Debug.Log ("视野开启"); 
+            fowRevealer.enabled = true;
+        }
+        else {
 			fowRevealer.enabled = false ;
 			// Debug.Log ("视野关闭");
 		}

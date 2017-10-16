@@ -189,6 +189,9 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             //
             if (IsTargetClosingEnoughToWork)
             {
+                //
+                transform.LookAt(targetGameUnit.transform);
+                //
                 if (IsMiningHarvested) { 
                     animatorStateController.WorkerAnimator_digHarvest();
                 }else { 
@@ -206,7 +209,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
                     move(targetGameUnit.transform.position);
                 }
             }
-            Debug.Log("miningAchievement = > " + miningAchievement);
+            //Debug.Log("miningAchievement = > " + miningAchievement);
             yield return new WaitForSeconds(miningAchievementAddingFrequency);
         }
         //
@@ -379,6 +382,9 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         //
         if(animatorStateController==null)
             animatorStateController = GetComponent<WorkerAnimatorStateController>();
+        //
+        animatorStateController.WorkerAnimator_idle();
+        //
     }
 
     //
