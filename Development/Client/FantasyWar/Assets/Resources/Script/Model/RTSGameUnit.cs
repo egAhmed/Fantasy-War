@@ -151,8 +151,8 @@ public class RTSGameUnit : MonoBehaviour
         }
     }
     //
-    private RTSGameUnitNetworkData _unitData;
-    public RTSGameUnitNetworkData UnitData
+    private RTSGameUnitDataInfo _unitData;
+    public RTSGameUnitDataInfo UnitData
     {
         get
         {

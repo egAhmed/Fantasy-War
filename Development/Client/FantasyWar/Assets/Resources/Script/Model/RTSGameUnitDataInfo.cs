@@ -8,11 +8,7 @@ public class RTSGameUnitDataInfo{
 	public float positionY;
 	public float positionZ;
 	//
-	public int serverID;
-	public int battleID;
-	//
 	public int playerID;
-	public int groupID;
 	//
 	public int unitID;
 	//

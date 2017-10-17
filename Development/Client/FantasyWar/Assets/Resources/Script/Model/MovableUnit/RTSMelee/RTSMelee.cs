@@ -173,7 +173,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
             animatorStateController = GetComponent<RTSMeleeAnimatorStateController>();
         //
         AttackDistance = 3F;
-        AttackFrequency = 0.5F;
+        AttackFrequency = 1F;
         //
     }
 

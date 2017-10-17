@@ -76,7 +76,7 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         return headerStr;
     }
 
-    public void send(RTSGameUnitNetworkData data) { 
+    public void send(RTSGameUnitDataInfo data) { 
         if (IsServerConnected)
         {
             NetworkGamePlayMsg msg = new NetworkGamePlayMsg();
