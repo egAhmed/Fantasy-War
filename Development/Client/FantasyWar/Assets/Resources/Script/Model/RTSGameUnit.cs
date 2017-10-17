@@ -94,7 +94,7 @@ public class RTSGameUnit : MonoBehaviour
     protected RTSGameUnit targetGameUnit;
     //
     public RTSGameUnitBelongSide gameUnitBelongSide;
-    protected RTSGameUnitSelectionBottomCircleController unitSelectionBottomCircleController;
+    //protected RTSGameUnitSelectionBottomCircleController unitSelectionBottomCircleController;
     //
     //
     //determine if it can be select by player
@@ -137,7 +137,7 @@ public class RTSGameUnit : MonoBehaviour
             //
             interactionAutoSwitch();
             //
-            selectionSpriteSwitch();
+            //selectionSpriteSwitch();
             unitActionEventControl();
         }
     }
@@ -225,32 +225,32 @@ public class RTSGameUnit : MonoBehaviour
         targetGameUnit = unit;
     }
 
-    private void selectionBottomCircleControllerInit()
-    {
-        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
-        //
-        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
-        unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
-    }
+//    private void selectionBottomCircleControllerInit()
+//    {
+//        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
+//        //
+//        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+//        unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
+//    }
     //
-    private void selectionSpriteSwitch()
-    {
-        // Debug.Log(gameObject.name+" selected => "+_isSelected);
-        if (unitSelectionBottomCircleController)
-        {
-            if (IsAllowMultipleSelection || IsAllowSingleSelection)
-            {
-                if (!IsSelected)
-                {
-                    unitSelectionBottomCircleController.hide();
-                }
-                else
-                {
-                    unitSelectionBottomCircleController.show(gameUnitBelongSide);
-                }
-            }
-        }
-    }
+//    private void selectionSpriteSwitch()
+//    {
+//        // Debug.Log(gameObject.name+" selected => "+_isSelected);
+//        if (unitSelectionBottomCircleController)
+//        {
+//            if (IsAllowMultipleSelection || IsAllowSingleSelection)
+//            {
+//                if (!IsSelected)
+//                {
+//                    unitSelectionBottomCircleController.hide();
+//                }
+//                else
+//                {
+//                    unitSelectionBottomCircleController.show(gameUnitBelongSide);
+//                }
+//            }
+//        }
+//    }
     //
     protected virtual void Awake()
     {
@@ -260,7 +260,7 @@ public class RTSGameUnit : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
-        selectionBottomCircleControllerInit();
+        //selectionBottomCircleControllerInit();
         //
         RTSGameUnitManager.ShareInstance.unitRegister(this);
         //
