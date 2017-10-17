@@ -8,6 +8,8 @@ public class UnitBloodBar : MonoBehaviour {
     private Scrollbar bloodScrollbar;
     public float _maxHp=100f;
     public float _curHp=100f;
+    public Color _backBloodColor = Color.black;
+    public Color _fillBloodColor= Color.green;
 
     // Use this for initialization
     void Start () {
@@ -32,7 +34,7 @@ public class UnitBloodBar : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         bloodBar.transform.rotation = Camera.main.transform.rotation;
         bloodScrollbar.size = SetHp(_curHp, _maxHp);
     }
@@ -43,6 +45,31 @@ public class UnitBloodBar : MonoBehaviour {
         _curHp = CurHp;
         return _curHp / _maxHp;
     }
-
+    public void SetHide(bool state)
+    {
+        if (state == true)
+        {
+            _backBloodColor.a = 0;
+            _fillBloodColor.a = 0;
+        }
+        else
+        {
+            _backBloodColor.a = 1;
+            _fillBloodColor.a = 1;
+        }
+        SetColor(_fillBloodColor, _backBloodColor);
+    }
+    public void SetColor(Color fillBloodColor)
+    {
+        _fillBloodColor = fillBloodColor;
+        bloodScrollbar.GetComponentInChildren<Image>().color = _fillBloodColor;
+    }
+    public void SetColor(Color fillBloodColor, Color backBloodColor)
+    {
+        _fillBloodColor = fillBloodColor;
+        bloodScrollbar.GetComponentInChildren<Image>().color = _fillBloodColor;
+        _backBloodColor = backBloodColor;
+        bloodScrollbar.GetComponent<Image>().color = _backBloodColor;
+    }
 
 }
