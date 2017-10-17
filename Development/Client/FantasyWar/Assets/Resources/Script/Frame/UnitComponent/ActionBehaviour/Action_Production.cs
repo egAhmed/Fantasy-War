@@ -20,7 +20,7 @@ public class Action_Production : ActionBehaviour  {
 			//TODO
 			//生产方法
 			GameObject.Instantiate(workerPrefeb,transform.position,Quaternion.identity);
-			Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");
+			//Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");
 		};
 	}
 }

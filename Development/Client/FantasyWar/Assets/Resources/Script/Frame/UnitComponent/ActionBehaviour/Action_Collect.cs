@@ -51,16 +51,6 @@ public class Action_Collect : ActionBehaviour {
 			Debug.Log ("目标不合法");
 		}
 
-		// string tag = hit.transform.tag;
-		// if (tag != "mine") {
-		// 	Debug.Log ("不是矿");
-		// 	//return;
-		// }
-		// if (tag == "mine") {
-		// 	Debug.Log (gameObject.GetComponent<RTSGameUnit> ().playerInfo.name + "挖矿");
-		// 	collectDelegate ();
-		// }
-
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
 	}
 

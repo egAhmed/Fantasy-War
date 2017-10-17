@@ -192,6 +192,13 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
     protected override void actionBehaviourInit() {
         base.actionBehaviourInit();
         //
+
+		if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+			ActionBehaviour ask = gameObject.AddComponent<Action_Skill1> ();
+			ActionList.Add (ask);
+			//
+		}
+
         Action_Attack ab = GetComponent<Action_Attack>();
         ab.attackDelegate += OnSetTargetUnit;
         //
