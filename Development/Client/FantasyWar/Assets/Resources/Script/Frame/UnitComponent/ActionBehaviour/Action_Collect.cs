@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Action_Collect : ActionBehaviour {
 
-	public delegate void CollectDelegate();
+	public delegate void CollectDelegate(RTSGameUnit unit);
 	public CollectDelegate collectDelegate;
 
 	void Awake(){
@@ -39,19 +39,27 @@ public class Action_Collect : ActionBehaviour {
 		RaycastHit hit;
 		if (!Physics.Raycast (ray, out hit))
 			return;
-
-		string tag = hit.transform.tag;
-		if (tag != "mine") {
-			Debug.Log ("不是矿");
-			//return;
-		}
-
-		//TODO
+		
+		RTSGameUnit targetUnit = hit.transform.GetComponent<RTSGameUnit> ();
+		if (targetUnit != null&&targetUnit is RTSResource){
+        //TODO
 		//采集方法
-		if (tag == "mine") {
 			Debug.Log (gameObject.GetComponent<RTSGameUnit> ().playerInfo.name + "挖矿");
-			collectDelegate ();
+			collectDelegate (targetUnit);
+			//
+		}else{
+			Debug.Log ("目标不合法");
 		}
+
+		// string tag = hit.transform.tag;
+		// if (tag != "mine") {
+		// 	Debug.Log ("不是矿");
+		// 	//return;
+		// }
+		// if (tag == "mine") {
+		// 	Debug.Log (gameObject.GetComponent<RTSGameUnit> ().playerInfo.name + "挖矿");
+		// 	collectDelegate ();
+		// }
 
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
 	}

@@ -11,7 +11,7 @@ public class FootmanAnimatorStateController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Test ();
+		// Test ();
 	}
 	public void Footman_Idle()
 	{

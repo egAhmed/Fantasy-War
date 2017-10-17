@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Action_Attack : ActionBehaviour {
 
-	public delegate void AttackDelegate();
+	public delegate void AttackDelegate(RTSGameUnit attackTarget);
 	public AttackDelegate attackDelegate;
 
 
@@ -16,7 +16,7 @@ public class Action_Attack : ActionBehaviour {
 		canRepeat = true;
 	}
 
-	void DebugAttack(){
+	void DebugAttack(RTSGameUnit attackTarget){
 		Debug.Log ("要攻击了");
 	}
 
@@ -69,7 +69,7 @@ public class Action_Attack : ActionBehaviour {
         //攻击方法
 			Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
 			if (attackDelegate != null) {
-				attackDelegate ();
+				attackDelegate (targetinfo);
 			}
 			//
 		}else{

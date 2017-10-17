@@ -56,7 +56,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     protected float repairingAchievementAddingFrequency = 1f;
     #endregion
     //
-    protected virtual bool IsTargetClosingEnoughToWork
+    protected virtual bool IsTargetClosingEnough
     {
         get
         {
@@ -189,8 +189,10 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         {
             // Debug.Log("doMining inside while");
             //
-            if (IsTargetClosingEnoughToWork)
+            if (IsTargetClosingEnough)
             {
+                //
+                move(transform.position);
                 //
                 transform.LookAt(targetGameUnit.transform);
                 //
@@ -264,11 +266,12 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         {
             // Debug.Log("doMining inside while");
             //
-            if (IsTargetClosingEnoughToWork)
+            if (IsTargetClosingEnough)
             {
                 //
-                RTSBuilding building = (RTSBuilding)targetGameUnit;
+                move(transform.position);
                 //
+                RTSBuilding building = (RTSBuilding)targetGameUnit;
                 //
                 if (building.IsNeedRepair) {
                     //
@@ -411,7 +414,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             return;
         }
         //
-        if (IsTargetClosingEnoughToWork)
+        if (IsTargetClosingEnough)
         {
             //Debug.Log("IsTargetClosingEnoughToWork");
             startWork();
@@ -444,6 +447,10 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 			ActionList.Add (ab);
 			ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
 			ActionList.Add (apro);
-		}
+            //
+            Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
+            acc.collectDelegate += OnSetTargetUnit;
+            //
+        }
     }
 }
