@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class MoveUnitAdvanceFSM : FSM
 {
+    public Transform enemyTransform;
     //所有状态的集合
-    private List<MoveUnitFSMState> fsmStates;
+    public List<MoveUnitFSMState> fsmStates;
 
     //当前状态编号
     private MoveUnitFSMStateID currentStateID;
-    public MoveUnitFSMStateID CurrentStateID { get { return currentStateID; } }
+    public MoveUnitFSMStateID CurrentStateID { get { return currentStateID; } set { currentStateID = value; } }
 
     private MoveUnitFSMState currentState;
-    public MoveUnitFSMState CurrentState { get { return currentState; } }
+    public MoveUnitFSMState CurrentState { get { return currentState; }set { currentState = value; } }
 
     public MoveUnitAdvanceFSM()
     {

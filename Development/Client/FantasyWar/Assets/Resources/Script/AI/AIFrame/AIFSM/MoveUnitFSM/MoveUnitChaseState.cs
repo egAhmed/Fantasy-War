@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveUnitChaseState : MoveUnitFSMState
 {
+    
 
     public MoveUnitChaseState()
     {
@@ -14,7 +15,13 @@ public class MoveUnitChaseState : MoveUnitFSMState
     //用来确定是否需要转到其他状态
     public override void Reason(Transform enemy, Transform myself)
     {
+        if(enemy==null)
+        {
+            Debug.LogError(StateID+"Enemy is null");
+        }
+            
         destPos = enemy.position;
+
 
         //Check the distance with player tank
         //When the distance is near, transition to attack state
