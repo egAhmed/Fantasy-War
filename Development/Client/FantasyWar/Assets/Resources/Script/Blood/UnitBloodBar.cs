@@ -11,11 +11,15 @@ public class UnitBloodBar : MonoBehaviour {
     public Color _backBloodColor = Color.black;
     public Color _fillBloodColor= Color.green;
 
-    // Use this for initialization
-    void Start () {
+    private void Awake()
+    {
         bloodBar = GameObject.Instantiate(RTSGameUnitBloodBarManager.ShareInstance.BloodBarPref);
         bloodBar.transform.SetParent(gameObject.transform);
         bloodScrollbar = bloodBar.GetComponent<Scrollbar>();
+    }
+    // Use this for initialization
+    void Start () {
+
         if (transform.GetComponent<CapsuleCollider>())
         {
             bloodBar.transform.localPosition = new Vector3(0, transform.GetComponent<CapsuleCollider>().height + 1f, 0);
@@ -62,12 +66,12 @@ public class UnitBloodBar : MonoBehaviour {
     public void SetColor(Color fillBloodColor)
     {
         _fillBloodColor = fillBloodColor;
-        bloodScrollbar.GetComponentInChildren<Image>().color = _fillBloodColor;
+        bloodScrollbar.transform.GetChild(0).GetComponent<Image>().color = _fillBloodColor;
     }
     public void SetColor(Color fillBloodColor, Color backBloodColor)
     {
         _fillBloodColor = fillBloodColor;
-        bloodScrollbar.GetComponentInChildren<Image>().color = _fillBloodColor;
+        bloodScrollbar.transform.GetChild(0).GetComponent<Image>().color = _fillBloodColor;
         _backBloodColor = backBloodColor;
         bloodScrollbar.GetComponent<Image>().color = _backBloodColor;
     }

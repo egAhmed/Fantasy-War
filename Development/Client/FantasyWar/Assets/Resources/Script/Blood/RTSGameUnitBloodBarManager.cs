@@ -6,6 +6,7 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
     public GameObject BloodBarPref;
     private bool isHide = false;
     public List<UnitBloodBar> unitList = new List<UnitBloodBar>();
+    private UnitBloodBar BloodBar;
     // Use this for initialization
     void Start () {
         if (BloodBarPref==null)
@@ -36,7 +37,8 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
         {
             if (item.GetComponent<UnitBloodBar>() == null)
             {
-                unitList.Add(item.gameObject.AddComponent<UnitBloodBar>());
+                BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
+                unitList.Add(BloodBar);
             }
 
         }
@@ -44,7 +46,11 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
         {
             if (item.GetComponent<UnitBloodBar>() == null)
             {
-                unitList.Add(item.gameObject.AddComponent<UnitBloodBar>());
+                BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
+                //BloodBar.SetColor(Color.white,Color.yellow);
+                //BloodBar.SetHide(true);
+                unitList.Add(BloodBar);
+
             }
 
         }
@@ -52,7 +58,8 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
         {
             if (item.GetComponent<UnitBloodBar>() == null)
             {
-                unitList.Add(item.gameObject.AddComponent<UnitBloodBar>());
+                BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
+                unitList.Add(BloodBar);
             }
 
             //}
