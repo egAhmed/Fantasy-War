@@ -51,21 +51,7 @@ public abstract class PlayerFSMState
     }
 
 
-    public Dictionary<string, List<RTSGameUnit>> ArmyNums
-    {
-        get
-        {
-            if (_armyNums == null)
-            {
-                _armyNums = new Dictionary<string, List<RTSGameUnit>>();
-            }
-            return _armyNums;
-        }
-        set
-        {
-            _armyNums = value;
-        }
-    }
+
 
     //向字典添加转换-状态
     public void AddTransition(PlayerFSMTransition transition, PlayerFSMStateID stateID)
