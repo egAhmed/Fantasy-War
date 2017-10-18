@@ -8,6 +8,7 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
 
     public RectTransform ViewPort;//小地图上的摄像机视野范围
+    public RectTransform targetPosition;
     //public Transform Corner1, Corner2;//地形左下角和地形右上角的标记点
     public GameObject BlipPrefab;//小地图上的单位预制体
     public GameObject MaskPrefab;
@@ -100,7 +101,7 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         mapRect.sizeDelta = new Vector2(256 * scaleFactor, 256 * scaleFactor);
         Border.sizeDelta = mapRect.sizeDelta;
         Border.position = mapRect.position;
-        ViewPort.sizeDelta = new Vector2(50 * scaleFactor, 70 * scaleFactor);
+        ViewPort.sizeDelta = new Vector2(50 * scaleFactor, 60 * scaleFactor);
         MaskMap.sizeDelta = mapRect.sizeDelta;
         MaskCarmera.orthographicSize = 128 * scaleFactor;
         MaskCarmera.transform.position = new Vector3(128 * scaleFactor, 128 * scaleFactor,0);
@@ -117,12 +118,14 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
         if (mouseOver&&Input.GetMouseButtonDown(1))
         {
+            targetPosition.gameObject.SetActive(false);
+            targetPosition.gameObject.SetActive(true);
+            targetPosition.transform.position = Input.mousePosition;
             MapToWorld = new Vector3(MapToWorldPosition((Input.mousePosition - this.transform.position)).x,0, MapToWorldPosition((Input.mousePosition - this.transform.position)).z);
             if (RTSGameUnitActionManager.ShareInstance.TargetPositionEvent != null)
             {
                 RTSGameUnitActionManager.ShareInstance.TargetPositionEvent.Invoke(MapToWorld + terrainPos);
-            }
-          
+            }         
         }
     }
     /// <summary>
