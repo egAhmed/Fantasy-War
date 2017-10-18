@@ -35,8 +35,8 @@ public class BloodHit : MonoBehaviour
 
     IEnumerator EnableBloodScreen(float waitTime)
     {
-        Hit_Full = 0.5f;
-        LightReflect = 0.5f;
+        Hit_Full = 0.6f;
+        LightReflect = 0.6f;
 
         yield return new WaitForSeconds(waitTime);
         CloseBloodScreen();
