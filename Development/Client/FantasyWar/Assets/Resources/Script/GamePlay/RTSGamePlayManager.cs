@@ -36,7 +36,6 @@ public class RTSGamePlayManager : UnitySingleton<RTSGamePlayManager>
         collider.convex = true;
         //collider.isTrigger = true;
         //
-
     }
 
     private void returnTheBuildingCost()

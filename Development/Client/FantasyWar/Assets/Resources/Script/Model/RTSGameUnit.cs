@@ -251,6 +251,10 @@ public class RTSGameUnit : MonoBehaviour
         //
         RTSGameUnitManager.ShareInstance.unitRegister(this);
         //
+        // testingCreateUnitInfo();
+        //
+        testingCreatePlayInfo();
+        //
         actionBehaviourInit();
     }
 
@@ -264,7 +268,11 @@ public class RTSGameUnit : MonoBehaviour
     {
 
     }
-    
+
+    private void testingCreateUnitInfo() {
+        unitInfo = new RTSGameUnitDataInfo();
+    }
+
     //
     private void testingCreatePlayInfo() { 
         PlayerInfo p1=new PlayerInfo();
@@ -282,7 +290,6 @@ public class RTSGameUnit : MonoBehaviour
 
     protected virtual void actionBehaviourInit() {
         //
-        testingCreatePlayInfo();
         //
         gameObject.AddComponent<DieInNoLife> ();
 		gameObject.AddComponent<MapBip> ();

@@ -7,7 +7,7 @@ public class RTSGameUnitGamePlayNetworkingData{
 	public float positionY;
 	public float positionZ;
 	//
-	public int unitID;
+	public string unitID;
 	//
 	public float eulerX;
 	public float eulerY;
