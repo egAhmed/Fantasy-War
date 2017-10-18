@@ -77,6 +77,6 @@ public class RTSGameUnitGamePlayNetworkingController : MonoBehaviour {
 	
 	void LateUpdate()
     {
-        send();
+        // send();
     }
 }

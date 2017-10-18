@@ -86,15 +86,18 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         //
         startAttacking();
         //
-        move(unit.transform.position);
     }
 
     protected virtual void startAttacking()
     {
-        // Debug.Log("startMining");
+        if (!isDoingAction) { 
         currentState = RTSMeleeActionType.Attacking;
         isDoingAction = true;
+        //
+        Debug.Log("startAttacking");
         StartCoroutine(attacking());
+        //
+        }
     }
 
     protected virtual void stopAttacking()
@@ -151,17 +154,20 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 
     protected virtual void stop()
     {
-        switch (currentState)
-        {
-            case RTSMeleeActionType.Attacking:
-                startAttacking();
-                break;
-            default:
-                break;
-        }
-        //
+        isDoingAction = false;
+        move(transform.position);
         currentState = RTSMeleeActionType.Idle;
         animatorStateController.doIdle();
+        //
+        // switch (currentState)
+        // {
+        //     case RTSMeleeActionType.Attacking:
+        //         stopAttacking();
+        //         break;
+        //     default:
+        //         break;
+        // }
+        StopAllCoroutines();
         //
     }
 

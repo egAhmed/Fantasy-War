@@ -46,8 +46,8 @@ public class RTSMeleeAnimatorStateController : MonoBehaviour {
 		if (meleeAnimator.GetBool ("Attacking")) {
 			return;
 		} else {
-			meleeAnimator.SetTrigger ("Ready to attack");
 			meleeAnimator.SetBool ("Attacking", true);
+			meleeAnimator.SetTrigger ("Ready to attack");
 		}
 	}
 	public void doDeath()

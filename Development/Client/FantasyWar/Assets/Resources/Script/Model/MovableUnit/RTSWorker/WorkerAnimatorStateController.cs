@@ -14,7 +14,7 @@ public class WorkerAnimatorStateController : MonoBehaviour
 //     Update is called once per frame
     void Update()
     {
-       Test();
+    //    Test();
     }
     
     public void WorkerAnimator_dig()
