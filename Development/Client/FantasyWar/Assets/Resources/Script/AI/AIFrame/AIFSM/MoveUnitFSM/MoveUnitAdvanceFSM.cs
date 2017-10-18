@@ -23,7 +23,7 @@ public class MoveUnitAdvanceFSM : FSM
                 return;
             currentState.SwitchOut();
             currentState = value;
-            currentState.SwitchOut();
+			currentState.SwitchIn();
         }
     }
 

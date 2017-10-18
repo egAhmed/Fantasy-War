@@ -2,15 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveUnitIdleState : MonoBehaviour {
+public class MoveUnitIdleState : MoveUnitFSMState {
 
-	// Use this for initialization
-	void Start () {
-		
+	public MoveUnitIdleState()
+	{
+		StateID = MoveUnitFSMStateID.Idle;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	public override void Reason(Transform enemy, Transform myself)
+	{
+		if (enemy == null)
+			return;
 		
+		destPos = enemy.position;
+
+		//Check the distance with player tank
+		//When the distance is near, transition to attack state
+		float dist = Vector3.Distance(myself.position, destPos);
+
+		//Go back to patrol is it become too far
+		if (dist <= chaseDistance)
+		{
+			Debug.Log("Switch to Chase state");
+			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.SawEnemy);
+		}
+	}
+
+	public override void Act (Transform player, Transform npc)
+	{
+		return;
+	}
+
+
+	public override void SwitchIn ()
+	{
+
+	}
+
+	public override void SwitchOut ()
+	{
+
 	}
 }

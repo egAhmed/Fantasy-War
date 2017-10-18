@@ -9,6 +9,8 @@ public enum MoveUnitFSMTransition
     ReachEnemy,//接近敌人，即敌人在攻击范围内
     LostEnemy,//敌人离开视线
     NoHealth,
+	SetBuild,//设置建造建筑
+	GetCollectCommand,
 }
 //可能的状态
 public enum MoveUnitFSMStateID
@@ -19,8 +21,9 @@ public enum MoveUnitFSMStateID
     Collect,//挖矿
     Building,//建造
     Dead,//死亡状态
+	Move,//移动状态
 }
-public abstract class MoveUnitFSMState
+public abstract class MoveUnitFSMState : FSMState
 {
 
 

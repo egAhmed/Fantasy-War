@@ -2,15 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveUnitAttackingState : MonoBehaviour {
+public class MoveUnitAttackingState : MoveUnitFSMState {
 
-	// Use this for initialization
-	void Start () {
+	RTSGameUnit AttackTarget = null;
+
+	public MoveUnitAttackingState()
+	{
+		StateID = MoveUnitFSMStateID.Attacking;
+
+	}
+
+	public override void SwitchIn ()
+	{
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public override void SwitchOut ()
+	{
+		AttackTarget = null;
 	}
+
+	//用来确定是否需要转到其他状态
+	public override void Reason(Transform enemy, Transform myself)
+	{
+		if (enemy == null)
+			return;
+		
+		destPos = enemy.position;
+
+		//Check the distance with player tank
+		//When the distance is near, transition to attack state
+		float dist = Vector3.Distance(myself.position, destPos);
+		if (dist >= attackDistance)
+		{
+			Debug.Log("Switch to Chase state");
+			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.SawEnemy);
+			//AttackTarget = null;
+		}
+		//Go back to patrol is it become too far
+		else if (dist >= chaseDistance)
+		{
+			Debug.Log("Switch to Idle state");
+			//AttackTarget = null;
+			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.LostEnemy);
+		}
+	}
+
+	public override void Act(Transform enemy, Transform myself)
+	{
+		//如果攻击目标和传进的目标不同，就A那个目标
+		if (enemy.GetComponent<RTSGameUnit>() != AttackTarget) {
+			myself.GetComponent<Action_Attack> ().attackDelegate (enemy.GetComponent<RTSGameUnit> ());
+			AttackTarget = enemy.GetComponent<RTSGameUnit>();
+		}
+	}
+
 }

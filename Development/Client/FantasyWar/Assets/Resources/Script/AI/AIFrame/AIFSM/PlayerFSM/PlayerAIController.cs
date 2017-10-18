@@ -63,22 +63,22 @@ public class PlayerAIController : PlayerAdvancedFSM {
     }
 
     //战略层使用，强制进入攻击状态
-    public void SetAttackState(Transform enemy)
-    {
-        //改变追击距离
-        for (int i = 0; i < fsmStates.Count; i++)
-        {
-            fsmStates[i].chaseDistance = float.MaxValue;
-        }
-
-        CurrentStateID = MoveUnitFSMStateID.Attacking;
-        foreach (var state in fsmStates)
-        {
-            if (state.StateID == CurrentStateID)
-            {
-                CurrentState = state;
-                break;
-            }
-        }
-    }
+//    public void SetAttackState(Transform enemy)
+//    {
+//        //改变追击距离
+//        for (int i = 0; i < fsmStates.Count; i++)
+//        {
+//            fsmStates[i].chaseDistance = float.MaxValue;
+//        }
+//
+//        CurrentStateID = MoveUnitFSMStateID.Attacking;
+//        foreach (var state in fsmStates)
+//        {
+//            if (state.StateID == CurrentStateID)
+//            {
+//                CurrentState = state;
+//                break;
+//            }
+//        }
+//    }
 }
