@@ -7,6 +7,7 @@ public class Action_Patrol : ActionBehaviour {
 	void Awake(){
 		index = 4;
 		shortCutKey = KeyCode.P;
+		canRepeat = true;
 	}
 
 	public override Action GetClickAction ()

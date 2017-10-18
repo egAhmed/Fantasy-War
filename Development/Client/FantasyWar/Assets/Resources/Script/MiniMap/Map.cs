@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Collections;
 
-public class Map : MonoBehaviour
+public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
 
     public RectTransform ViewPort;//小地图上的摄像机视野范围
+    public RectTransform targetPosition;
     //public Transform Corner1, Corner2;//地形左下角和地形右上角的标记点
     public GameObject BlipPrefab;//小地图上的单位预制体
     public GameObject MaskPrefab;
@@ -19,10 +21,11 @@ public class Map : MonoBehaviour
     private Vector3 terrainPos;
     private RectTransform mapRect;
     public bool saveTrack = true;
-
+    private bool mouseOver = false;
+    public Vector3 MapToWorld;
     private TerrainData terrainData;
     private float scaleFactor = 1;
-
+   
     public Map()
     {
         Current = this;
@@ -89,16 +92,16 @@ public class Map : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         Vector2 miniMapOffset = new Vector2(Map.Current.transform.position.x, Map.Current.transform.position.y);//小地图原点相对于屏幕坐标原点的偏移值,用于自适应
-        ViewPort.position = WorldPositionToMap(Camera.main.transform.position) + miniMapOffset - new Vector2(20,0);//摄像机在小地图上的视线范围
+        ViewPort.position = WorldPositionToMap(Camera.main.transform.position) + miniMapOffset  ;//摄像机在小地图上的视线范围
 
         //分辨率自适应
         scaleFactor = Screen.width / 1024f;
         mapRect.sizeDelta = new Vector2(256 * scaleFactor, 256 * scaleFactor);
         Border.sizeDelta = mapRect.sizeDelta;
         Border.position = mapRect.position;
-        ViewPort.sizeDelta = new Vector2(50 * scaleFactor, 80 * scaleFactor);
+        ViewPort.sizeDelta = new Vector2(50 * scaleFactor, 60 * scaleFactor);
         MaskMap.sizeDelta = mapRect.sizeDelta;
         MaskCarmera.orthographicSize = 128 * scaleFactor;
         MaskCarmera.transform.position = new Vector3(128 * scaleFactor, 128 * scaleFactor,0);
@@ -112,6 +115,18 @@ public class Map : MonoBehaviour
         {
             MaskCarmera.clearFlags = CameraClearFlags.SolidColor;
         }
+
+        if (mouseOver&&Input.GetMouseButtonDown(1))
+        {
+            targetPosition.gameObject.SetActive(false);
+            targetPosition.gameObject.SetActive(true);
+            targetPosition.transform.position = Input.mousePosition;
+            MapToWorld = new Vector3(MapToWorldPosition((Input.mousePosition - this.transform.position)).x,0, MapToWorldPosition((Input.mousePosition - this.transform.position)).z);
+            if (RTSGameUnitActionManager.ShareInstance.TargetPositionEvent != null)
+            {
+                RTSGameUnitActionManager.ShareInstance.TargetPositionEvent.Invoke(MapToWorld + terrainPos);
+            }         
+        }
     }
     /// <summary>
     /// 移动到摄像机到点击位置
@@ -121,8 +136,21 @@ public class Map : MonoBehaviour
 
         //小地图坐标系转世界坐标系
         Vector3 map2world = new Vector3(MapToWorldPosition((Input.mousePosition - this.transform.position)).x, Camera.main.transform.position.y, MapToWorldPosition((Input.mousePosition - this.transform.position)).z);
-        Camera.main.transform.position= map2world + terrainPos + new Vector3(20,0,0);
+        Camera.main.transform.position= map2world + terrainPos ;
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        mouseOver = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        mouseOver = false;
+    }
+
+
+
 
     //private void OnGUI()
     //{

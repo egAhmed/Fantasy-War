@@ -15,8 +15,6 @@ public enum RTSGameUnitBelongSide
 public class RTSGameUnit : MonoBehaviour
 {
 	public int maxHP;
-	public string unitName;
-    public Sprite unitIcom;
     //
     [SerializeField]
     public PlayerInfo playerInfo;
@@ -94,7 +92,7 @@ public class RTSGameUnit : MonoBehaviour
     protected RTSGameUnit targetGameUnit;
     //
     public RTSGameUnitBelongSide gameUnitBelongSide;
-    protected RTSGameUnitSelectionBottomCircleController unitSelectionBottomCircleController;
+    //protected RTSGameUnitSelectionBottomCircleController unitSelectionBottomCircleController;
     //
     //
     //determine if it can be select by player
@@ -137,7 +135,7 @@ public class RTSGameUnit : MonoBehaviour
             //
             interactionAutoSwitch();
             //
-            selectionSpriteSwitch();
+            //selectionSpriteSwitch();
             unitActionEventControl();
         }
     }
@@ -151,20 +149,9 @@ public class RTSGameUnit : MonoBehaviour
         }
     }
     //
-    private RTSGameUnitNetworkData _unitData;
-    public RTSGameUnitNetworkData UnitData
-    {
-        get
-        {
-            return _unitData;
-        }
-
-        set
-        {
-            _unitData = value;
-        }
-    }
-
+    [SerializeField]
+    public RTSGameUnitDataInfo unitInfo;
+ 
     private void OnBecameVisible()
     {
         //Debug.Log("is visible");
@@ -225,32 +212,32 @@ public class RTSGameUnit : MonoBehaviour
         targetGameUnit = unit;
     }
 
-    private void selectionBottomCircleControllerInit()
-    {
-        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
-        //
-        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
-        unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
-    }
+//    private void selectionBottomCircleControllerInit()
+//    {
+//        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
+//        //
+//        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+//        unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
+//    }
     //
-    private void selectionSpriteSwitch()
-    {
-        // Debug.Log(gameObject.name+" selected => "+_isSelected);
-        if (unitSelectionBottomCircleController)
-        {
-            if (IsAllowMultipleSelection || IsAllowSingleSelection)
-            {
-                if (!IsSelected)
-                {
-                    unitSelectionBottomCircleController.hide();
-                }
-                else
-                {
-                    unitSelectionBottomCircleController.show(gameUnitBelongSide);
-                }
-            }
-        }
-    }
+//    private void selectionSpriteSwitch()
+//    {
+//        // Debug.Log(gameObject.name+" selected => "+_isSelected);
+//        if (unitSelectionBottomCircleController)
+//        {
+//            if (IsAllowMultipleSelection || IsAllowSingleSelection)
+//            {
+//                if (!IsSelected)
+//                {
+//                    unitSelectionBottomCircleController.hide();
+//                }
+//                else
+//                {
+//                    unitSelectionBottomCircleController.show(gameUnitBelongSide);
+//                }
+//            }
+//        }
+//    }
     //
     protected virtual void Awake()
     {
@@ -260,9 +247,13 @@ public class RTSGameUnit : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
-        selectionBottomCircleControllerInit();
+        //selectionBottomCircleControllerInit();
         //
         RTSGameUnitManager.ShareInstance.unitRegister(this);
+        //
+        // testingCreateUnitInfo();
+        //
+        testingCreatePlayInfo();
         //
         actionBehaviourInit();
     }
@@ -277,7 +268,11 @@ public class RTSGameUnit : MonoBehaviour
     {
 
     }
-    
+
+    private void testingCreateUnitInfo() {
+        unitInfo = new RTSGameUnitDataInfo();
+    }
+
     //
     private void testingCreatePlayInfo() { 
         PlayerInfo p1=new PlayerInfo();
@@ -295,7 +290,6 @@ public class RTSGameUnit : MonoBehaviour
 
     protected virtual void actionBehaviourInit() {
         //
-        testingCreatePlayInfo();
         //
         gameObject.AddComponent<DieInNoLife> ();
 		gameObject.AddComponent<MapBip> ();

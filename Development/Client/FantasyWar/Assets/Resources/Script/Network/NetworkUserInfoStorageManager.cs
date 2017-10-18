@@ -23,4 +23,15 @@ public class NetworkUserInfoStorage
         _password = value;
 		}
 	}
+
+    private static string _playerID="00000001";
+	public static string PlayerID { 
+		get 
+		{
+			return _playerID;
+		}
+        set { 
+        _playerID = value;
+		}
+	}
 }

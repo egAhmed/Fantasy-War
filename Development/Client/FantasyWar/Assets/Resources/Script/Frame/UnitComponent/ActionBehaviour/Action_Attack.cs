@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class Action_Attack : ActionBehaviour {
 
-
-	public delegate void AttackDelegate();
+	public delegate void AttackDelegate(RTSGameUnit attackTarget);
 	public AttackDelegate attackDelegate;
+
 
 	void Awake(){
 		index = 2;
 		shortCutKey = KeyCode.A;
 		actionIcon = Resources.Load<Sprite> ("Texture/AtkIcon");
+		attackDelegate += DebugAttack;
+		canRepeat = true;
+	}
+
+	void DebugAttack(RTSGameUnit attackTarget){
+		Debug.Log ("要攻击了");
 	}
 
 	public override Action GetClickAction ()
@@ -28,10 +34,10 @@ public class Action_Attack : ActionBehaviour {
 		RTSGameUnitSelectionManager.Enabled = false;
 		//
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
-		// InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
-		//
-		//
-		Debug.Log ("寻找攻击目标");
+        // InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
+        //
+        //
+        Debug.Log ("寻找攻击目标");
 	}
 
 	public void FindAttackTarget(KeyCode k){
@@ -43,7 +49,7 @@ public class Action_Attack : ActionBehaviour {
 
 		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, FindAttackTarget);
 		//
-		//
+        //
 		//		
 
 		Vector3 mousePos = Input.mousePosition;
@@ -54,22 +60,26 @@ public class Action_Attack : ActionBehaviour {
 			return;
 
 		RTSGameUnit targetinfo = hit.transform.GetComponent<RTSGameUnit> ();
-		if (targetinfo == null)
-			return;
+		if (targetinfo != null){
 
-		//
-		// if (targetinfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
+        //
+        // if (targetinfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
 		// }
-		//TODO
-		//攻击方法
-		Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
-		attackDelegate ();
-		//
+        //TODO
+        //攻击方法
+			Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "攻击" + targetinfo.playerInfo.name);
+			if (attackDelegate != null) {
+				attackDelegate (targetinfo);
+			}
+			//
+		}else{
+			Debug.Log ("目标不合法");
+		}
 		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);
 		//
 	}
 
-	private void activateSelection(KeyCode key) { 
+    private void activateSelection(KeyCode key) { 
 		Debug.Log("Mouse 0 released");
 		RTSGameUnitSelectionManager.Enabled = true;
 		InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyUp (KeyCode.Mouse0, activateSelection);

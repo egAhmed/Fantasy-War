@@ -59,15 +59,15 @@ public class ActionUpdate : Interaction {
 			}
 		}
 		// if (TeamManager.ShareInstance.currentSelections [0] != this.gameObject) {
-		if (RTSGameUnitManager.ShareInstance.SelectedUnits [0] != this.gameObject) {
-			
-			
+		if (RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject != this.gameObject) {
 			foreach (ActionBehaviour ab in gameObject.GetComponent<RTSGameUnit>().ActionList) {
 				if (ActionManager.ShareInstance.ActionBehaviours [ab.index] != null) {
 					if (ActionManager.ShareInstance.ActionBehaviours [ab.index].GetType () == ab.GetType ()) {
-						ActionManager.ShareInstance.AddButtonDelegate (ab.index, ab.GetClickAction ());
-						InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (ab.shortCutKey, ab.RunAction);
-						hasIntoDelete.Add(ab);
+						if (ab.canRepeat) {
+							ActionManager.ShareInstance.AddButtonDelegate (ab.index, ab.GetClickAction ());
+							InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown (ab.shortCutKey, ab.RunAction);
+							hasIntoDelete.Add (ab);
+						}
 					}
 				}
 			}

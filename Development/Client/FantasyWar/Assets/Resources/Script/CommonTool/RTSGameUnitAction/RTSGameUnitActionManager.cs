@@ -37,6 +37,13 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
     //
     private event DGameUnitActionTargetPosition targetPositionEvent;
     private event DGameUnitActionTargetUnit targetUnitEvent;
+    public DGameUnitActionTargetPosition TargetPositionEvent
+    {
+        get
+        {
+            return targetPositionEvent;
+        }
+    }
     //
     #region eventRegister&eventUnRegister
     //

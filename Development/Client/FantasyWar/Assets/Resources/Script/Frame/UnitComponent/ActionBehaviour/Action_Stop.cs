@@ -7,6 +7,7 @@ public class Action_Stop : ActionBehaviour {
 	void Awake(){
 		index = 1;
 		shortCutKey = KeyCode.S;
+		canRepeat = true;
 	}
 
 	public override Action GetClickAction ()

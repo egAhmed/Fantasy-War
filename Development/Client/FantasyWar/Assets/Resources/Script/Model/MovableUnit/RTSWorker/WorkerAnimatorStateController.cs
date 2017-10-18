@@ -11,12 +11,12 @@ public class WorkerAnimatorStateController : MonoBehaviour
         WorkerAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
+//     Update is called once per frame
+    void Update()
+    {
     //    Test();
-    //}
-    //
+    }
+    
     public void WorkerAnimator_dig()
     {
         if (WorkerAnimator.GetBool("IsDigging") && !WorkerAnimator.GetBool("IsHarvest"))
@@ -128,6 +128,7 @@ public class WorkerAnimatorStateController : MonoBehaviour
         }
         //
         WorkerAnimator.SetBool("Death", true);
+		WorkerAnimator.SetTrigger ("DoDead");
     }
     //
     void Test()
