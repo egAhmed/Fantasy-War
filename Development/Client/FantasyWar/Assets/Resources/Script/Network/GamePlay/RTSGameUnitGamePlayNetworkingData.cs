@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 public class RTSGameUnitGamePlayNetworkingData{
 	//
+	public string unitID;
 	public float positionX;
 	public float positionY;
 	public float positionZ;
-	//
-	public string unitID;
 	//
 	public float eulerX;
 	public float eulerY;
