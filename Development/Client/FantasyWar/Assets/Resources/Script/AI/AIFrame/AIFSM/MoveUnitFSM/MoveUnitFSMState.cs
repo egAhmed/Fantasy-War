@@ -16,6 +16,8 @@ public enum MoveUnitFSMStateID
     Idle = 0,//休闲状态
     Chasing,//追逐状态
     Attacking,//攻击状态
+    Collect,//挖矿
+    Building,//建造
     Dead,//死亡状态
 }
 public abstract class MoveUnitFSMState : FSMState
@@ -47,7 +49,9 @@ public abstract class MoveUnitFSMState : FSMState
     //各个状态的变量
 
     //追逐范围
-    protected float chaseDistance = 40.0f;
+    public float chaseDistance = originDistance;
+    //初始追击范围
+    public static float originDistance = 40.0f;
     //攻击距离
     protected float attackDistance = 20.0f;
     //与巡逻点的距离
