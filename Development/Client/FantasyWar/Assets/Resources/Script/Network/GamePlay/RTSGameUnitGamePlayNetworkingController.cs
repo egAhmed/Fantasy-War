@@ -36,9 +36,11 @@ public class RTSGameUnitGamePlayNetworkingController : MonoBehaviour {
 
     public void send() {
 		//
-        Debug.Log("send");
-		//
-		if(UnitNetworkingData==null)
+        // Debug.Log("send");
+        //
+        networkingDataInit();
+        //
+        if(UnitNetworkingData==null)
         return;
 			//
         RTSNetworkGamePlayClientManager.ShareInstance.send(UnitNetworkingData);
@@ -73,8 +75,8 @@ public class RTSGameUnitGamePlayNetworkingController : MonoBehaviour {
 		//
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	void LateUpdate()
+    {
+        send();
+    }
 }
