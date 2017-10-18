@@ -6,7 +6,7 @@ public class PlayerAdvancedFSM : FSM
 {
     public Transform enemyTransform;
     //所有状态的集合
-	public List<PlayerFSMState> fsmStates;
+    public List<PlayerFSMState> fsmStates;
 
     //当前状态编号
     private PlayerFSMStateID currentStateID;

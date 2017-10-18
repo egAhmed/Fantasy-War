@@ -12,7 +12,10 @@ public class PlayerAIController : PlayerAdvancedFSM {
     //public Attack AIAttack;
     //public GetResources AIGetResources;
 
+    //判断军队充足的数量
+    private Dictionary<string, List<RTSMovableUnit>> _armyNums;
 
+    private Dictionary<string, List<RTSBuilding>> _buildingNums;
     //Initialize the Finite state machine for the NPC tank
     protected override void Initialize()
     {
@@ -44,16 +47,16 @@ public class PlayerAIController : PlayerAdvancedFSM {
     {
 
 
-        PlayerAttackState attack = new PlayerAttackState();
+        PlayerAttackState attack = new PlayerAttackState(this);
         attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
         attack.AddTransition(PlayerFSMTransition.ArmyUseUp, PlayerFSMStateID.Develop);
 
-        PlayerDevelopState develop = new PlayerDevelopState();
+        PlayerDevelopState develop = new PlayerDevelopState(this);
         develop.AddTransition(PlayerFSMTransition.ArmyEnough, PlayerFSMStateID.Attack);
         develop.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
         develop.AddTransition(PlayerFSMTransition.NoMoney, PlayerFSMStateID.Attack);
 
-        PlayerDeadState dead = new PlayerDeadState();
+        PlayerDeadState dead = new PlayerDeadState(this);
         attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
         
 

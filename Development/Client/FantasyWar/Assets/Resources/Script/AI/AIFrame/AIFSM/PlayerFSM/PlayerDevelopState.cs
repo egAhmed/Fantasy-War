@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerDevelopState : PlayerFSMState
 {
+    public PlayerDevelopState(PlayerAIController AICon)
+    {
+        StateID = PlayerFSMStateID.Develop;
+        AIController = AICon;
+    }
     public override void Act(Transform enemy, Transform myself)
     {
         throw new NotImplementedException();
@@ -12,16 +17,8 @@ public class PlayerDevelopState : PlayerFSMState
 
     public override void Reason(Transform enemy, Transform myself)
     {
-        throw new NotImplementedException();
-    }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
 }
+
+

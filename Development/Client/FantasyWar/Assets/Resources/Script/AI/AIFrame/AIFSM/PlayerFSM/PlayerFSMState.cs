@@ -19,6 +19,7 @@ public enum PlayerFSMStateID
 }
 public abstract class PlayerFSMState
 {
+    protected PlayerAIController AIController;
     //字典，用于保存“转换-状态”的信息
     protected Dictionary<PlayerFSMTransition, PlayerFSMStateID> _map;
     public Dictionary<PlayerFSMTransition, PlayerFSMStateID> Map
@@ -43,10 +44,13 @@ public abstract class PlayerFSMState
         {
             return _stateID;
         }
+        set
+        {
+            _stateID = value;
+        }
     }
 
-    //判断军队充足的数量
-    protected Dictionary<string, List<RTSGameUnit>> _armyNums;
+
     public Dictionary<string, List<RTSGameUnit>> ArmyNums
     {
         get
