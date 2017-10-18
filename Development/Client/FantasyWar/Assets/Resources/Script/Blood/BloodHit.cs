@@ -13,6 +13,8 @@ public class BloodHit : MonoBehaviour
     public float LightReflect = 0.5f;
     private Material SCMaterial;
     private Texture2D Texture2;
+    private bool existCoroutine = false;
+   
     Material material
     {
         get
@@ -30,28 +32,52 @@ public class BloodHit : MonoBehaviour
     {
         current = this;
     }
-    public void BloodScreen()
+
+    IEnumerator EnableBloodScreen(float waitTime)
     {
         Hit_Full = 0.5f;
         LightReflect = 0.5f;
+
+        yield return new WaitForSeconds(waitTime);
+        CloseBloodScreen();
+        StopCoroutine("BloodScreen");
+        existCoroutine = !existCoroutine;
+       
+
     }
-    public void CloseBloodScreen()
+
+    public void BloodScreen(float waitTime)
+    {
+        if (existCoroutine==false)
+        {
+            StartCoroutine(EnableBloodScreen(waitTime));
+            existCoroutine = !existCoroutine;
+        }
+        else
+        {
+            StopCoroutine("BloodScreen");
+        }
+
+
+    }
+    private void CloseBloodScreen()
     {
         Hit_Full = 0.0f;
         LightReflect = 0.0f;
     }
-    /// <summary>
-    /// 损血屏幕特效,效果强度由两个参数的积决定,范围0~1
-    /// </summary>
-    /// <param name="arg1"></param>
-    /// <param name="arg2"></param>
-    public void BloodScreen(float arg1, float arg2)
-    {
-        Hit_Full = arg1;
-        LightReflect = arg2;
-    }
+    ///// <summary>
+    ///// 损血屏幕特效,效果强度由两个参数的积决定,范围0~1
+    ///// </summary>
+    ///// <param name="arg1"></param>
+    ///// <param name="arg2"></param>
+    //public void BloodScreen(float arg1, float arg2)
+    //{
+    //    Hit_Full = arg1;
+    //    LightReflect = arg2;
+    //}
     void Start()
     {
+
         Texture2 = Resources.Load("Texture/BloodHit") as Texture2D;
         SCShader = Shader.Find("ImageEffects/BloodHit");
         if (!SystemInfo.supportsImageEffects)
@@ -91,6 +117,6 @@ public class BloodHit : MonoBehaviour
 
     }
 
-   
+
 
 }
