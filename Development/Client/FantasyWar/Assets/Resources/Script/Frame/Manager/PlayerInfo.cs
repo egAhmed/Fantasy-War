@@ -15,16 +15,17 @@ public class PlayerInfo{
 
     //public List<GameObject> StartingUnits = new List<GameObject>();
 
-    //private List<GameObject> buildingUnits = new List<GameObject> ();
+	private Dictionary<string,List<RTSGameUnit>> buildingUnits = new Dictionary<string, List<RTSGameUnit>>();
 
-    //public List<GameObject> BuildingUnits { get { return buildingUnits; } }
+	public Dictionary<string,List<RTSGameUnit>> BuildingUnits { get { return buildingUnits; } }
 
-    //private List<GameObject> armyUnits = new List<GameObject> ();
+	private Dictionary<string,List<RTSGameUnit>> armyUnits = new Dictionary<string, List<RTSGameUnit>> ();
 
-    //public List<GameObject> ArmyUnits { get { return armyUnits; } }
+	public Dictionary<string,List<RTSGameUnit>> ArmyUnits {get{ return armyUnits;}}
 
     public RTSGameUnitBelongSide gameUnitBelongSide;
-    public bool IsCurrentPlayer;
+
+	//public bool IsCurrentPlayer;
 
 	public float Resources;
 }
