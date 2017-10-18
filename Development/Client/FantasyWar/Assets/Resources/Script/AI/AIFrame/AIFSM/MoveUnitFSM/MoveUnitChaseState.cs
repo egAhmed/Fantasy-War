@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,5 +47,15 @@ public class MoveUnitChaseState : MoveUnitFSMState
         MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();
         if (AICon.AIMove != null)
             AICon.AIMove(destPos);
+    }
+
+    public override void SwitchIn()
+    {
+        
+    }
+
+    public override void SwitchOut()
+    {
+
     }
 }

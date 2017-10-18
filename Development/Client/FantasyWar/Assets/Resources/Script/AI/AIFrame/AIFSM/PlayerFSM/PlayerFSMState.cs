@@ -6,8 +6,7 @@ using UnityEngine;
 public enum PlayerFSMTransition
 {
     ArmyEnough = 0,//军队充足
-    BeAttack,//受到攻击
-    LostEnemy,//失去敌人视野
+    ArmyUseUp,//进攻时候，军队死完
     BaseNoHealth,//基地没血
     NoMoney,//没钱，且没农民或附近矿产为0
 }
@@ -18,7 +17,7 @@ public enum PlayerFSMStateID
     Attack,//攻击状态
     Dead,//死亡状态
 }
-public abstract class PlayerFSMState : FSMState
+public abstract class PlayerFSMState
 {
     //字典，用于保存“转换-状态”的信息
     protected Dictionary<PlayerFSMTransition, PlayerFSMStateID> _map;
@@ -83,5 +82,9 @@ public abstract class PlayerFSMState : FSMState
         return Map[transition];
     }
 
+    //用来确定是否需要转换到其他状态
+    public abstract void Reason(Transform enemy, Transform myself);
+    //本状态的角色行为
+    public abstract void Act(Transform enemy, Transform myself);
     
 }

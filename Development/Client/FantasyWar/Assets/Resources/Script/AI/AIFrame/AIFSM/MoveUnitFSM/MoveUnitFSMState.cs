@@ -20,7 +20,7 @@ public enum MoveUnitFSMStateID
     Building,//建造
     Dead,//死亡状态
 }
-public abstract class MoveUnitFSMState : FSMState
+public abstract class MoveUnitFSMState
 {
 
 
@@ -75,5 +75,12 @@ public abstract class MoveUnitFSMState : FSMState
     {
         return Map[transition];
     }
-
+    //用来确定是否需要转换到其他状态
+    public abstract void Reason(Transform enemy, Transform myself);
+    //本状态的角色行为
+    public abstract void Act(Transform enemy, Transform myself);
+    //切入状态a后，会调用的a的SwitchIn函数
+    public abstract void SwitchIn();
+    //切出状态a后，会调用a的SwitchOut函数
+    public abstract void SwitchOut();
 }

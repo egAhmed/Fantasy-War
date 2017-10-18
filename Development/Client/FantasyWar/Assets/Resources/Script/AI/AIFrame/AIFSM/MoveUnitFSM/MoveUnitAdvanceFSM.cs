@@ -13,7 +13,19 @@ public class MoveUnitAdvanceFSM : FSM
     public MoveUnitFSMStateID CurrentStateID { get { return currentStateID; } set { currentStateID = value; } }
 
     private MoveUnitFSMState currentState;
-    public MoveUnitFSMState CurrentState { get { return currentState; }set { currentState = value; } }
+    public MoveUnitFSMState CurrentState
+    {
+        get { return currentState; }
+        //调用切出切入函数
+        set
+        {
+            if (value == currentState)
+                return;
+            currentState.SwitchOut();
+            currentState = value;
+            currentState.SwitchOut();
+        }
+    }
 
     public MoveUnitAdvanceFSM()
     {
@@ -27,7 +39,7 @@ public class MoveUnitAdvanceFSM : FSM
     {
         if (fsmState == null)
             return;
-        
+
         //若列表是空的，则加入列表并设置状态
         if (fsmStates.Count == 0)
         {
@@ -47,7 +59,7 @@ public class MoveUnitAdvanceFSM : FSM
         fsmStates.Add(fsmState);
     }
 
-  
+
     public void DeleteState(MoveUnitFSMStateID fsmState)
     {
         foreach (var state in fsmStates)
@@ -64,7 +76,7 @@ public class MoveUnitAdvanceFSM : FSM
     public void PerformTransition(MoveUnitFSMTransition trans)
     {
         MoveUnitFSMStateID id = currentState.GetOutputState(trans);
-        
+
         currentStateID = id;
         foreach (var state in fsmStates)
         {

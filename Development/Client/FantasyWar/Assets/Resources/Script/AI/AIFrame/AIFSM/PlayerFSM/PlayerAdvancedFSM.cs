@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAdvancedFSM : FSM
 {
+    public Transform enemyTransform;
     //所有状态的集合
     private List<PlayerFSMState> fsmStates;
 
