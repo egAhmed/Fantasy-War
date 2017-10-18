@@ -37,8 +37,15 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
         {
             if (item.GetComponent<UnitBloodBar>() == null)
             {
-                BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
-                unitList.Add(BloodBar);
+                //Checkmate:Added testing code here, using for first basic demo, may enhance implement in next version >>>
+                UnitBloodBar temp= item.gameObject.AddComponent<UnitBloodBar>();
+                temp.SetColor(Color.green, Color.gray);
+                unitList.Add(temp);
+                //<<<
+
+                //szmalqp:original desgin>>>
+                // BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
+                // unitList.Add(BloodBar);
             }
 
         }
@@ -46,11 +53,17 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
         {
             if (item.GetComponent<UnitBloodBar>() == null)
             {
-                BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
-                //BloodBar.SetColor(Color.white,Color.yellow);
-                //BloodBar.SetHide(true);
-                unitList.Add(BloodBar);
-
+                //Checkmate:Added testing code here, using for first basic demo, may enhance implement in next version >>>
+                UnitBloodBar temp= item.gameObject.AddComponent<UnitBloodBar>();
+                temp.SetColor(Color.red, Color.gray);
+                unitList.Add(temp);
+                //<<<
+                //
+                //szmalqp:original desgin>>>
+                // BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
+                // //BloodBar.SetColor(Color.white,Color.yellow);
+                // //BloodBar.SetHide(true);
+                // unitList.Add(BloodBar);
             }
 
         }
@@ -58,8 +71,15 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
         {
             if (item.GetComponent<UnitBloodBar>() == null)
             {
-                BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
-                unitList.Add(BloodBar);
+                //Checkmate:Added testing code here, using for first basic demo, may enhance implement in next version >>>
+                UnitBloodBar temp= item.gameObject.AddComponent<UnitBloodBar>();
+                temp.SetColor(Color.yellow, Color.gray);
+                unitList.Add(temp);
+                //<<<
+                 //
+                //szmalqp:original desgin>>>
+                // BloodBar = item.gameObject.AddComponent<UnitBloodBar>();
+                // unitList.Add(BloodBar);
             }
 
             //}

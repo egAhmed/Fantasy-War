@@ -15,8 +15,6 @@ public enum RTSGameUnitBelongSide
 public class RTSGameUnit : MonoBehaviour
 {
 	public int maxHP;
-	public string unitName;
-    public Sprite unitIcom;
     //
     [SerializeField]
     public PlayerInfo playerInfo;
@@ -151,20 +149,9 @@ public class RTSGameUnit : MonoBehaviour
         }
     }
     //
-    private RTSGameUnitDataInfo _unitData;
-    public RTSGameUnitDataInfo UnitData
-    {
-        get
-        {
-            return _unitData;
-        }
-
-        set
-        {
-            _unitData = value;
-        }
-    }
-
+    [SerializeField]
+    public RTSGameUnitDataInfo unitInfo;
+ 
     private void OnBecameVisible()
     {
         //Debug.Log("is visible");

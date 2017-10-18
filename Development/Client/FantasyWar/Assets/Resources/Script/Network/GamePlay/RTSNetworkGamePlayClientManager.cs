@@ -76,12 +76,18 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         return headerStr;
     }
 
-    public void send(RTSGameUnitDataInfo data) { 
+    public void send(RTSGameUnitGamePlayNetworkingData data) { 
+        if(data==null)
+            return;
+            //
         if (IsServerConnected)
         {
-            NetworkGamePlayMsg msg = new NetworkGamePlayMsg();
+            NetworkGamePlayMsg msg = NetworkGamePlayMsgGenerator.generateMsg(NetworkConfig.MSGTYPE_BATTLE_GAMEUNIT_DATA,JsonUtility.ToJson(data));
             //
-            clientSocket.Send(Encoding.UTF8.GetBytes(msg.msgHeader+msg.msgContent));
+            if(msg==null)
+            return;
+            //
+            send(msg);
             //
         }else
         {

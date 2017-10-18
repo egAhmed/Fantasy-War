@@ -21,8 +21,7 @@ public class ShowInfoUI : Interaction {
         {
             if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits[0] == this.gameObject)
             {
-
-                showPanel.SetText(RTSGameUnit.unitName, RTSGameUnit.HP.ToString(), RTSGameUnit.playerInfo.accentColor.ToString());
+                showPanel.SetText(RTSGameUnit.unitInfo.unitName, RTSGameUnit.HP.ToString(), RTSGameUnit.playerInfo.accentColor.ToString());
             }
         }
     }

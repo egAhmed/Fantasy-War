@@ -3,42 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RTSGameUnitGamePlayNetworkingController : MonoBehaviour {
-    private RTSGameUnit unit;
+    private RTSGameUnit Unit{
+        get;
+        set;
+    }
+    private RTSGameUnitGamePlayNetworkingData UnitNetworkingData{
+        get;
+        set;
+    }
+    //
+    private void networkingDataInit() {
+        //
+        if (Unit == null||Unit.unitInfo==null) {
+            UnitNetworkingData = null;
+            return;
+        }
+        //
+        if(UnitNetworkingData==null)
+            UnitNetworkingData=new RTSGameUnitGamePlayNetworkingData();
+        //
+        //
+        UnitNetworkingData.unitID = Unit.unitInfo.unitID;
+        UnitNetworkingData.positionX = transform.position.x;
+        UnitNetworkingData.positionY = transform.position.y;
+        UnitNetworkingData.positionZ = transform.position.z;
+        //
+        UnitNetworkingData.eulerX = transform.rotation.eulerAngles.x;
+        UnitNetworkingData.eulerY = transform.rotation.eulerAngles.y;
+        UnitNetworkingData.eulerZ = transform.rotation.eulerAngles.z;
+        //
+    }
+
     public void send() {
 		//
         Debug.Log("send");
 		//
-		if(unit==null)
-        return;
-		//
-		if(unit.UnitData==null)
+		if(UnitNetworkingData==null)
         return;
 			//
-        RTSNetworkGamePlayClientManager.ShareInstance.send(unit.UnitData);
+        RTSNetworkGamePlayClientManager.ShareInstance.send(UnitNetworkingData);
 		//
     }
 
-    public void received(RTSGameUnitDataInfo data) {
+    public void received(RTSGameUnitGamePlayNetworkingData data) {
         Debug.Log("received");
 		//
 		if(data==null)
             return;
 			//
-        if(unit==null)
+        if(Unit==null)
         return;
         //
-		if(unit.UnitData==null)
+		if(Unit.unitInfo==null)
             return;
 			//
-		if(unit.UnitData.unitID==data.unitID)
-        unit.UnitData = data;
+		if(Unit.unitInfo.unitID!=data.unitID)
+            return;
+            //
+
     }
 
     // Use this for initialization
     void Start () {
-        unit=GetComponent<RTSGameUnit>();
+        Unit=GetComponent<RTSGameUnit>();
 		//
-        if (unit == null) {
+        if (Unit == null) {
             Destroy(this);
         }
 		//
