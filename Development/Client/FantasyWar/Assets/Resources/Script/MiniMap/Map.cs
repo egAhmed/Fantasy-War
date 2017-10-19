@@ -10,9 +10,6 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public RectTransform ViewPort;//小地图上的摄像机视野范围
     public RectTransform targetPosition;
     public RectTransform WarningPosition;
-    public RectTransform WarningPosition1;
-    public RectTransform WarningPosition2;
-    public RectTransform WarningPosition3;
     //public Transform Corner1, Corner2;//地形左下角和地形右上角的标记点
     public GameObject BlipPrefab;//小地图上的单位预制体
     public GameObject MaskPrefab;
@@ -69,12 +66,9 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     /// </summary>
     /// <param name="battleWorldPosition"></param>
     public void battleWarning(Vector3 battleWorldPosition)
-    {
-       
-        
+    {       
         WarningPosition.gameObject.SetActive(true);
-        WarningPosition.position = WorldPositionToMap(battleWorldPosition);
-        
+        WarningPosition.position = WorldPositionToMap(battleWorldPosition);        
     }
 
     /// <summary>
