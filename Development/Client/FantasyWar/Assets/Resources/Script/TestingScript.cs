@@ -21,6 +21,12 @@ public class TestingScript : MonoBehaviour {
         InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, getHurtTesting);
         //
         testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
+
+		PlayerInfo p1 = new PlayerInfo ();
+		p1.isAI = true;
+		p1.name = "p1";
+		//p1.location =
+		p1.accentColor = Color.cyan;
     }
 
     RTSGameUnit testingGetHurtUnit;

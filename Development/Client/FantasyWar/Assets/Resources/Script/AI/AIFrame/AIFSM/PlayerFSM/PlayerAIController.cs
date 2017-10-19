@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAIController : PlayerAdvancedFSM {
-
     //public delegate void DelAIMove(Vector3 pos);
     //public delegate void Attack(RTSGameUnit tar);
     //public delegate void GetResources(RTSGameUnit tar);
@@ -19,7 +18,22 @@ public class PlayerAIController : PlayerAdvancedFSM {
         //rtswork = transform.GetComponent<RTSWorker>();
         //开始构造状态机
         ConstructFSM();
+
+		DelAIBuild = AIBuild;
     }
+
+	private bool AIBuild(Vector3 pos,string prefabPath){
+		foreach (RTSGameUnit item in playerInfo.ArmyUnits["worker"]) {
+			//选一个农民执行建造动作，建造建筑到pos
+			if (item is RTSWorker) {
+				MoveUnitAIController muac = item.GetComponent<MoveUnitAIController> ();
+				muac.SetTransition (MoveUnitFSMTransition.SetBuild);
+				muac.CurrentState.destPos = pos;
+				return true;
+			}
+		}
+		return false;
+	}
 
     //在FSM基类Update中调用
     protected override void FSMUpdate()

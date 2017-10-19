@@ -25,6 +25,7 @@ public class PlayerAttackState : PlayerFSMState
 		}
 
 		if (nearestPlayer == null) {
+			//找到最近的主基地
 			foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players) {
 				if (item != AIController.playerInfo) {
 					if (nearestPlayer != null) {
@@ -38,8 +39,11 @@ public class PlayerAttackState : PlayerFSMState
 				}
 			}
 
+			//让小兵打过去
 			foreach (string item in AIController.playerInfo.ArmyUnits.Keys) {
 				foreach (RTSGameUnit unit in AIController.playerInfo.ArmyUnits[item]) {
+					if (unit is RTSWorker)
+						continue;
 					MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
 					control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
 					control.CurrentState.destPos = nearestPlayer.location;
