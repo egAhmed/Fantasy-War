@@ -212,32 +212,45 @@ public class RTSGameUnit : MonoBehaviour
         targetGameUnit = unit;
     }
 
-//    private void selectionBottomCircleControllerInit()
-//    {
-//        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
-//        //
-//        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
-//        unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
-//    }
+    //    private void selectionBottomCircleControllerInit()
+    //    {
+    //        Vector3 bottomPos = new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
+    //        //
+    //        unitSelectionBottomCircleController = PrefabFactory.ShareInstance.createClone<RTSGameUnitSelectionBottomCircleController>(RTSGameUnitSelectionBottomCircleController.prefabPath, bottomPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+    //        unitSelectionBottomCircleController.transform.localEulerAngles = Vector3.zero;
+    //    }
     //
-//    private void selectionSpriteSwitch()
-//    {
-//        // Debug.Log(gameObject.name+" selected => "+_isSelected);
-//        if (unitSelectionBottomCircleController)
-//        {
-//            if (IsAllowMultipleSelection || IsAllowSingleSelection)
-//            {
-//                if (!IsSelected)
-//                {
-//                    unitSelectionBottomCircleController.hide();
-//                }
-//                else
-//                {
-//                    unitSelectionBottomCircleController.show(gameUnitBelongSide);
-//                }
-//            }
-//        }
-//    }
+    //    private void selectionSpriteSwitch()
+    //    {
+    //        // Debug.Log(gameObject.name+" selected => "+_isSelected);
+    //        if (unitSelectionBottomCircleController)
+    //        {
+    //            if (IsAllowMultipleSelection || IsAllowSingleSelection)
+    //            {
+    //                if (!IsSelected)
+    //                {
+    //                    unitSelectionBottomCircleController.hide();
+    //                }
+    //                else
+    //                {
+    //                    unitSelectionBottomCircleController.show(gameUnitBelongSide);
+    //                }
+    //            }
+    //        }
+    //    }
+    //
+    public virtual void getHurt(RTSGameUnit attackSourceUnit) {
+        //do attack damage calculate
+        
+        //do getHurt effect
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
+            //
+            BloodHit.current.BloodScreen(3f, 1f);
+            Map.Current.battleWarning(transform.position);
+            //
+        }
+        //
+    }
     //
     protected virtual void Awake()
     {

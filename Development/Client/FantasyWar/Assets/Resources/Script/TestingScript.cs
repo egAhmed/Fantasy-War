@@ -18,6 +18,17 @@ public class TestingScript : MonoBehaviour {
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,close);
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, poolManagerTesting);
+        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, getHurtTesting);
+        //
+        testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
+    }
+
+    RTSGameUnit testingGetHurtUnit;
+    private void getHurtTesting(KeyCode key) {
+        //
+        testingGetHurtUnit.getHurt(null);
+        // PoolManager.ShareInstanceance.PushObject("testing",1,obj);
+        //
     }
 
     private void poolManagerTesting(KeyCode key) {

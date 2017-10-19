@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 public static class NetworkConfig{
+    public const char MSG_SEPARATOR = ';';
     public const string CHAT_SERVER_HOST = @"10.20.70.141";
     public const string GAMEPLAY_SERVER_HOST = @"10.20.70.204";
     // public static readonly string GAMEPLAY_SERVER_HOST = @"127.0.0.1";

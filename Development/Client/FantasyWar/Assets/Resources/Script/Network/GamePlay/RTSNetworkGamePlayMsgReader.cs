@@ -4,9 +4,50 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class RTSNetworkGamePlayMsgReader{
-	
+    private readonly static char[] SPLIT_SEPARATORS = new char[1]{NetworkConfig.MSG_SEPARATOR};
     public static void readMsg(string msgStr) {
         //
+        try
+        {
+            //
+            if (msgStr == null)
+            {
+                Debug.Log("msgStr null");
+                return;
+            }
+            //
+            // Debug.Log("msgStr => " + msgStr);
+            //
+            if (!msgStr.StartsWith(NetworkConfig.GAMEPLAY_CLIENTMSG_HEADER_HEAD)
+                    || msgStr.Length < NetworkConfig.CLIENTMSG_HEADER_LENGTH)
+            {
+                Debug.Log("msgStr unknown, invalid format to read...");
+                return;
+            }
+            //
+            string[] msgFormattedStrArr = msgStr.Split(SPLIT_SEPARATORS, StringSplitOptions.RemoveEmptyEntries);
+            //
+            if (msgFormattedStrArr == null || msgFormattedStrArr.Length <= 0)
+            {
+                Debug.Log("msgFormattedStrArr null or empty...");
+                return;
+            }
+            //
+            for (int i = 0; i < msgFormattedStrArr.Length; i++)
+            {
+                //
+                readEachMsg(msgFormattedStrArr[i]);
+                //
+            }
+            //
+        }catch (Exception e) { 
+			//
+			Debug.Log("Exception => " + e.Message);
+			//
+		}
+    }
+    //
+    private static void readEachMsg(string msgStr) { 
 		try {
 			//
 			if (msgStr == null) {
@@ -14,7 +55,7 @@ public static class RTSNetworkGamePlayMsgReader{
 				return;
 			}
 			//
-			Debug.Log("msgStr => " + msgStr);
+			// Debug.Log("msgStr => " + msgStr);
 			//
 			if (!msgStr.StartsWith(NetworkConfig.GAMEPLAY_CLIENTMSG_HEADER_HEAD)
 					|| msgStr.Length < NetworkConfig.CLIENTMSG_HEADER_LENGTH) {
@@ -32,6 +73,7 @@ public static class RTSNetworkGamePlayMsgReader{
 			//
 			int msgType;
 			bool result = Int32.TryParse(msgTypeStr, out msgType); // return bool value hint y/n
+			//
 			if (!result)
 			{
 			//TODO
@@ -54,7 +96,7 @@ public static class RTSNetworkGamePlayMsgReader{
 				return;
 			}
 			//
-			Debug.Log("msgContentStr = >"+msgContentStr);
+			// Debug.Log("msgContentStr = >"+msgContentStr);
 			//
 			switch (msgType) {
 				case NetworkConfig.MSGTYPE_BATTLE_GAMEUNIT_DATA:
@@ -72,16 +114,10 @@ public static class RTSNetworkGamePlayMsgReader{
 			//
 			Debug.Log("Exception => " + e.Message);
 			//
-		} finally {
-			//
-
-			//
-		}
+		} 
         //	
-    }
+	}
     //
-
-	//
     static RTSNetworkGamePlayMsgReader() { 
         
     }

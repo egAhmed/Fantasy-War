@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class RTSGamePlayNetworkingMsgReceiverManager : UnitySingleton<RTSGamePlayNetworkingMsgReceiverManager>
 {
@@ -17,17 +18,23 @@ public class RTSGamePlayNetworkingMsgReceiverManager : UnitySingleton<RTSGamePla
     }
 
     public void receivedMsg(RTSGameUnitGamePlayNetworkingData data){
-		if(data==null)
+        //
+        // Debug.Log("receivedMsg");
+        //
+        if(data==null)
             return;
         //
 		if(data.unitID==null)
             return;
         //
         if (!NetworkingMsgReceivers.ContainsKey(data.unitID)) { 
+            //  Debug.Log("!ContainsKey");
 			// NetworkingMsgReceivers.Add(data.unitID)
 		}else {
+            //
             RTSGameUnitGamePlayNetworkingMsgReceiver  receiver=  NetworkingMsgReceivers[data.unitID];
             receiver.receive(data);
+            //
         }
 		//
     }

@@ -18,9 +18,14 @@ public class RTSGameUnitGamePlayNetworkingMsgReceiver : MonoBehaviour {
         }
     }
     //
+    private RTSGameUnitGamePlayNetworkingData UnitData{
+        get;
+        set;
+    }
+    //
     public void receive(RTSGameUnitGamePlayNetworkingData data) {
         //
-        Debug.Log("receive");
+        // Debug.Log("receive");
 		//
 		if(data==null||data.unitID==null)
             return;
@@ -28,10 +33,8 @@ public class RTSGameUnitGamePlayNetworkingMsgReceiver : MonoBehaviour {
 		if(UnitID!=data.unitID)
             return;
         //
-        Vector3 pos = new Vector3(data.positionX,data.positionY,data.positionZ);
-        transform.position = pos;
-        Quaternion rot = Quaternion.Euler(data.eulerX,data.eulerY,data.eulerZ);
-        transform.rotation=rot;
+        UnitData = data;
+     
         //
     }
 
@@ -39,11 +42,30 @@ public class RTSGameUnitGamePlayNetworkingMsgReceiver : MonoBehaviour {
     void Start () {
         Unit=GetComponent<RTSGameUnit>();
 		//
-        if (Unit == null) {
+        if (UnitID == null) {
             Destroy(this);
         }
         //
+        UnitData = new RTSGameUnitGamePlayNetworkingData();
+        UnitData.unitID = UnitID;
+        //
         RTSGamePlayNetworkingMsgReceiverManager.ShareInstance.register(this);
+        //
+    }
+    //
+    /// <summary>
+    /// LateUpdate is called every frame, if the Behaviour is enabled.
+    /// It is called after all Update functions have been called.
+    /// </summary>
+    void LateUpdate()
+    {
+        if(UnitData==null)
+            return;
+            //
+        Vector3 pos = new Vector3(UnitData.positionX,UnitData.positionY,UnitData.positionZ);
+        transform.localPosition = pos;
+        Quaternion rot = Quaternion.Euler(UnitData.eulerX,UnitData.eulerY,UnitData.eulerZ);
+        transform.rotation=rot;
         //
     }
 }

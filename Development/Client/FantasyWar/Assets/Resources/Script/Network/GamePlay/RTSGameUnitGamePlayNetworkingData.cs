@@ -13,5 +13,20 @@ public class RTSGameUnitGamePlayNetworkingData{
 	public float eulerZ;
 	//
 	public string behaviour;
-	//
+    //
+    public override string ToString() {
+		//
+        string str = "";
+		str+="unitID:"+unitID+"\n";
+		//
+		str+="positionX:"+positionX+"\n";
+		str+="positionY:"+positionY+"\n";
+		str+="positionZ:"+positionZ+"\n";
+		//
+		str+="eulerX:"+eulerX+"\n";
+		str+="eulerY:"+eulerY+"\n";
+		str+="eulerZ:"+eulerZ+"\n";
+		//
+        return str;
+    }
 }
