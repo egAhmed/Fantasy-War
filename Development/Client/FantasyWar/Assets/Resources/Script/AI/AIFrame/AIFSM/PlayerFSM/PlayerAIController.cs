@@ -11,12 +11,12 @@ public class PlayerAIController : PlayerAdvancedFSM {
     //public DelAIMove AIMove;
     //public Attack AIAttack;
     //public GetResources AIGetResources;
-    public RTSWorker rtswork;
+	public PlayerInfo playerInfo;
     
     //Initialize the Finite state machine for the NPC tank
     protected override void Initialize()
     {
-        rtswork = transform.GetComponent<RTSWorker>();
+        //rtswork = transform.GetComponent<RTSWorker>();
         //开始构造状态机
         ConstructFSM();
     }
