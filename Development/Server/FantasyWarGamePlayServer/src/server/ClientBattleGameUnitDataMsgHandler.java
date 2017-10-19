@@ -1,6 +1,9 @@
 package server;
 
+import java.net.InetAddress;
+
 import clientMsg.battle.ClientMsgBattleGameUnitData;
+import config.ServerConfig;
 
 public class ClientBattleGameUnitDataMsgHandler {
 	//
@@ -13,14 +16,14 @@ public class ClientBattleGameUnitDataMsgHandler {
 		}
 		return instance;
 	}
-
 	//
 	private ClientBattleGameUnitDataMsgHandler() {
 		
 	}
 	//
 	public void handleClientBattleMsg(ClientMsgBattleGameUnitData unitData) {
-		
+		System.out.println("ClientMsgBattleGameUnitData : "+ unitData);
+		//
 	}
 	//
 }

@@ -14,7 +14,8 @@ public class BloodHit : MonoBehaviour
     private Material SCMaterial;
     private Texture2D Texture2;
     private bool existCoroutine = false;
-   
+    private Animator bloodAnimator;
+    private AnimatorStateInfo bloodAnimatorState;
     Material material
     {
         get
@@ -32,12 +33,10 @@ public class BloodHit : MonoBehaviour
     {
         current = this;
     }
-
-    IEnumerator EnableBloodScreen(float waitTime)
+   
+    IEnumerator EnableBloodScreen(float waitTime, float flashFrequency)
     {
-        Hit_Full = 0.6f;
-        LightReflect = 0.6f;
-
+        bloodAnimator.speed = 2.0f / flashFrequency;
         yield return new WaitForSeconds(waitTime);
         CloseBloodScreen();
         StopCoroutine("BloodScreen");
@@ -46,11 +45,12 @@ public class BloodHit : MonoBehaviour
 
     }
 
-    public void BloodScreen(float waitTime)
+    public void BloodScreen(float waitTime, float flashFrequency)
     {
         if (existCoroutine==false)
-        {
-            StartCoroutine(EnableBloodScreen(waitTime));
+        {           
+            StartCoroutine(EnableBloodScreen(waitTime, flashFrequency));
+            bloodAnimator.SetTrigger("play");
             existCoroutine = !existCoroutine;
         }
         else
@@ -62,8 +62,8 @@ public class BloodHit : MonoBehaviour
     }
     private void CloseBloodScreen()
     {
-        Hit_Full = 0.0f;
-        LightReflect = 0.0f;
+        bloodAnimator.SetTrigger("stop");
+
     }
     ///// <summary>
     ///// 损血屏幕特效,效果强度由两个参数的积决定,范围0~1
@@ -77,7 +77,8 @@ public class BloodHit : MonoBehaviour
     //}
     void Start()
     {
-
+        bloodAnimator = GetComponent<Animator>();
+        bloodAnimatorState = bloodAnimator.GetCurrentAnimatorStateInfo(0);
         Texture2 = Resources.Load("Texture/BloodHit") as Texture2D;
         SCShader = Shader.Find("ImageEffects/BloodHit");
         if (!SystemInfo.supportsImageEffects)
@@ -85,7 +86,6 @@ public class BloodHit : MonoBehaviour
             enabled = false;
             return;
         }
-        CloseBloodScreen();
     }
 
     void OnRenderImage(RenderTexture sourceTexture, RenderTexture destTexture)

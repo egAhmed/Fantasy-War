@@ -29,15 +29,24 @@ public class ClientMsgHandler {
 		try {
 			//
 			if (clientMsgStr == null) {
-				System.out.println("clientMsgStr null");
+//				System.out.println("clientMsgStr null");
 				return;
 			}
 			//
-			System.out.println("clientMsgStr => " + clientMsgStr);
+//			System.out.println("clientMsgStr => " + clientMsgStr);
 			//
 			if (!clientMsgStr.startsWith(ServerConfig.CLIENTMSG_HEADER_HEAD)
 					|| clientMsgStr.length() < ServerConfig.CLIENTMSG_HEADER_LENGTH) {
-				System.out.println("clientMsgStr unknown, invalid format to read...");
+//				System.out.println("clientMsgStr unknown, invalid format to read...");
+//				System.out.println(clientMsgStr);
+				return;
+			}
+			//
+			String userIDStr = clientMsgStr.substring(ServerConfig.CLIENTMSG_HEADER_USERID_INDEX_START,
+					ServerConfig.CLIENTMSG_HEADER_USERID_INDEX_END);
+			//
+			if (userIDStr == null) {
+//				System.out.println("userIDStr null...");
 				return;
 			}
 			//
@@ -45,33 +54,31 @@ public class ClientMsgHandler {
 					ServerConfig.CLIENTMSG_HEADER_MSGTYPE_INDEX_END);
 			//
 			if (msgTypeStr == null) {
+//				System.out.println("msgTypeStr null...");
 				return;
 			}
 			//
 			int msgType = Integer.parseInt(msgTypeStr);
 			//
-			String userIDStr = clientMsgStr.substring(ServerConfig.CLIENTMSG_HEADER_USERID_INDEX_START,
-					ServerConfig.CLIENTMSG_HEADER_USERID_INDEX_END);
-			//
-			if (userIDStr == null) {
-				return;
-			}
-			//
 			String msgContent = clientMsgStr.substring(ServerConfig.CLIENTMSG_CONTENT_INDEX_START);
 			//
 			if (msgContent == null) {
+//				System.out.println("msgContent null...");
 				return;
 			}
 			//
+//			System.out.println("clientMsgStr msgContent = >"+msgContent);
 			//
-			Gson gson = new Gson();
+//			Gson gson = new Gson();
 			//
 			switch (msgType) {
 			case ServerConfig.MSGTYPE_BATTLE_GAMEUNIT_DATA:
 				//
-				ClientMsgBattleGameUnitData clientMsgBattleGameUnitData = gson.fromJson(msgContent,
-						ClientMsgBattleGameUnitData.class);
-				ClientBattleGameUnitDataMsgHandler.shareInstance().handleClientBattleMsg(clientMsgBattleGameUnitData);
+				ServerMsgBroadcastManager.shareInstance().broadcast(clientMsgStr);
+				//
+//				ClientMsgBattleGameUnitData clientMsgBattleGameUnitData = gson.fromJson(msgContent,
+//						ClientMsgBattleGameUnitData.class);
+//				ClientBattleGameUnitDataMsgHandler.shareInstance().handleClientBattleMsg(clientMsgBattleGameUnitData);
 				//
 				break;
 			default:
