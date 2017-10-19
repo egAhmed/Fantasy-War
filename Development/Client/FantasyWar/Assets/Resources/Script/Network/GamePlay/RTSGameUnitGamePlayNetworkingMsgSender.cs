@@ -51,6 +51,6 @@ public class RTSGameUnitGamePlayNetworkingMsgSender : MonoBehaviour {
 	//
 	void LateUpdate()
     {
-        //send();
+        send();
     }
 }

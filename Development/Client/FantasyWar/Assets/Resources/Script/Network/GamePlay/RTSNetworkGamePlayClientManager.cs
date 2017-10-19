@@ -36,12 +36,13 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
 
     void connect()
     {
+        try
+        {
         //  
         IPAddress ip = IPAddress.Parse(NetworkConfig.GAMEPLAY_SERVER_HOST);
         clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         //
-        try
-        {
+       
             clientSocket.Connect(new IPEndPoint(ip, NetworkConfig.GAMEPLAY_SERVER_PORT)); //binding ip and port config  
             //
             Debug.Log("Connecting Success!");
@@ -56,9 +57,20 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         catch (Exception e)
         {
             //
-            Debug.LogError("Connecting exception, Error...");
-            Debug.LogError(e.Message);
+            Debug.Log("Connecting exception, could not find the GameServer...");
+            // Debug.LogError(e.Message);
             //
+        }
+    }
+    //
+
+    private const float CONNECTING_FREQUENCY = 3F;
+    private IEnumerator forceConnectingLoop() {
+        while (true) {
+            if (!IsServerConnected) {
+                connect();
+            }
+            yield return new WaitForSeconds(CONNECTING_FREQUENCY);
         }
     }
 
@@ -77,9 +89,6 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
             //
             clientSocket.Send(Encoding.UTF8.GetBytes(sendingMsg),SocketFlags.None);
             //
-        }else
-        {
-            connect();
         }
     }
 
@@ -89,7 +98,8 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
             //
         if (IsServerConnected)
         {
-            return;
+            // return;
+            Debug.Log("fucking connected");
             //
             string dataJSON = JsonUtility.ToJson(data);
             // Debug.LogError("dataJSON =>"+dataJSON);
@@ -100,9 +110,6 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
             //
             send(msg);
             //
-        }else
-        {
-            connect();
         }
     }
 
@@ -155,6 +162,9 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
 
     private void clientClose()
     {
+        //
+        StopAllCoroutines();
+        //
         receiveThreadClose();
         //
         if (clientSocket != null)
@@ -164,7 +174,7 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
             clientSocket = null;
         }
         //
-        Debug.LogError("clientClose");
+        Debug.Log("clientClose");
         //
     }
 //
@@ -182,8 +192,6 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
     private IEnumerator pendingLogin() {
         //
         loginMsgSending = true;
-        //
-        connect();
         //
         float connectionWaitingSecPerTime = 0.1f;
         int connectionWaitingTimesLimit=60;
@@ -294,4 +302,8 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         clientClose();
     }
     //
+    void Start()
+    {
+        StartCoroutine(forceConnectingLoop());
+    }
 }
