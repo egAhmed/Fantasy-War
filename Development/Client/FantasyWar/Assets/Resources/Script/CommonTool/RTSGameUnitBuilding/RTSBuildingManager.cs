@@ -1,54 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 //
-public delegate void DGameUnitBuildingModeStarted();
-public delegate void DGameUnitBuildingModeStopped(bool unitBuildingIsCompleted, Vector3 buildingPos);
+// public delegate void DGameUnitBuildingModeStarted();
+public delegate void DGameUnitBuildingModeStopped(bool unitBuildingIsCompleted, Vector3 buildingPos,PlayerInfo info);
 //
 public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
 {
     //
-    private event DGameUnitBuildingModeStarted buildingStartedEvent;
+    // private event DGameUnitBuildingModeStarted buildingStartedEvent;
     private event DGameUnitBuildingModeStopped buildingStoppedEvent;
     //
-    public static void eventRegister(DGameUnitBuildingModeStarted eventHandler)
-    {
-        if (ShareInstance == null)
-        {
-            return;
-        }
-        if (eventHandler == null) {
-            return;
-        }
-        if (ShareInstance.buildingStartedEvent == null)
-        {
-            ShareInstance.buildingStartedEvent = eventHandler;
-        }
-        else
-        {
-            ShareInstance.buildingStartedEvent += eventHandler;
-        }
-    }
+    // public static void eventRegister(DGameUnitBuildingModeStarted eventHandler)
+    // {
+    //     if (ShareInstance == null)
+    //     {
+    //         return;
+    //     }
+    //     if (eventHandler == null) {
+    //         return;
+    //     }
+    //     if (ShareInstance.buildingStartedEvent == null)
+    //     {
+    //         ShareInstance.buildingStartedEvent = eventHandler;
+    //     }
+    //     else
+    //     {
+    //         ShareInstance.buildingStartedEvent += eventHandler;
+    //     }
+    // }
     //
-    public static void eventUnRegister(DGameUnitBuildingModeStarted eventHandler)
-    {
-        if (ShareInstance == null)
-        {
-            return;
-        }
-        if (eventHandler == null) {
-            return;
-        }
-        if (ShareInstance.buildingStartedEvent == null)
-        {
-            return;
-        }
-        else
-        {
-            ShareInstance.buildingStartedEvent -= eventHandler;
-        }
-    }
+    // public static void eventUnRegister(DGameUnitBuildingModeStarted eventHandler)
+    // {
+    //     if (ShareInstance == null)
+    //     {
+    //         return;
+    //     }
+    //     if (eventHandler == null) {
+    //         return;
+    //     }
+    //     if (ShareInstance.buildingStartedEvent == null)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         ShareInstance.buildingStartedEvent -= eventHandler;
+    //     }
+    // }
     //
     public static void eventRegister(DGameUnitBuildingModeStopped eventHandler)
     {
@@ -88,6 +89,7 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         }
     }
     //
+    private PlayerInfo playerRequestToBuild;
     //
     private bool isBuildingMode;
     //
@@ -108,11 +110,11 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         {
             if (buildingTempUnit != null)
             {
-                buildingStoppedEvent.Invoke(true, buildingTempUnit.transform.position);
+                buildingStoppedEvent.Invoke(true, buildingTempUnit.transform.position,playerRequestToBuild);
             }
             else
             {
-                buildingStoppedEvent.Invoke(false, Vector3.zero);
+                buildingStoppedEvent.Invoke(false, Vector3.zero,playerRequestToBuild);
             }
         }
         //
@@ -141,7 +143,7 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
     {
         if (buildingStoppedEvent != null)
         {
-            buildingStoppedEvent.Invoke(false, Vector3.zero);
+            buildingStoppedEvent.Invoke(false, Vector3.zero,playerRequestToBuild);
         }
         stopBuildingMode();
     }
@@ -206,9 +208,19 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         buildingTempUnit = null;
     }
     //
-    public void startBuildingMode(RTSBuildingTempUnit tempUnit)
+    public void startBuildingMode(string prefabPath, PlayerInfo playerInfo) {
+        startBuildingMode(PrefabFactory.ShareInstance.createClone<RTSBuildingTempUnit>(prefabPath, Vector3.zero, Quaternion.identity),playerInfo);
+    }
+
+    //
+    public void startBuildingMode(RTSBuildingTempUnit tempUnit,PlayerInfo playerInfo)
     {
         // Debug.Log("startBuildingMode");
+        if (playerInfo == null) {
+            return;
+        }
+        //
+        playerRequestToBuild = playerInfo;
         //
         if (tempUnit == null)
         {
@@ -222,6 +234,8 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
             //
                 isBuildingMode = true;
                 //
+                RTSGameUnitSelectionManager.Enabled = false;
+                RTSGameUnitActionManager.Enabled = false;
                 //
                 InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Mouse0, OnMouseLeftDown);
                 InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Escape, OnEscDown);
@@ -231,13 +245,13 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
                 //
                 StartCoroutine(buildingLocating());
                 //
-                if (buildingStartedEvent != null)
-            {
-                Debug.Log("buildingStartedEvent != null");
-                buildingStartedEvent.Invoke();
-            }else { 
-                Debug.Log("buildingStartedEvent == null");
-            }
+            //     if (buildingStartedEvent != null)
+            // {
+            //     Debug.Log("buildingStartedEvent != null");
+            //     buildingStartedEvent.Invoke();
+            // }else { 
+            //     Debug.Log("buildingStartedEvent == null");
+            // }
             //
         }
     }
@@ -253,7 +267,74 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
             //
             InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown(KeyCode.Mouse0, OnMouseLeftDown);
             InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown(KeyCode.Escape, OnEscDown);
+            //
+            RTSGameUnitSelectionManager.Enabled = true;
+            RTSGameUnitActionManager.Enabled = true;
+            //
         }
     }
 
+    public bool isPosValidToBuild(Vector3 pos, string path) {
+        //
+        bool flag = false;
+        //
+        Vector3 validBuildPos;
+        //
+        try { 
+            //
+        RTSBuildingTempUnit unit=PrefabFactory.ShareInstance.createClone<RTSBuildingTempUnit>(path,Vector3.zero,Quaternion.identity);
+        //
+        Debug.Log("fucking here");
+        //
+        if (RTSCameraController.RTSCamera && unit != null)
+        {
+                Debug.Log("ready to cast");
+                //
+                Vector3 direction = pos - RTSCameraController.RTSCamera.transform.position;
+            RaycastHit hitInfo = new RaycastHit();
+            //
+            if (Physics.Raycast(RTSCameraController.RTSCamera.transform.position, direction, out hitInfo, 1000f, RTSLayerManager.ShareInstance.LayerMaskRayCastMouse1, QueryTriggerInteraction.Ignore))
+            {
+                //
+                Debug.Log("raycast hit something");
+                //
+                GameObject hitObj = hitInfo.collider.gameObject;
+                //
+                if (hitObj != null)
+                {
+                    //
+                    Debug.LogError("hit obj");
+                    //
+                    if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentGround)
+                    {
+                        Debug.LogError("hit Ground");
+                        //
+                        unit.transform.position = hitInfo.point;
+                        //
+                        flag = !buildingTempUnit.IsBlocked;
+                        //
+                    }
+                    else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnemyGameUnit)
+                    {
+                        Debug.LogError("hit LayerNumberEnemyGameUnit");
+                    }else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberFriendlyGameUnit)
+                    {
+                        Debug.LogError("hit LayerNumberFriendlyGameUnit");
+                    }
+                    else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentObstacle)
+                    {
+                        Debug.LogError("hit LayerNumberEnvironmentObstacle");
+                    }
+                }
+            }
+            //
+        }
+        //
+        }catch(Exception e){ 
+            Debug.Log(e.Message);
+        }
+        //
+        return flag;
+        //
+    }
 }

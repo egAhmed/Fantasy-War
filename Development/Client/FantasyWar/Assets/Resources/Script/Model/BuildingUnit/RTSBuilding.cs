@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshCollider))]
 public class RTSBuilding : RTSGameUnit
 {
+    MeshCollider collider;
     public float BuildTime = 3;
     public float DestoryTime = 3;
 
@@ -21,6 +23,13 @@ public class RTSBuilding : RTSGameUnit
     protected override void Start()
     {
         base.Start();
+        //
+        MeshCollider collider=GetComponent<MeshCollider>();
+        if (collider == null) {
+            collider = gameObject.AddComponent<MeshCollider>();
+        }
+        //
+        collider.convex = true;
         //
         // materials = GetMaterials();
         //
