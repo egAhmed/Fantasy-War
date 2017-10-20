@@ -22,22 +22,23 @@ public class PlayerDevelopState : PlayerFSMState
     {
         bool tmp = false;
         //士兵已满
-        if (tmp)
+        if (armyEnough)
         {
             AIController.SetTransition(PlayerFSMTransition.ArmyEnough);
             return;
         }
+        RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits["基地名"][0];
         //基地爆炸（问题不大）
-        if (tmp)
+        if (mainunit == null||mainunit.HP==0)
         {
             AIController.SetTransition(PlayerFSMTransition.BaseNoHealth);
             return;
         }
         //没钱没农民
-        if (tmp)
+        if (AIController.playerInfo.Resources==0&& AIController.playerInfo.ArmyUnits["农民名称"].Count==0)
         {
             //还要没兵
-            if(tmp)
+            if(isNoArmy())
             {
                 AIController.SetTransition(PlayerFSMTransition.NoMoney & PlayerFSMTransition.ArmyUseUp);
                 return;
@@ -122,6 +123,15 @@ public class PlayerDevelopState : PlayerFSMState
     void creatArmy(string armyName)
     {
         AIController.playerInfo.BuildingUnits["兵营"][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
+    }
+    bool isNoArmy()
+    {
+        foreach (var item in AIController.playerInfo.ArmyUnits.Values)
+        {
+            if (item.Count != 0)
+                return false;
+        }
+        return true;
     }
 }
 

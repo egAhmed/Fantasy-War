@@ -61,10 +61,25 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
         MoveUnitDeadState dead = new MoveUnitDeadState();
         dead.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
+        MoveUnitBuildState build = new MoveUnitBuildState();
+        build.AddTransition(MoveUnitFSMTransition.GetCollectCommand, MoveUnitFSMStateID.Collect);
+
+        MoveUnitCollectingState collecting = new MoveUnitCollectingState();
+        
+
+        MoveUnitPatrolState patrol = new MoveUnitPatrolState();
+        patrol.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
+
+        MoveUnitMoveState move = new MoveUnitMoveState();
+        move.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
+
         AddFSMState(idle);
         AddFSMState(chase);
         AddFSMState(attack);
         AddFSMState(dead);
+        AddFSMState(build);
+        AddFSMState(collecting);
+        AddFSMState(patrol);
     }
 
     //战略层使用，强制进入攻击状态
