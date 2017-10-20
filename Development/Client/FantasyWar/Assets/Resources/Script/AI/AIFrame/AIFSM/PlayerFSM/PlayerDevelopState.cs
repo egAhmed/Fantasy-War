@@ -15,7 +15,7 @@ public class PlayerDevelopState : PlayerFSMState
     }
     public override void Act(Transform enemy, Transform myself)
     {
-            armyEnough=develop(AIController.TargetResourcesNums);
+        armyEnough = develop(AIController.TargetResourcesNums);
     }
 
     public override void Reason(Transform enemy, Transform myself)
@@ -26,18 +26,18 @@ public class PlayerDevelopState : PlayerFSMState
             AIController.SetTransition(PlayerFSMTransition.ArmyEnough);
             return;
         }
-        RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits["基地名"][0];
+        RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits["人族主城"][0];
         //基地爆炸（问题不大）
-        if (mainunit == null||mainunit.HP==0)
+        if (mainunit == null || mainunit.HP == 0)
         {
             AIController.SetTransition(PlayerFSMTransition.BaseNoHealth);
             return;
         }
         //没钱没农民
-        if (AIController.playerInfo.Resources==0&& AIController.playerInfo.ArmyUnits["农民名称"].Count==0)
+        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits["人族农民"].Count == 0)
         {
             //还要没兵
-            if(isNoArmy())
+            if (isNoArmy())
             {
                 AIController.SetTransition(PlayerFSMTransition.NoMoney & PlayerFSMTransition.ArmyUseUp);
                 return;
@@ -53,11 +53,13 @@ public class PlayerDevelopState : PlayerFSMState
     {
         for (int i = 0; i < TargetResourcesNums.GetLength(0); i++)
         {
+            int IndexOfName = TargetResourcesNums[i, 0].LastIndexOf(@"/")+1;
+            string name = TargetResourcesNums[i, 0].Substring(IndexOfName);
             //先判断是否存在于建筑的字典里。
-            if (AIController.playerInfo.BuildingUnits.ContainsKey(TargetResourcesNums[i, 0]))
+            if (AIController.playerInfo.BuildingUnits.ContainsKey(name))
             {
                 //判断建筑数量是否达标
-                if (AIController.playerInfo.BuildingUnits[TargetResourcesNums[i, 0]].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
+                if (AIController.playerInfo.BuildingUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
                 {
                     //没达标，建造一个
                     build(TargetResourcesNums[i, 0]);
@@ -66,10 +68,10 @@ public class PlayerDevelopState : PlayerFSMState
                 continue;
             }
             //判断是否存在部队字典里面
-            if (AIController.playerInfo.ArmyUnits.ContainsKey(TargetResourcesNums[i, 0]))
+            if (AIController.playerInfo.ArmyUnits.ContainsKey(name))
             {
                 //判断部队数量是否达标
-                if (AIController.playerInfo.BuildingUnits[TargetResourcesNums[i, 0]].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
+                if (AIController.playerInfo.BuildingUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
                 {
                     //没达标，造一个
                     creatArmy(TargetResourcesNums[i, 0]);
@@ -85,7 +87,7 @@ public class PlayerDevelopState : PlayerFSMState
     void build(string buildPath)
     {
         //获取基地坐标
-        Vector3 basePos = AIController.playerInfo.BuildingUnits["基地名称"][0].transform.position;
+        Vector3 basePos = AIController.playerInfo.BuildingUnits["人族主城"][0].transform.position;
         Vector3 buildPos = basePos;
         float anchor = 0;
         if (FSM.DelAIBuild == null)
@@ -106,7 +108,7 @@ public class PlayerDevelopState : PlayerFSMState
 
 
         //找一个农民去建房子
-        MoveUnitAIController farmerAI=AIController.playerInfo.ArmyUnits["农民的名称"][0].GetComponent<MoveUnitAIController>();
+        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits["人族农民"][0].GetComponent<MoveUnitAIController>();
         farmerAI.SetBuildState(FSM.DelAIBuild(buildPos, buildPath).pos, buildPath);
     }
 
@@ -121,7 +123,7 @@ public class PlayerDevelopState : PlayerFSMState
     //}
     void creatArmy(string armyName)
     {
-        AIController.playerInfo.BuildingUnits["兵营"][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
+        AIController.playerInfo.BuildingUnits["人族兵营"][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
     }
     bool isNoArmy()
     {

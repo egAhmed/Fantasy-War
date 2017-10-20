@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
 
-public class PlayerAIController : PlayerAdvancedFSM {
+public class PlayerAIController : PlayerAdvancedFSM
+{
 
     //public delegate void DelAIMove(Vector3 pos);
     //public delegate void Attack(RTSGameUnit tar);
@@ -11,11 +14,11 @@ public class PlayerAIController : PlayerAdvancedFSM {
     //public DelAIMove AIMove;
     //public Attack AIAttack;
     //public GetResources AIGetResources;
-	public PlayerInfo playerInfo;
+    public PlayerInfo playerInfo;
 
     private string[,] _targetResourcesNums;
 
-    
+
     //阶段性目标兵种和建筑数量
     public string[,] TargetResourcesNums
     {
@@ -23,13 +26,14 @@ public class PlayerAIController : PlayerAdvancedFSM {
         {
             //初始化阶段性目标兵种和建筑数量
             if (_targetResourcesNums == null)
-                _targetResourcesNums = new string[,]
-                {
-                    {"a","1" }
-                };
+            {
+                loadTargetnums();
+            }
+            
             return _targetResourcesNums;
         }
     }
+    
     //Initialize the Finite state machine for the NPC tank
     protected override void Initialize()
     {
@@ -37,21 +41,21 @@ public class PlayerAIController : PlayerAdvancedFSM {
         //开始构造状态机
         ConstructFSM();
 
-		//DelAIBuild = AIBuild;
+        //DelAIBuild = AIBuild;
     }
 
-	//private bool AIBuild(Vector3 pos,string prefabPath){
-	//	foreach (RTSGameUnit item in playerInfo.ArmyUnits["worker"]) {
-	//		//选一个农民执行建造动作，建造建筑到pos
-	//		if (item is RTSWorker) {
-	//			MoveUnitAIController muac = item.GetComponent<MoveUnitAIController> ();
-	//			muac.SetTransition (MoveUnitFSMTransition.SetBuild);
-	//			muac.CurrentState.destPos = pos;
-	//			return true;
-	//		}
-	//	}
-	//	return false;
-	//}
+    //private bool AIBuild(Vector3 pos,string prefabPath){
+    //	foreach (RTSGameUnit item in playerInfo.ArmyUnits["worker"]) {
+    //		//选一个农民执行建造动作，建造建筑到pos
+    //		if (item is RTSWorker) {
+    //			MoveUnitAIController muac = item.GetComponent<MoveUnitAIController> ();
+    //			muac.SetTransition (MoveUnitFSMTransition.SetBuild);
+    //			muac.CurrentState.destPos = pos;
+    //			return true;
+    //		}
+    //	}
+    //	return false;
+    //}
 
     //在FSM基类Update中调用
     protected override void FSMUpdate()
@@ -88,7 +92,7 @@ public class PlayerAIController : PlayerAdvancedFSM {
 
         PlayerDeadState dead = new PlayerDeadState(this);
         attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
-        
+
 
         AddFSMState(attack);
         AddFSMState(develop);
@@ -96,22 +100,63 @@ public class PlayerAIController : PlayerAdvancedFSM {
     }
 
     //战略层使用，强制进入攻击状态
-//    public void SetAttackState(Transform enemy)
-//    {
-//        //改变追击距离
-//        for (int i = 0; i < fsmStates.Count; i++)
-//        {
-//            fsmStates[i].chaseDistance = float.MaxValue;
-//        }
-//
-//        CurrentStateID = MoveUnitFSMStateID.Attacking;
-//        foreach (var state in fsmStates)
-//        {
-//            if (state.StateID == CurrentStateID)
-//            {
-//                CurrentState = state;
-//                break;
-//            }
-//        }
-//    }
+    //    public void SetAttackState(Transform enemy)
+    //    {
+    //        //改变追击距离
+    //        for (int i = 0; i < fsmStates.Count; i++)
+    //        {
+    //            fsmStates[i].chaseDistance = float.MaxValue;
+    //        }
+    //
+    //        CurrentStateID = MoveUnitFSMStateID.Attacking;
+    //        foreach (var state in fsmStates)
+    //        {
+    //            if (state.StateID == CurrentStateID)
+    //            {
+    //                CurrentState = state;
+    //                break;
+    //            }
+    //        }
+    //    }
+
+    //加载发展目标表
+    void loadTargetnums()
+    {
+        if (File.Exists(Application.streamingAssetsPath + @"/AIhunmandevelop"))
+        {
+            byte[] buffer = new byte[1024 * 1024];
+            FileStream fs = File.Open(Application.streamingAssetsPath + @"/AIhunmandevelop", FileMode.Open);
+            int leng = fs.Read(buffer, 0, (int)fs.Length);
+            string str = System.Text.Encoding.UTF8.GetString(buffer, 0, leng);
+            if (Settings.AIhunmandevelop.idList==null)
+                Settings.AIhunmandevelop.Get(0).LoadData(str);
+            _targetResourcesNums = new string[Settings.AIhunmandevelop.idList.Count, 2];
+            for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
+            {
+                _targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(i).resid.ToString();
+                _targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(i).nums.ToString();
+
+            }
+            loadResources();
+        }
+    }
+
+    //加载资源表
+    void loadResources()
+    {
+        if (File.Exists(Application.streamingAssetsPath + @"/ResourcesTable"))
+        {
+            byte[] buffer = new byte[1024 * 1024];
+            FileStream fs = File.Open(Application.streamingAssetsPath + @"/ResourcesTable", FileMode.Open);
+            int leng = fs.Read(buffer, 0, (int)fs.Length);
+            string str = System.Text.Encoding.UTF8.GetString(buffer, 0, leng);
+            if (Settings.ResourcesTable.idList==null)
+                Settings.ResourcesTable.Get(0).LoadData(str);
+            for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
+            {
+                _targetResourcesNums[i, 0] = Settings.ResourcesTable.Get(Convert.ToInt32(_targetResourcesNums[i, 0])).path;
+
+            }
+        }
+    }
 }
