@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class RTSNetworkGamePlayMsgReader{
-    private readonly static char[] SPLIT_SEPARATORS = new char[1]{NetworkConfig.MSG_SEPARATOR};
-    public static void readMsg(string msgStr) {
+public class RTSNetworkGamePlayMsgReader:Singleton<RTSNetworkGamePlayMsgReader>{
+    private readonly char[] SPLIT_SEPARATORS = new char[1]{NetworkConfig.MSG_SEPARATOR};
+    public void readMsg(string msgStr) {
         //
-        try
-        {
+        // try
+        // {
             //
             if (msgStr == null)
             {
@@ -40,15 +40,15 @@ public static class RTSNetworkGamePlayMsgReader{
                 //
             }
             //
-        }catch (Exception e) { 
-			//
-			Debug.Log("Exception => " + e.Message);
-			//
-		}
+        // }catch (Exception e) { 
+		// 	//
+		// 	Debug.Log("Exception => " + e.Message);
+		// 	//
+		// }
     }
     //
-    private static void readEachMsg(string msgStr) { 
-		try {
+    private void readEachMsg(string msgStr) { 
+		// try {
 			//
 			if (msgStr == null) {
 				Debug.Log("msgStr null");
@@ -102,6 +102,7 @@ public static class RTSNetworkGamePlayMsgReader{
 				case NetworkConfig.MSGTYPE_BATTLE_GAMEUNIT_DATA:
                     //
                     RTSGameUnitGamePlayNetworkingData data=JsonUtility.FromJson<RTSGameUnitGamePlayNetworkingData>(msgContentStr);
+					//
                     RTSGamePlayNetworkingMsgReceiverManager.ShareInstance.receivedMsg(data);
 				//
 				break;
@@ -110,15 +111,11 @@ public static class RTSNetworkGamePlayMsgReader{
 			}
 			//
 			//
-		} catch (Exception e) {
-			//
-			Debug.Log("Exception => " + e.Message);
-			//
-		} 
+		// } catch (Exception e) {
+		// 	//
+		// 	Debug.Log("Exception => " + e.Message);
+		// 	//
+		// } 
         //	
 	}
-    //
-    static RTSNetworkGamePlayMsgReader() { 
-        
-    }
 }

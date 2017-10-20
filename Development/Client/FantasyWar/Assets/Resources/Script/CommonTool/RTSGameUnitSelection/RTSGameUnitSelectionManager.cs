@@ -266,7 +266,8 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
             singleSelectedUnit = null;
         }
         //
-        List<RTSGameUnit> selectedUnits = RTSGameUnitManager.ShareInstance.SelectedUnits;
+
+		List<RTSGameUnit> selectedUnits =PlayerInfoManager.ShareInstance.currentPlayer.SelectedUnits;
         if (selectedUnits == null || selectedUnits.Count <= 0)
         {
             return;
@@ -335,8 +336,8 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 //Debug.LogError("hit => " + hitObj.name);
                 //
                 //selectionRelease();
-                // RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
-                RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
+                RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
+                // RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
                 //            
                 //
                 if (gameUnit)
@@ -409,7 +410,7 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
         }
         ////
         //
-        List<RTSGameUnit> UnitsSelectionAvailable = RTSGameUnitManager.ShareInstance.PlayerUnits;
+		List<RTSGameUnit> UnitsSelectionAvailable = PlayerInfoManager.ShareInstance.currentPlayer.AllUnits;
         if (UnitsSelectionAvailable == null)
         {
             return;
