@@ -52,10 +52,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		super.channelActive(ctx);
 		//
 		System.out.println("channelActive");
-		//
 		ServerChanelGroupManager.shareInstance().getServerChannelGroup().add(ctx.channel());
 		//
-//		ServerChanelGroupManager.shareInstance().ClientChannelList().add(ctx);
+		ServerChanelGroupManager.shareInstance().ClientChannelList().add(ctx);
 //		ServerMsgBroadcastManager.shareInstance().broadcast("fuck you");
 		//
 	}
@@ -66,10 +65,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		super.channelInactive(ctx);
 		//
 		System.out.println("channelInactive");
-		//
 		ServerChanelGroupManager.shareInstance().getServerChannelGroup().remove(ctx.channel());
 		//
-//		ServerChanelGroupManager.shareInstance().ClientChannelList().remove(ctx);
+		ServerChanelGroupManager.shareInstance().ClientChannelList().remove(ctx);
 		//
 	}
 	

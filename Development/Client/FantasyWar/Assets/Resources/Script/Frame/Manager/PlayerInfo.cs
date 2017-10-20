@@ -25,7 +25,7 @@ public class PlayerInfo{
 
     public RTSGameUnitBelongSide gameUnitBelongSide;
 
-	//public bool IsCurrentPlayer;
+	public bool isAI;
 
 	public float Resources;
 }
