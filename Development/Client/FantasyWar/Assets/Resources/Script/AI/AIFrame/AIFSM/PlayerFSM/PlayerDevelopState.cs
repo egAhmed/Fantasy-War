@@ -93,7 +93,7 @@ public class PlayerDevelopState : PlayerFSMState
             return;
         while (FSM.DelAIBuild(out buildPos, buildPath))
         {
-            buildPos = basePos + new Vector3(Mathf.Sin(anchor), -100, Mathf.Cos(anchor));
+            buildPos = basePos + new Vector3(Mathf.Sin(anchor), 0, Mathf.Cos(anchor));
             if (anchor == 2 * Mathf.PI)
                 anchor = 0;
             else
