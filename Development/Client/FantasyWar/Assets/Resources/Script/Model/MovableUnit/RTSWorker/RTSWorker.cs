@@ -445,8 +445,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 			ActionList.Add (ac);
 			ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
 			ActionList.Add (ab);
-			ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
-			ActionList.Add (apro);
+		
             //
             Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
             acc.collectDelegate += OnSetTargetUnit;

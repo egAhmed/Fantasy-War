@@ -11,7 +11,6 @@ public enum MoveUnitFSMTransition
     NoHealth,
 	SetBuild,//设置建造建筑
 	GetCollectCommand,
-	GetPatrolCommand,
 }
 //可能的状态
 public enum MoveUnitFSMStateID
@@ -23,14 +22,13 @@ public enum MoveUnitFSMStateID
     Building,//建造
     Dead,//死亡状态
 	Move,//移动状态
-	Patrol,//巡逻寻敌状态
 }
 public abstract class MoveUnitFSMState : FSMState
 {
 
 
     //目标点位置
-	public Vector3 destPos;
+    protected Vector3 destPos;
     //字典，用于保存“转换-状态”的信息
     protected Dictionary<MoveUnitFSMTransition, MoveUnitFSMStateID> _map;
     public Dictionary<MoveUnitFSMTransition, MoveUnitFSMStateID> Map
