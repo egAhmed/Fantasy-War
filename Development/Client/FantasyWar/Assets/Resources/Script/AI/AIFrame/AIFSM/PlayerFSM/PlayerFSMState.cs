@@ -5,10 +5,10 @@ using UnityEngine;
 //可能的转换
 public enum PlayerFSMTransition
 {
-    ArmyEnough = 0,//军队充足
-    ArmyUseUp,//进攻时候，军队死完
-    BaseNoHealth,//基地没血
-    NoMoney,//没钱，且没农民或附近矿产为0
+    ArmyEnough = 1,//军队充足
+    ArmyUseUp=1<<1,//进攻时候，军队死完
+    BaseNoHealth=1<<2,//基地没血
+    NoMoney=1<<3,//没钱，且没农民
 }
 //可能的状态
 public enum PlayerFSMStateID

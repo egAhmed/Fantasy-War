@@ -86,4 +86,20 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
             }
         }
     }
+
+    //战略层使用，强制进入建造状态
+    public void SetBuildState(Vector3 pos,string name)
+    {
+        CurrentStateID = MoveUnitFSMStateID.Building;
+        foreach (var state in fsmStates)
+        {
+            if (state.StateID == CurrentStateID)
+            {
+                CurrentState = state;
+                break;
+            }
+        }
+        CurrentState.destPos = pos;
+        
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAIController : PlayerAdvancedFSM {
+
     //public delegate void DelAIMove(Vector3 pos);
     //public delegate void Attack(RTSGameUnit tar);
     //public delegate void GetResources(RTSGameUnit tar);
@@ -11,7 +12,24 @@ public class PlayerAIController : PlayerAdvancedFSM {
     //public Attack AIAttack;
     //public GetResources AIGetResources;
 	public PlayerInfo playerInfo;
+
+    private string[,] _targetResourcesNums;
+
     
+    //阶段性目标兵种和建筑数量
+    public string[,] TargetResourcesNums
+    {
+        get
+        {
+            //初始化阶段性目标兵种和建筑数量
+            if (_targetResourcesNums == null)
+                _targetResourcesNums = new string[,]
+                {
+                    {"a","1" }
+                };
+            return _targetResourcesNums;
+        }
+    }
     //Initialize the Finite state machine for the NPC tank
     protected override void Initialize()
     {
@@ -19,21 +37,21 @@ public class PlayerAIController : PlayerAdvancedFSM {
         //开始构造状态机
         ConstructFSM();
 
-		DelAIBuild = AIBuild;
+		//DelAIBuild = AIBuild;
     }
 
-	private bool AIBuild(Vector3 pos,string prefabPath){
-		foreach (RTSGameUnit item in playerInfo.ArmyUnits["worker"]) {
-			//选一个农民执行建造动作，建造建筑到pos
-			if (item is RTSWorker) {
-				MoveUnitAIController muac = item.GetComponent<MoveUnitAIController> ();
-				muac.SetTransition (MoveUnitFSMTransition.SetBuild);
-				muac.CurrentState.destPos = pos;
-				return true;
-			}
-		}
-		return false;
-	}
+	//private bool AIBuild(Vector3 pos,string prefabPath){
+	//	foreach (RTSGameUnit item in playerInfo.ArmyUnits["worker"]) {
+	//		//选一个农民执行建造动作，建造建筑到pos
+	//		if (item is RTSWorker) {
+	//			MoveUnitAIController muac = item.GetComponent<MoveUnitAIController> ();
+	//			muac.SetTransition (MoveUnitFSMTransition.SetBuild);
+	//			muac.CurrentState.destPos = pos;
+	//			return true;
+	//		}
+	//	}
+	//	return false;
+	//}
 
     //在FSM基类Update中调用
     protected override void FSMUpdate()
@@ -66,6 +84,7 @@ public class PlayerAIController : PlayerAdvancedFSM {
         develop.AddTransition(PlayerFSMTransition.ArmyEnough, PlayerFSMStateID.Attack);
         develop.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
         develop.AddTransition(PlayerFSMTransition.NoMoney, PlayerFSMStateID.Attack);
+        develop.AddTransition(PlayerFSMTransition.NoMoney & PlayerFSMTransition.ArmyUseUp, PlayerFSMStateID.Dead);
 
         PlayerDeadState dead = new PlayerDeadState(this);
         attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);

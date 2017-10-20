@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FSM : MonoBehaviour {
 
-    public delegate bool delAIBuild(Vector3 pos, string path);
+    public delegate bool delAIBuild(out Vector3 pos, string path);
     //AI建造委托
-    public delAIBuild DelAIBuild;
+    public static delAIBuild DelAIBuild;
     protected virtual void Initialize() { }
     protected virtual void FSMUpdate() { }
     protected virtual void FSMFixedUpdate() { }
