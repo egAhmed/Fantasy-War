@@ -1,3 +1,0 @@
-﻿//发展顺序按照id来		
-int	int	int
-id	resid	nums

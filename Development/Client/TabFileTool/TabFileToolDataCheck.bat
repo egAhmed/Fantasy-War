@@ -1,3 +1,0 @@
-echo start checking....
-TabFileTool check
-pause
