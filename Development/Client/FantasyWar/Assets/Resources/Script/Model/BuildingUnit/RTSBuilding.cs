@@ -20,9 +20,13 @@ public class RTSBuilding : RTSGameUnit
 
     protected override void Start()
     {
-        materials = GetMaterials();
+        base.Start();
         //
-        BuildShaderEffect();
+        // materials = GetMaterials();
+        //
+        // materials[0].SetFloat("_Progress", 0);
+//        
+        // BuildShaderEffect();
         //
     }
 
@@ -97,14 +101,16 @@ public class RTSBuilding : RTSGameUnit
     }
     //
     protected override void actionBehaviourInit() {
+        ///
         base.actionBehaviourInit();
         //
-        UnitManager.ShareInstance.Buildings[playerInfo].Add (gameObject);
+        // UnitManager.ShareInstance.Buildings[playerInfo].Add (gameObject);
         //
 		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
 		ActionList.Add (aa);
-		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
-		ActionList.Add (ab);
+        //
+		ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
+		ActionList.Add (apro);
         //
     }
 }
