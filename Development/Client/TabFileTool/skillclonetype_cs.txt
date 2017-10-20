@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+namespace Settings
+{
+#if SKILL_EDITOR_MODE
+	[System.Serializable]
+#endif
+    public partial struct $ClassName : TabFileDataBase
+    {
+		$StructDefStart
+#if SKILL_EDITOR_MODE
+		[System.Serializable]
+#endif
+		public struct $StructName
+		{
+			$StructVaribleDefStart
+			$Varible
+			$StructVaribleDefEnd
+		}
+		$StructDefEnd
+		$VaribleDefStart
+		$Varible
+		$VaribleDefEnd
+		private static Dictionary<int, $ClassName> datas = null;
+		public static List<int> idList = null;
+		
+		public static $ClassName Get(int id)
+		{
+			if (datas.ContainsKey(id))
+				return datas[id];
+			$ClassName nullValue = new $ClassName();
+			return nullValue;
+		}
+		
+#if SKILL_EDITOR_MODE
+		public static void Set($ClassName conf)
+		{
+			if (datas.ContainsKey(conf.id))
+				datas[conf.id] = conf;
+			else
+			{
+				idList.Add(conf.id);
+				datas.Add(conf.id, conf);
+			}
+		}
+#endif
+
+		public bool isNull{ get { return id == 0; } }
+		public void LoadData(string context)
+		{
+			string[] lines = context.Split('\n');
+			int lineCount = lines.Length;
+			datas = new Dictionary<int, $ClassName>(lineCount);
+			idList = new List<int>(lineCount);
+			for (int i = 0; i < lineCount; i++)
+			{
+				string line = lines[i];
+				if (string.IsNullOrEmpty(line))
+					continue;
+				string[] paramList = line.Split('\t');
+				$ClassName data = new $ClassName();
+				int paramIndex = 0;
+$ParamDataSet
+				datas[data.id] = data;
+				idList.Add(data.id);
+			}
+		}
+		
+		public $ClassName Clone()
+		{
+			$ClassName data = new $ClassName();
+$CloneDataSet
+			return data;
+		}
+    }
+}

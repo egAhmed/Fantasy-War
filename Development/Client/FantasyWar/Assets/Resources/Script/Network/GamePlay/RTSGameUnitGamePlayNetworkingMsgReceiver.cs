@@ -34,8 +34,7 @@ public class RTSGameUnitGamePlayNetworkingMsgReceiver : MonoBehaviour {
             return;
         //
         UnitData = data;
-        //
-        Debug.Log(UnitData);
+     
         //
     }
 

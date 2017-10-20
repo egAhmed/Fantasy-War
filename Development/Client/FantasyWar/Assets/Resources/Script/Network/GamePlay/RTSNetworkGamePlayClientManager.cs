@@ -106,7 +106,7 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
             //
             string dataJSON = JsonUtility.ToJson(data);
             // Debug.LogError("dataJSON =>"+dataJSON);
-            RTSNetworkGamePlayMsg msg =RTSNetworkGamePlayMsgGenerator.ShareInstance.generateMsg(NetworkConfig.MSGTYPE_BATTLE_GAMEUNIT_DATA,dataJSON);
+            RTSNetworkGamePlayMsg msg =RTSNetworkGamePlayMsgGenerator.generateMsg(NetworkConfig.MSGTYPE_BATTLE_GAMEUNIT_DATA,dataJSON);
             //
             // Debug.LogError("msg.msgHeader =>"+msg.msgHeader);
             // Debug.LogError("msg.msgContent =>"+msg.msgContent);
@@ -118,7 +118,7 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
 
     private void serverMsgReader(string msgStr) {
         // Debug.Log("received server msg => " + msgStr);
-        RTSNetworkGamePlayMsgReader.ShareInstance.readMsg(msgStr);
+        RTSNetworkGamePlayMsgReader.readMsg(msgStr);
     }
     //
     void receiveMsg()
@@ -173,9 +173,7 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         //
         if (clientSocket != null)
         {
-            if (IsServerConnected) { 
             clientSocket.Shutdown(SocketShutdown.Both);
-            }
             clientSocket.Close();
             clientSocket = null;
         }

@@ -39,10 +39,10 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
             {
                 //Checkmate:Added testing code here, using for first basic demo, may enhance implement in next version >>>
               //
-                // if (item is RTSBuilding) {
-                //       //Bug binding
-                //     continue;
-                // }
+                if (item is RTSBuilding) {
+                      //Bug binding
+                    continue;
+                }
                 UnitBloodBar temp= item.gameObject.AddComponent<UnitBloodBar>();
                 temp.SetColor(Color.green, Color.gray);
                 unitList.Add(temp);
