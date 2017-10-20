@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public static class RTSNetworkGamePlayMsgGenerator{
+public class RTSNetworkGamePlayMsgGenerator: Singleton<RTSNetworkGamePlayMsgGenerator>{
 
-    public static RTSNetworkGamePlayMsg generateMsg(int msgType,string msgContent) {
+    public RTSNetworkGamePlayMsg generateMsg(int msgType,string msgContent) {
         //
         RTSNetworkGamePlayMsg networkMsg = new RTSNetworkGamePlayMsg();
         //
@@ -13,7 +14,4 @@ public static class RTSNetworkGamePlayMsgGenerator{
         return networkMsg;
     }
     //
-    static RTSNetworkGamePlayMsgGenerator() { 
-        
-    }
 }

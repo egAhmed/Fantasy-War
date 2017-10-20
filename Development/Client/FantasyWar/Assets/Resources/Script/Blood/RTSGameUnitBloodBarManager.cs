@@ -38,6 +38,11 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
             if (item.GetComponent<UnitBloodBar>() == null)
             {
                 //Checkmate:Added testing code here, using for first basic demo, may enhance implement in next version >>>
+              //
+                // if (item is RTSBuilding) {
+                //       //Bug binding
+                //     continue;
+                // }
                 UnitBloodBar temp= item.gameObject.AddComponent<UnitBloodBar>();
                 temp.SetColor(Color.green, Color.gray);
                 unitList.Add(temp);
@@ -54,6 +59,10 @@ public class RTSGameUnitBloodBarManager : UnitySingleton<RTSGameUnitBloodBarMana
             if (item.GetComponent<UnitBloodBar>() == null)
             {
                 //Checkmate:Added testing code here, using for first basic demo, may enhance implement in next version >>>
+                // if (item is RTSBuilding) {
+                //     //Bug binding
+                //    continue;
+                //}
                 UnitBloodBar temp= item.gameObject.AddComponent<UnitBloodBar>();
                 temp.SetColor(Color.red, Color.gray);
                 unitList.Add(temp);

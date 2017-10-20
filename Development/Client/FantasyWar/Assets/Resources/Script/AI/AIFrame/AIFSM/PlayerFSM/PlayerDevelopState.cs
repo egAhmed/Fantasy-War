@@ -20,7 +20,6 @@ public class PlayerDevelopState : PlayerFSMState
 
     public override void Reason(Transform enemy, Transform myself)
     {
-        bool tmp = false;
         //士兵已满
         if (armyEnough)
         {
@@ -91,9 +90,9 @@ public class PlayerDevelopState : PlayerFSMState
         float anchor = 0;
         if (FSM.DelAIBuild == null)
             return;
-        while (FSM.DelAIBuild(out buildPos, buildPath))
+        while (!FSM.DelAIBuild(buildPos, buildPath).canbuild)
         {
-            buildPos = basePos + new Vector3(Mathf.Sin(anchor), 0, Mathf.Cos(anchor));
+            buildPos = basePos + new Vector3(Mathf.Sin(anchor), -100, Mathf.Cos(anchor));
             if (anchor == 2 * Mathf.PI)
                 anchor = 0;
             else
@@ -108,7 +107,7 @@ public class PlayerDevelopState : PlayerFSMState
 
         //找一个农民去建房子
         MoveUnitAIController farmerAI=AIController.playerInfo.ArmyUnits["农民的名称"][0].GetComponent<MoveUnitAIController>();
-        farmerAI.SetBuildState(buildPos, buildPath);
+        farmerAI.SetBuildState(FSM.DelAIBuild(buildPos, buildPath).pos, buildPath);
     }
 
     ////，用于寻找合适的建造地点
