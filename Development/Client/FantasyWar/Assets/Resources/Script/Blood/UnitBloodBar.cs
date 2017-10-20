@@ -30,7 +30,8 @@ public class UnitBloodBar : MonoBehaviour {
         }
         else
         {
-           bloodBar.transform.localPosition = new Vector3(0, 5f, 0);           
+            bloodBar.transform.localPosition = new Vector3(0, transform.GetComponent<MeshFilter>().mesh.bounds.size.y + 1f, 0);
+            
         }
        
        
