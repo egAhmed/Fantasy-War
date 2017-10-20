@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace Settings
 {
-    public partial struct ArmyTable : TabFileDataBase
+    public partial struct ResourcesTable : TabFileDataBase
     {
 
 		public int id;
@@ -14,14 +14,14 @@ namespace Settings
 		public float moveSpeed;
 		public string path;
 
-		private static Dictionary<int, ArmyTable> datas = null;
+		private static Dictionary<int, ResourcesTable> datas = null;
 		public static List<int> idList = null;
 		
-		public static ArmyTable Get(int id)
+		public static ResourcesTable Get(int id)
 		{
 			if (datas.ContainsKey(id))
 				return datas[id];
-			ArmyTable nullValue = new ArmyTable();
+			ResourcesTable nullValue = new ResourcesTable();
 			return nullValue;
 		}
 		
@@ -30,7 +30,7 @@ namespace Settings
 		{
 			string[] lines = context.Split('\n');
 			int lineCount = lines.Length;
-			datas = new Dictionary<int, ArmyTable>(lineCount);
+			datas = new Dictionary<int, ResourcesTable>(lineCount);
 			idList = new List<int>(lineCount);
 			for (int i = 0; i < lineCount; i++)
 			{
@@ -38,7 +38,7 @@ namespace Settings
 				if (string.IsNullOrEmpty(line))
 					continue;
 				string[] paramList = line.Split('\t');
-				ArmyTable data = new ArmyTable();
+				ResourcesTable data = new ResourcesTable();
 				int paramIndex = 0;
 				int.TryParse(paramList[paramIndex++], out data.id);
 				data.type = paramList[paramIndex++];
