@@ -173,7 +173,9 @@ public class RTSNetworkGamePlayClientManager : UnitySingleton<RTSNetworkGamePlay
         //
         if (clientSocket != null)
         {
+            if (IsServerConnected) { 
             clientSocket.Shutdown(SocketShutdown.Both);
+            }
             clientSocket.Close();
             clientSocket = null;
         }
