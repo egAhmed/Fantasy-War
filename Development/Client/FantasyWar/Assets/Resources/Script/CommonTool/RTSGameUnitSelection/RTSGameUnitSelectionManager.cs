@@ -335,8 +335,8 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 //Debug.LogError("hit => " + hitObj.name);
                 //
                 //selectionRelease();
-                // RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
-                RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
+                RTSGameUnit gameUnit = hitObj.GetComponent<RTSGameUnit>();
+                // RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
                 //            
                 //
                 if (gameUnit)

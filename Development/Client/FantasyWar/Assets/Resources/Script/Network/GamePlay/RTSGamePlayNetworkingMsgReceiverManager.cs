@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RTSGamePlayNetworkingMsgReceiverManager : UnitySingleton<RTSGamePlayNetworkingMsgReceiverManager>
+public class RTSGamePlayNetworkingMsgReceiverManager : Singleton<RTSGamePlayNetworkingMsgReceiverManager>
 {
     private Dictionary<string, RTSGameUnitGamePlayNetworkingMsgReceiver> _networkingMsgReceivers;
     public Dictionary<string, RTSGameUnitGamePlayNetworkingMsgReceiver> NetworkingMsgReceivers
