@@ -13,7 +13,7 @@ public class PoolManager : UnitySingleton<PoolManager>
     /// <summary>
     /// 默认对象池上限
     /// </summary>
-    public const int PoolItemMaxNum = 2147483647;
+    public const int PoolItemMaxNum = int.MaxValue;
 
     /// <summary>  
     /// 对象池  
