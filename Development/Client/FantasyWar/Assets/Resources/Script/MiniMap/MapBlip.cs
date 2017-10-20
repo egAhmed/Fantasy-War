@@ -41,6 +41,7 @@ public class MapBlip : MonoBehaviour
         set
         {
             unitColor = value;
+            BlipImage.color = unitColor;
         }
     }
 
