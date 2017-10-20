@@ -26,8 +26,8 @@ public class RTSGameUnitGamePlayNetworkingMsgSender : MonoBehaviour {
         //
         RTSGameUnitGamePlayNetworkingData data=new RTSGameUnitGamePlayNetworkingData();
         //
-        //
         data.unitID = Unit.unitInfo.unitID;
+        //
         // data.positionX =gameObject.transform.position.x;
         // data.positionY = gameObject.transform.position.y;
         // data.positionZ = gameObject.transform.position.z;
@@ -39,7 +39,6 @@ public class RTSGameUnitGamePlayNetworkingMsgSender : MonoBehaviour {
         data.eulerX = gameObject.transform.rotation.x;
         data.eulerY = gameObject.transform.rotation.y;
         data.eulerZ = gameObject.transform.rotation.z;
-        //
         //
         // Debug.Log(data);
         //

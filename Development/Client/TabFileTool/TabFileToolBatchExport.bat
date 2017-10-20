@@ -1,3 +1,0 @@
-echo start patching....
-TabFileTool batch
-pause
