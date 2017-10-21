@@ -241,7 +241,7 @@ public class RTSGameUnit : MonoBehaviour
     //
     public virtual void getHurt(RTSGameUnit attackSourceUnit) {
         //do attack damage calculate
-
+        
         //do getHurt effect
         if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
             //
@@ -266,7 +266,7 @@ public class RTSGameUnit : MonoBehaviour
         //
         // testingCreateUnitInfo();
         //
-        //testingCreatePlayInfo();
+        testingCreatePlayInfo();
         //
         actionBehaviourInit();
     }
@@ -321,8 +321,8 @@ public class RTSGameUnit : MonoBehaviour
 //
 		Interaction hl = gameObject.AddComponent<HightLight> ();
 		interactionList.Add (hl);
-		// Interaction si = gameObject.AddComponent<ShowInfoUI> ();
-		// interactionList.Add (si);
+		Interaction si = gameObject.AddComponent<ShowInfoUI> ();
+		interactionList.Add (si);
         //
     }
     //

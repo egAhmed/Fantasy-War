@@ -5,19 +5,14 @@ using UnityEngine;
 public class TestingScript : MonoBehaviour {
 
 	// Use this for initialization
-
-	public static string virCurrentName = "xxixxxlx";
-	public static PlayerInfo currentPlayer = null;
-
-
 	void Start () {
-		
-		//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
+        //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
+		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
 
 		// RTSGamePlayManager.ShareInstance.build();
         //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
-        //RTSManager.ShareInstance.testingCreatePlayInfo();
+        RTSManager.ShareInstance.testingCreatePlayInfo();
         RTSGameUnitBloodBarManager.ShareInstance.hideBloodbar();
         //
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);
@@ -25,30 +20,14 @@ public class TestingScript : MonoBehaviour {
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, poolManagerTesting);
         InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, getHurtTesting);
         //
-        //testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
+        testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
 
-//		PlayerInfo p1 = new PlayerInfo ();
-//		p1.isAI = true;
-//		p1.name = "p1";
-//		//p1.location =
-//		p1.accentColor = Color.cyan;
-		LoadPlayer();
-
-		foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players) {
-			if (item.name == virCurrentName) {
-				PlayerInfoManager.ShareInstance.currentPlayer = item;
-			}
-		}
+		PlayerInfo p1 = new PlayerInfo ();
+		p1.isAI = true;
+		p1.name = "p1";
+		//p1.location =
+		p1.accentColor = Color.cyan;
     }
-
-	void LoadPlayer(){
-		PlayerInfoManager pim = PlayerInfoManager.ShareInstance;
-		pim.AddPlayer ("xxixxxlx", Color.cyan);
-		pim.AddAIPlayerInfo ();
-		pim.InitPlayers ();
-		pim.LoadInitBuild ();
-	}
-
 
     RTSGameUnit testingGetHurtUnit;
     private void getHurtTesting(KeyCode key) {
@@ -65,9 +44,9 @@ public class TestingScript : MonoBehaviour {
         //
     }
 
-//    private void buildingTesting(KeyCode key) {
-//        RTSGamePlayManager.ShareInstance.build();
-//    }
+    private void buildingTesting(KeyCode key) {
+        RTSGamePlayManager.ShareInstance.build();
+    }
 
     // private void open(KeyCode key) {
     //     InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.P,p);

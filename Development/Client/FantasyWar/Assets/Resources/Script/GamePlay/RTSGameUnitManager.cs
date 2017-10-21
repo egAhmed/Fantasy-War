@@ -25,9 +25,6 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
     {
         get
         {
-			if (!GameUnitsDic.ContainsKey (RTSGameUnitBelongSide.Player)) {
-				return null;
-			}
             List<RTSGameUnit> playerUnits = GameUnitsDic[RTSGameUnitBelongSide.Player];
             if (playerUnits == null)
             {
@@ -52,9 +49,6 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
     {
         get
         {
-			if (!GameUnitsDic.ContainsKey (RTSGameUnitBelongSide.Player)) {
-				return null;
-			}
             return GameUnitsDic[RTSGameUnitBelongSide.Player];
         }
     }
@@ -63,9 +57,6 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
     {
         get
         {
-			if (!GameUnitsDic.ContainsKey (RTSGameUnitBelongSide.EnemyGroup)) {
-				return null;
-			}
             return GameUnitsDic[RTSGameUnitBelongSide.EnemyGroup];
         }
     }
@@ -74,9 +65,6 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
     {
         get
         {
-			if (!GameUnitsDic.ContainsKey (RTSGameUnitBelongSide.FriendlyGroup)) {
-				return null;
-			}
             return GameUnitsDic[RTSGameUnitBelongSide.FriendlyGroup];
         }
     }

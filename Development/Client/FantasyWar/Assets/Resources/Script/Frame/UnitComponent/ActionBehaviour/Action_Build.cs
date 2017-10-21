@@ -18,7 +18,7 @@ public class Action_Build : ActionBehaviour {
 			//建造方法
 			Debug.Log("加载建筑");
 			//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
-			RTSGamePlayManager.ShareInstance.build(gameObject.GetComponent<RTSGameUnit>().playerInfo);
+			RTSGamePlayManager.ShareInstance.build();
 		};
 	}
 
