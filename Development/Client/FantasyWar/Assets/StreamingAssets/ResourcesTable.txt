@@ -1,5 +1,5 @@
-1001	人族步兵	10	100	3	1	5	Prefab/RTSCharacter/RTSHeavyInfanty/RTSHeavyInfanty
-1002	人族骑兵	15	75	3	1	8	Prefab/RTSCharacter/RTSCavalryman/RTSCavalryman
-1009	人族农民	3	50	3	2	5	Prefab/RTSCharacter/RTSWorker/RTSWorker
-1101	人族主城	0	300	0	0	0	3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house
-1102	人族兵营	0	200	0	0	0	3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barrack
+1001	RTSHeavyInfanty	10	100	3	1	5	Prefab/RTSCharacter/RTSHeavyInfanty/RTSHeavyInfanty
+1002	RTSCavalryman	15	75	3	1	8	Prefab/RTSCharacter/RTSCavalryman/RTSCavalryman
+1009	RTSWorker	3	50	3	2	5	Prefab/RTSCharacter/RTSWorker/RTSWorker
+1101	house	0	300	0	0	0	3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house
+1102	barrack	0	200	0	0	0	3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barrack
