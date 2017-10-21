@@ -65,6 +65,7 @@ public class PlayerAttackState : PlayerFSMState
 
     public override void Reason(Transform enemy, Transform myself)
     {
+        base.Reason(enemy, myself);
 		if (population < 10) {
 			AIController.SetTransition (PlayerFSMTransition.ArmyUseUp);
 		}

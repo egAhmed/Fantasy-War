@@ -29,11 +29,11 @@ public class PlayerAIController : PlayerAdvancedFSM
             {
                 loadTargetnums();
             }
-            
+
             return _targetResourcesNums;
         }
     }
-    
+
     //Initialize the Finite state machine for the NPC tank
     protected override void Initialize()
     {
@@ -78,24 +78,23 @@ public class PlayerAIController : PlayerAdvancedFSM
 
     private void ConstructFSM()
     {
-
-
-        PlayerAttackState attack = new PlayerAttackState(this);
-        attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
-        attack.AddTransition(PlayerFSMTransition.ArmyUseUp, PlayerFSMStateID.Develop);
-
+        
         PlayerDevelopState develop = new PlayerDevelopState(this);
         develop.AddTransition(PlayerFSMTransition.ArmyEnough, PlayerFSMStateID.Attack);
         develop.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
         develop.AddTransition(PlayerFSMTransition.NoMoney, PlayerFSMStateID.Attack);
         develop.AddTransition(PlayerFSMTransition.NoMoney & PlayerFSMTransition.ArmyUseUp, PlayerFSMStateID.Dead);
 
+        PlayerAttackState attack = new PlayerAttackState(this);
+        attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
+        attack.AddTransition(PlayerFSMTransition.ArmyUseUp, PlayerFSMStateID.Develop);
+
         PlayerDeadState dead = new PlayerDeadState(this);
         attack.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
 
 
-        AddFSMState(attack);
         AddFSMState(develop);
+        AddFSMState(attack);
         AddFSMState(dead);
     }
 
@@ -122,41 +121,29 @@ public class PlayerAIController : PlayerAdvancedFSM
     //加载发展目标表
     void loadTargetnums()
     {
-        if (File.Exists(Application.streamingAssetsPath + @"/AIhunmandevelop"))
+        if (Settings.AIhunmandevelop.idList == null)
+            Settings.TableManage.Start();
+        _targetResourcesNums = new string[Settings.AIhunmandevelop.idList.Count, 2];
+        for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
         {
-            byte[] buffer = new byte[1024 * 1024];
-            FileStream fs = File.Open(Application.streamingAssetsPath + @"/AIhunmandevelop", FileMode.Open);
-            int leng = fs.Read(buffer, 0, (int)fs.Length);
-            string str = System.Text.Encoding.UTF8.GetString(buffer, 0, leng);
-            if (Settings.AIhunmandevelop.idList==null)
-                Settings.AIhunmandevelop.Get(0).LoadData(str);
-            _targetResourcesNums = new string[Settings.AIhunmandevelop.idList.Count, 2];
-            for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
-            {
-                _targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(i).resid.ToString();
-                _targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(i).nums.ToString();
+            _targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(i).resid.ToString();
+            _targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(i).nums.ToString();
 
-            }
-            loadResources();
         }
+        loadResources();
+
     }
 
     //加载资源表
     void loadResources()
     {
-        if (File.Exists(Application.streamingAssetsPath + @"/ResourcesTable"))
+        if (Settings.ResourcesTable.idList == null)
+            Settings.TableManage.Start();
+        for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
         {
-            byte[] buffer = new byte[1024 * 1024];
-            FileStream fs = File.Open(Application.streamingAssetsPath + @"/ResourcesTable", FileMode.Open);
-            int leng = fs.Read(buffer, 0, (int)fs.Length);
-            string str = System.Text.Encoding.UTF8.GetString(buffer, 0, leng);
-            if (Settings.ResourcesTable.idList==null)
-                Settings.ResourcesTable.Get(0).LoadData(str);
-            for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
-            {
-                _targetResourcesNums[i, 0] = Settings.ResourcesTable.Get(Convert.ToInt32(_targetResourcesNums[i, 0])).path;
+            _targetResourcesNums[i, 0] = Settings.ResourcesTable.Get(Convert.ToInt32(_targetResourcesNums[i, 0])).path;
 
-            }
         }
+
     }
 }

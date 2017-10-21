@@ -16,7 +16,8 @@ public class MoveUnitChaseState : MoveUnitFSMState
     //用来确定是否需要转到其他状态
     public override void Reason(Transform enemy, Transform myself)
     {
-        if(enemy==null)
+        base.Reason(enemy, myself);
+        if (enemy==null)
         {
             Debug.LogError(StateID+"Enemy is null");
         }

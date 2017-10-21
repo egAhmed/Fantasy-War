@@ -59,19 +59,22 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
         attack.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
         MoveUnitDeadState dead = new MoveUnitDeadState();
-        dead.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
         MoveUnitBuildState build = new MoveUnitBuildState();
         build.AddTransition(MoveUnitFSMTransition.GetCollectCommand, MoveUnitFSMStateID.Collect);
+        build.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
         MoveUnitCollectingState collecting = new MoveUnitCollectingState();
-        
+        collecting.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+
 
         MoveUnitPatrolState patrol = new MoveUnitPatrolState();
         patrol.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
+        patrol.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
         MoveUnitMoveState move = new MoveUnitMoveState();
         move.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
+        move.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
         AddFSMState(idle);
         AddFSMState(chase);

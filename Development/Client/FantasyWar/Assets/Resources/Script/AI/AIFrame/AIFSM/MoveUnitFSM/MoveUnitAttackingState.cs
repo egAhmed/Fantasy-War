@@ -25,6 +25,7 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 	//用来确定是否需要转到其他状态
 	public override void Reason(Transform enemy, Transform myself)
 	{
+        base.Reason(enemy,myself);
 		if (enemy == null)
 			return;
 		

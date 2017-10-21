@@ -22,7 +22,8 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 	public override void Reason(Transform enemy, Transform myself)
 	{
-		if (enemy == null)
+        base.Reason(enemy, myself);
+        if (enemy == null)
 			return;
 
 		destPos = enemy.position;

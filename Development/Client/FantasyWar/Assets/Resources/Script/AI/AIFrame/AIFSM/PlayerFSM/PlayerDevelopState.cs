@@ -20,21 +20,19 @@ public class PlayerDevelopState : PlayerFSMState
 
     public override void Reason(Transform enemy, Transform myself)
     {
+        base.Reason(enemy, myself);
+        if (Settings.ResourcesTable.idList == null)
+            Settings.TableManage.Start();
         //士兵已满
         if (armyEnough)
         {
             AIController.SetTransition(PlayerFSMTransition.ArmyEnough);
             return;
         }
-        RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits["人族主城"][0];
-        //基地爆炸（问题不大）
-        if (mainunit == null || mainunit.HP == 0)
-        {
-            AIController.SetTransition(PlayerFSMTransition.BaseNoHealth);
-            return;
-        }
+
         //没钱没农民
-        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits["人族农民"].Count == 0)
+        //判断是否还有农民
+        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count == 0)
         {
             //还要没兵
             if (isNoArmy())
@@ -86,8 +84,10 @@ public class PlayerDevelopState : PlayerFSMState
     //查找建筑点，然后建建筑的方法
     void build(string buildPath)
     {
+        if (Settings.ResourcesTable.idList == null)
+            Settings.TableManage.Start();
         //获取基地坐标
-        Vector3 basePos = AIController.playerInfo.BuildingUnits["人族主城"][0].transform.position;
+        Vector3 basePos = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
         Vector3 buildPos = basePos;
         float anchor = 0;
         if (FSM.DelAIBuild == null)
@@ -108,7 +108,7 @@ public class PlayerDevelopState : PlayerFSMState
 
 
         //找一个农民去建房子
-        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits["人族农民"][0].GetComponent<MoveUnitAIController>();
+        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<MoveUnitAIController>();
         farmerAI.SetBuildState(FSM.DelAIBuild(buildPos, buildPath).pos, buildPath);
     }
 

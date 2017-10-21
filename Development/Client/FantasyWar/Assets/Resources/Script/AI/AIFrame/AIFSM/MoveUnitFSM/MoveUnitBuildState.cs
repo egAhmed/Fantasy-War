@@ -11,7 +11,8 @@ public class MoveUnitBuildState : MoveUnitFSMState {
 
 	public override void Reason(Transform enemy, Transform myself)
 	{
-		return;
+        base.Reason(enemy, myself);
+        return;
 	}
 		
 	public override void Act (Transform player, Transform npc)

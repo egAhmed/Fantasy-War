@@ -81,7 +81,14 @@ public abstract class MoveUnitFSMState : FSMState
         return Map[transition];
     }
     //用来确定是否需要转换到其他状态
-    public abstract void Reason(Transform enemy, Transform myself);
+    public virtual void Reason(Transform enemy, Transform myself)
+    {
+        RTSGameUnit unit = myself.GetComponent<RTSGameUnit>();
+        if(unit.HP<=0)
+        {
+            myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.NoHealth);
+        }
+    }
     //本状态的角色行为
     public abstract void Act(Transform enemy, Transform myself);
     //切入状态a后，会调用的a的SwitchIn函数

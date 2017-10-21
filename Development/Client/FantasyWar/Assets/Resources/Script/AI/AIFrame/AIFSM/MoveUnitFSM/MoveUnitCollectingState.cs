@@ -15,7 +15,8 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 
 	public override void Reason(Transform enemy, Transform myself)
 	{
-		return;
+        base.Reason(enemy, myself);
+        return;
 	}
 
 	public override void Act(Transform enemy, Transform myself)
