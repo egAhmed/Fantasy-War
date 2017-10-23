@@ -9,6 +9,10 @@ public class TestingScript : MonoBehaviour {
 	public static string virCurrentName = "xxixxxlx";
 	public static PlayerInfo currentPlayer = null;
 
+    //
+    // public static List<PlayerInfo> 
+    //
+
 
 	void Start () {
 		
@@ -47,8 +51,11 @@ public class TestingScript : MonoBehaviour {
 
 	void LoadPlayer(){
 		PlayerInfoManager pim = PlayerInfoManager.ShareInstance;
+        //add Player
 		pim.AddPlayer ("xxixxxlx", Color.cyan);
+        //add AI
 		pim.AddAIPlayerInfo ();
+        //
 		pim.InitPlayers ();
 		pim.LoadInitBuild ();
 		pim.LoadAIController ();
