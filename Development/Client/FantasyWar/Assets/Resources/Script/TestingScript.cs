@@ -14,11 +14,13 @@ public class TestingScript : MonoBehaviour {
     public static List<PlayerInfo> playerInfos = null;
     //
 
-	void Start () {
-		Settings.TableManage.Start ();
-		//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
 
-		// RTSGamePlayManager.ShareInstance.build();
+    void Start () {
+        //
+        Settings.TableManage.Start();
+        //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
+
+        // RTSGamePlayManager.ShareInstance.build();
         //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
         //RTSManager.ShareInstance.testingCreatePlayInfo();
@@ -27,9 +29,10 @@ public class TestingScript : MonoBehaviour {
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,close);
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, poolManagerTesting);
-        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, getHurtTesting);
+        // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C, getHurtTesting);
         //
-        //testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
+        // GameObject test = new GameObject();
+        // testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
 
         //		PlayerInfo p1 = new PlayerInfo ();
         //		p1.isAI = true;
@@ -49,6 +52,7 @@ public class TestingScript : MonoBehaviour {
     }
 
 	void Update(){
+        //
 	}
 
 	void LoadPlayer(){

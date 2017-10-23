@@ -93,9 +93,11 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 	}
 
 	public void LoadAIController(){
+				Debug.Log ("我是AI哦");
+		
 		foreach (PlayerInfo item in Players) {
 			if (item.isAI) {
-				//Debug.Log ("我是AI哦");
+				Debug.Log ("我是AI哦");
 				PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
 				pac.playerInfo = item;
 				pac.enabled = true;

@@ -125,8 +125,10 @@ public class PlayerDevelopState : PlayerFSMState
     void creatArmy(string armyName)
 	{
 		if (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count > 0&&Time.time>Time.deltaTime&&armyName==1009.ToString()) {
-//			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
-			AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ().RunAction (KeyCode.A);
+            //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
+            if(AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_Production> ()==null)
+            Debug.LogError("kong");
+            AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ().RunAction (KeyCode.A);
 		}
 		if (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count > 0&&Time.time>Time.deltaTime&&armyName==1002.ToString()) {
 //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);

@@ -16,6 +16,7 @@ public abstract class ActionBehaviour : MonoBehaviour {
 
 	public void RunAction(KeyCode d){
 		Action ac = GetClickAction ();
-		ac ();
+        Debug.Log(ac == null);
+        ac ();
 	}
 }
