@@ -113,7 +113,50 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
     }
 
     void startBattle() {
+        //
         RTSSceneManager.ShareInstance.loadScene(2);
+        //
+        if (playerSettingPlayerBarControllers != null)
+        {
+            //
+            List<PlayerInfo> playerInfos=new List<PlayerInfo>();
+            //
+            for (int i = 0; i < playerSettingPlayerBarControllers.Length; i++)
+            {
+                //
+                PlayerSettingPlayerBarController bc = playerSettingPlayerBarControllers[i];
+                PlayerInfo playerInfoTemp = new PlayerInfo();
+                //
+                if (bc == null)
+                {
+                    continue;
+                }
+                //
+                playerInfoTemp.name = bc.playerNameController.PlayerName;
+                playerInfoTemp.racial = bc.playerRaceController.SelectedRacial;
+                playerInfoTemp.accentColor = bc.playerColorController.SelectedColor;
+                //
+                if (i == 0)
+                {
+                    playerInfoTemp.isAI = false;
+                    //
+                    TestingScript.currentPlayer = playerInfoTemp;
+                    TestingScript.virCurrentName = playerInfoTemp.name;
+                    //
+                }
+                else
+                {
+                    bc.IsAI = true;
+                }
+                //
+                playerInfos.Add(playerInfoTemp);
+                //
+            }
+            //
+            TestingScript.playerInfos = playerInfos;
+            //
+        }
+        //
     }
 
     void playerAdd()
@@ -129,6 +172,7 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
 
     void playerMinus()
     {
+        //
         if (AddedPlayerNum <= 1)
         {
             return;

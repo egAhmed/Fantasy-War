@@ -6,15 +6,16 @@ public class TestingScript : MonoBehaviour {
 
 	// Use this for initialization
 
-	public static string virCurrentName = "xxixxxlx";
+	public static string virCurrentName=null;
+    
 	public static PlayerInfo currentPlayer = null;
 
     //
-    // public static List<PlayerInfo> 
+    public static List<PlayerInfo> playerInfos = null;
     //
 
 
-	void Start () {
+    void Start () {
 		
 		//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
 
@@ -31,19 +32,21 @@ public class TestingScript : MonoBehaviour {
         //
         //testingGetHurtUnit = GameObject.Find("testingGetHurtUnit").GetComponent<RTSGameUnit>();
 
-//		PlayerInfo p1 = new PlayerInfo ();
-//		p1.isAI = true;
-//		p1.name = "p1";
-//		//p1.location =
-//		p1.accentColor = Color.cyan;
-
-		LoadPlayer();
-
-		foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players) {
-			if (item.name == virCurrentName) {
-				PlayerInfoManager.ShareInstance.currentPlayer = item;
-			}
-		}
+        //		PlayerInfo p1 = new PlayerInfo ();
+        //		p1.isAI = true;
+        //		p1.name = "p1";
+        //		//p1.location =
+        //		p1.accentColor = Color.cyan;
+        //
+        LoadPlayer();
+        //
+        // foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players) {
+        // 	if (item.name == virCurrentName) {
+        // 		PlayerInfoManager.ShareInstance.currentPlayer = item;
+        // 	}
+        // }
+        //
+        //
     }
 
 	void Update(){
@@ -52,13 +55,16 @@ public class TestingScript : MonoBehaviour {
 	void LoadPlayer(){
 		PlayerInfoManager pim = PlayerInfoManager.ShareInstance;
         //add Player
-		pim.AddPlayer ("xxixxxlx", Color.cyan);
+		// pim.AddPlayer ("xxixxxlx", Color.cyan);
         //add AI
-		pim.AddAIPlayerInfo ();
+		// pim.AddAIPlayerInfo ();
+        PlayerInfoManager.ShareInstance.currentPlayer = currentPlayer;
+        PlayerInfoManager.ShareInstance.Players = playerInfos;
         //
 		pim.InitPlayers ();
 		pim.LoadInitBuild ();
 		pim.LoadAIController ();
+        //
 	}
 
 
