@@ -32,7 +32,8 @@ public class PlayerDevelopState : PlayerFSMState
 
         //没钱没农民
         //判断是否还有农民
-        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count == 0)
+        //Settings.ResourcesTable.Get(1009).type更换下面第二个判断条件
+        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits["worker"].Count == 0)
         {
             //还要没兵
             if (isNoArmy())
@@ -87,7 +88,8 @@ public class PlayerDevelopState : PlayerFSMState
         if (Settings.ResourcesTable.idList == null)
             Settings.TableManage.Start();
         //获取基地坐标
-        Vector3 basePos = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
+        //Settings.ResourcesTable.Get(1101).type更换以下“Base”
+        Vector3 basePos = AIController.playerInfo.BuildingUnits["Base"][0].transform.position;
         Vector3 buildPos = basePos;
         float anchor = 0;
         if (FSM.DelAIBuild == null)
@@ -108,7 +110,8 @@ public class PlayerDevelopState : PlayerFSMState
 
 
         //找一个农民去建房子
-        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<MoveUnitAIController>();
+        //Settings.ResourcesTable.Get(1009).type更换以下worker
+        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits["worker"][0].GetComponent<MoveUnitAIController>();
         farmerAI.SetBuildState(FSM.DelAIBuild(buildPos, buildPath).pos, buildPath);
     }
 
