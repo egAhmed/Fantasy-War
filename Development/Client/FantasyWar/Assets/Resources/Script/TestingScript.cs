@@ -11,8 +11,7 @@ public class TestingScript : MonoBehaviour {
 
 
 	void Start () {
-		//加载所有表格
-		Settings.TableManage.Start ();
+		
 		//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
 
 		// RTSGamePlayManager.ShareInstance.build();
@@ -33,6 +32,7 @@ public class TestingScript : MonoBehaviour {
 //		p1.name = "p1";
 //		//p1.location =
 //		p1.accentColor = Color.cyan;
+
 		LoadPlayer();
 
 		foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players) {
@@ -40,9 +40,6 @@ public class TestingScript : MonoBehaviour {
 				PlayerInfoManager.ShareInstance.currentPlayer = item;
 			}
 		}
-
-		PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
-		pac.playerInfo = PlayerInfoManager.ShareInstance.Players[0];
     }
 
 	void Update(){

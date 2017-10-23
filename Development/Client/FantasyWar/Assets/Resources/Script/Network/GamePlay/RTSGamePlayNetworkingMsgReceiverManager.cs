@@ -19,20 +19,28 @@ public class RTSGamePlayNetworkingMsgReceiverManager : Singleton<RTSGamePlayNetw
 
     public void receivedMsg(RTSGameUnitGamePlayNetworkingData data){
         //
-        // Debug.Log("receivedMsg");
+        Debug.Log("RTSGameUnitGamePlayNetworkingData => " + data);
         //
-        if(data==null)
+        if (data==null)
             return;
         //
 		if(data.unitID==null)
             return;
         //
-        if (!NetworkingMsgReceivers.ContainsKey(data.unitID)) { 
-            //  Debug.Log("!ContainsKey");
-			// NetworkingMsgReceivers.Add(data.unitID)
-		}else {
+        if (!NetworkingMsgReceivers.ContainsKey(data.unitID)) {
             //
-            RTSGameUnitGamePlayNetworkingMsgReceiver  receiver=  NetworkingMsgReceivers[data.unitID];
+            Debug.Log("!ContainsKey");
+            //
+            foreach (string key in NetworkingMsgReceivers.Keys) {
+                Debug.Log("key =>"+ key);
+            }
+            // NetworkingMsgReceivers.Add(data.unitID)
+        }
+        else {
+            //
+            //Debug.Log("RTSGameUnitGamePlayNetworkingData => " + data);
+            //
+            RTSGameUnitGamePlayNetworkingMsgReceiver receiver =  NetworkingMsgReceivers[data.unitID];
             receiver.receive(data);
             //
         }
