@@ -29,10 +29,11 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
     /// </summary>
     private void resourcePrefabPathsInitialization()
     {
-        resourcePrefabPaths = new string[resourcePrefabNames.Length];
-        for (int i = 0; i < resourcePrefabNames.Length; i++)
+		resourcePrefabPaths = new string[Settings.ResourcesTable.idList.Count];
+		for (int i = 0; i < resourcePrefabPaths.Length; i++)
         {
-            resourcePrefabPaths[i] = resourcePrefabFolderRootPath + resourcePrefabNames[i];
+			int j = Settings.ResourcesTable.idList [i];
+			resourcePrefabPaths[i] = Settings.ResourcesTable.Get(j).path;
         }
     }
 

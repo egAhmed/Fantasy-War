@@ -13,13 +13,15 @@ namespace Settings
         /// </summary>
         public static void Start()
         {
-            Debug.Log("start");
+            //Debug.Log("start");
             LoadResourcesTable(@"/ResourcesTable.txt");
             LoadAIhunmandevelop(@"/AIhunmandevelop.txt");
         }
 
         static void LoadResourcesTable(string path)
         {
+            //Debug.Log(Application.streamingAssetsPath + path);
+            //Debug.Log("start   " + path +"    "+ (File.Exists(Application.streamingAssetsPath + path)));
             if (File.Exists(Application.streamingAssetsPath + path))
             {
                 if (Settings.ResourcesTable.idList != null)
@@ -32,14 +34,12 @@ namespace Settings
                 new Settings.ResourcesTable().LoadData(str);
 
             }
-            else
-            {
-                Debug.LogError("不存在ResourcesTable");
-            }
         }
 
         static void LoadAIhunmandevelop(string path)
         {
+//            Debug.Log(Application.streamingAssetsPath + path);
+//            Debug.Log("start   " + path + "    " + (File.Exists(Application.streamingAssetsPath + path)));
             if (File.Exists(Application.streamingAssetsPath + path))
             {
                 if (Settings.AIhunmandevelop.idList != null)
@@ -51,10 +51,6 @@ namespace Settings
                 string str = System.Text.Encoding.UTF8.GetString(buffer, 0, leng);
                 new Settings.AIhunmandevelop().LoadData(str);
 
-            }
-            else
-            {
-                Debug.LogError("不存在AIhunmandevelop");
             }
         }
     }

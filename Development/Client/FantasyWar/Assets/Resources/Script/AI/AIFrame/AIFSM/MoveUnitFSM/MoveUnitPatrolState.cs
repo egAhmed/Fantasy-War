@@ -35,7 +35,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 		float dist = Vector3.Distance(myself.position, destPos);
 		if (dist <= attackDistance)
 		{
-			Debug.Log("Switch to Attack state");
+			Debug.LogError("Switch to Attack state");
 			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.ReachEnemy);
 			//AttackTarget = null;
 		}
@@ -43,11 +43,14 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 	public override void Act(Transform enemy, Transform myself)
 	{
-		destPos = enemy.position;
+		AICon.destPos = enemy.position;
 
 		if (AttackTarget == null) {
+			//遍历所有玩家
 			foreach (PlayerInfo playerinfo in PlayerInfoManager.ShareInstance.Players) {
+				//如果不是自己
 				if (playerinfo != myself.GetComponent<RTSGameUnit> ().playerInfo) {
+					//遍历所有单位
 					foreach (string item in playerinfo.ArmyUnits.Keys) {
 						foreach (RTSGameUnit target in playerinfo.ArmyUnits[item]) {
 							if (Vector3.Distance(target.transform.position, myself.position) < attackDistance) {
@@ -63,7 +66,11 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 		//没有找到要打的敌人，继续移动
 		//MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();
-		if (MoveUnitAIController.AIMove != null)
-            MoveUnitAIController.AIMove(destPos);
+		//Debug.LogError (MoveUnitAIController.AIMove == null);
+		Debug.Log(AICon.GetComponent<RTSGameUnit>().GetType());
+		if (MoveUnitAIController.AIMove != null) {
+			if(AICon.GetComponent<RTSWorker>()==null)
+			MoveUnitAIController.AIMove (destPos);
+		}
 	}
 }

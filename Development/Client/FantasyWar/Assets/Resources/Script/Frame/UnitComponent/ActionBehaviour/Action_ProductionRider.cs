@@ -27,11 +27,11 @@ public class Action_ProductionRider : ActionBehaviour {
 			rtsm.playerInfo = pi;
 			//rtsm.homeBuilding = (RTSBuilding)pi.BuildingUnits["Base"][0];
 			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
-			Debug.Log(pi.ArmyUnits["Melee"].Count);
+//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1002).type].Count);
 			if(pi.isAI){
-				Debug.Log("是AI");
+				//Debug.Log("是AI");
 				go.AddComponent<MoveUnitAIController>();
-				Debug.Log("AI添加成功");
+				//Debug.Log("AI添加成功");
 			}
 			//Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");
 		};

@@ -195,11 +195,11 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
                 if (hitObj != null)
                 {
                     //
-                    Debug.LogError("hit obj");
+                    //Debug.LogError("hit obj");
                     //
                     if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI)
                     {
-                        Debug.LogError("hit UI");
+                        //Debug.LogError("hit UI");
                     }
                     else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentGround)
                     {
@@ -230,11 +230,11 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
                     }
                     else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentObstacle)
                     {
-                        Debug.LogError("hit Obstacle");
+                        //Debug.LogError("hit Obstacle");
                     }
                     else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentResource)
                     {
-                        Debug.LogError("hit Resource");
+                       // Debug.LogError("hit Resource");
                         //
                         RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
                         //
@@ -250,7 +250,7 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
                     }
                     else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit)
                     {
-                        Debug.LogError("hit Building");
+                        //Debug.LogError("hit Building");
                         //
                         RTSGameUnit gameUnit = (RTSGameUnit)hitObj.GetComponent("RTSGameUnit");
                         //

@@ -20,6 +20,15 @@ public class RTSBuilding : RTSGameUnit
         }
     }
 
+	protected override void Awake ()
+	{
+		base.Awake ();
+
+		//
+		maxHP = 100;
+		HP = maxHP;
+	}
+
     protected override void Start()
     {
         base.Start();
@@ -122,6 +131,5 @@ public class RTSBuilding : RTSGameUnit
 		ActionList.Add (apro);
 		ActionBehaviour apr = gameObject.AddComponent<Action_ProductionRider> ();
 		ActionList.Add (apr);
-        //
     }
 }

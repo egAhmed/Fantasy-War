@@ -309,10 +309,10 @@ public class RTSGameUnit : MonoBehaviour
 
     protected virtual void actionBehaviourInit() {
         //
-        Debug.LogError ("playerInfo =>" + playerInfo.name);
+        //Debug.LogError ("playerInfo =>" + playerInfo.name);
         //
 		playerInfo.AllUnits.Add(this);
-        Debug.Log ("我是" + this.GetType ().ToString());
+        //Debug.Log ("我是" + this.GetType ().ToString());
 //
         gameObject.AddComponent<DieInNoLife> ();
 		gameObject.AddComponent<MapBip> ();
@@ -320,7 +320,7 @@ public class RTSGameUnit : MonoBehaviour
 //
 		// Debug.Log ("我是" + this.GetType ().ToString());
 		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-			Debug.Log (this.GetType () + "是自己人");
+//			Debug.Log (this.GetType () + "是自己人");
 			Interaction au = gameObject.AddComponent<ActionUpdate> ();
 			interactionList.Add (au);
 		}
