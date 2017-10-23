@@ -115,11 +115,13 @@ public class RTSBuilding : RTSGameUnit
         //
         // UnitManager.ShareInstance.Buildings[playerInfo].Add (gameObject);
         //
-		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
-		ActionList.Add (aa);
+//		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
+//		ActionList.Add (aa);
         //
 		ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
 		ActionList.Add (apro);
+		ActionBehaviour apr = gameObject.AddComponent<Action_ProductionRider> ();
+		ActionList.Add (apr);
         //
     }
 }

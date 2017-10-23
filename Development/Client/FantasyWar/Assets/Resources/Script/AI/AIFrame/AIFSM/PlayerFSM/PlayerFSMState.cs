@@ -75,8 +75,10 @@ public abstract class PlayerFSMState
     //用来确定是否需要转换到其他状态
     public virtual void Reason(Transform enemy, Transform myself)
     {
+		if (Settings.ResourcesTable.idList == null)
+			Settings.TableManage.Start();
         //获得基地对象
-        RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0];
+		RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits["Base"][0];
         //基地爆炸（问题不大）
         if (mainunit == null || mainunit.HP == 0)
         {

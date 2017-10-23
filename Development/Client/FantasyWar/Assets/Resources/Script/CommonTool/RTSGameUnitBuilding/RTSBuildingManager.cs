@@ -221,6 +221,7 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         }
         //
         playerRequestToBuild = playerInfo;
+		//Debug.Log (playerRequestToBuild.name);
         //
         if (tempUnit == null)
         {

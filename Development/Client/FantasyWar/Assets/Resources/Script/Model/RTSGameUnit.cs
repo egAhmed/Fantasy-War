@@ -241,7 +241,7 @@ public class RTSGameUnit : MonoBehaviour
     //
     public virtual void getHurt(RTSGameUnit attackSourceUnit) {
         //do attack damage calculate
-        
+
         //do getHurt effect
         if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
             //
@@ -266,7 +266,7 @@ public class RTSGameUnit : MonoBehaviour
         //
         // testingCreateUnitInfo();
         //
-        testingCreatePlayInfo();
+        //testingCreatePlayInfo();
         //
         actionBehaviourInit();
     }
@@ -304,13 +304,15 @@ public class RTSGameUnit : MonoBehaviour
     protected virtual void actionBehaviourInit() {
         //
         //
+		playerInfo.AllUnits.Add(this);
+
         gameObject.AddComponent<DieInNoLife> ();
 		gameObject.AddComponent<MapBip> ();
 		// gameObject.AddComponent<MarkColor> ();
 //
 		// Debug.Log ("我是" + this.GetType ().ToString());
-        if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-			//Debug.Log (this.GetType () + "是自己人");
+		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+			Debug.Log (this.GetType () + "是自己人");
 			Interaction au = gameObject.AddComponent<ActionUpdate> ();
 			interactionList.Add (au);
 		}
@@ -321,8 +323,8 @@ public class RTSGameUnit : MonoBehaviour
 //
 		Interaction hl = gameObject.AddComponent<HightLight> ();
 		interactionList.Add (hl);
-		Interaction si = gameObject.AddComponent<ShowInfoUI> ();
-		interactionList.Add (si);
+		// Interaction si = gameObject.AddComponent<ShowInfoUI> ();
+		// interactionList.Add (si);
         //
     }
     //
@@ -343,9 +345,13 @@ public class RTSGameUnit : MonoBehaviour
     private void interactionAutoSwitch() {
         if (IsSelected) {
             //activate
+			RTSGameUnitManager.ShareInstance.SelectedUnits.Add(this);
             ActiveInteractions();
         }else {
             //
+			if(RTSGameUnitManager.ShareInstance.SelectedUnits.Contains(this)){
+				RTSGameUnitManager.ShareInstance.SelectedUnits.Remove (this);
+			}
             InactiveInteractions();
         }
     }

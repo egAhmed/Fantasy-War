@@ -35,8 +35,8 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
     protected override void actionBehaviourInit() {
         base.actionBehaviourInit();
         //
-        UnitManager.ShareInstance.Armys[playerInfo].Add (gameObject);
-        //
+        //UnitManager.ShareInstance.Armys[playerInfo].Add (gameObject);
+		//
         //
 		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			Interaction m = gameObject.AddComponent<Move> ();

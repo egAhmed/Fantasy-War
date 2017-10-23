@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action_Production : ActionBehaviour  {
-
+public class Action_ProductionRider : ActionBehaviour {
+	
 	GameObject workerPrefeb;
 
 	void Awake(){
-		index = 0;
-		shortCutKey = KeyCode.W;
-		actionIcon = Resources.Load<Sprite> ("Texture/WorkerIcon");
+		index = 1;
+		shortCutKey = KeyCode.R;
+		actionIcon = Resources.Load<Sprite> ("Texture/RiderIcon");
 		canRepeat = false;
-		workerPrefeb = Resources.Load<GameObject> ("Prefab/RTSCharacter/RTSWorker/RTSWorker");
+		workerPrefeb = Resources.Load<GameObject> ("Prefab/RTSCharacter/RTSCavalryman/RTSCavalryman");
 	}
 
 	public override Action GetClickAction ()
@@ -21,15 +21,15 @@ public class Action_Production : ActionBehaviour  {
 			//生产方法
 			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
 			GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
-			RTSWorker rtsw = go.GetComponent<RTSWorker>();
-			rtsw.playerInfo = pi;
-			rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits["Base"][0];
+			RTSMelee rtsm = go.GetComponent<RTSMelee>();
+			rtsm.playerInfo = pi;
+			//rtsm.homeBuilding = (RTSBuilding)pi.BuildingUnits["Base"][0];
 			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
-			Debug.Log(pi.ArmyUnits["worker"].Count);
+			Debug.Log(pi.ArmyUnits["Melee"].Count);
 			if(pi.isAI){
 				Debug.Log("是AI");
 				go.AddComponent<MoveUnitAIController>();
-				Debug.Log("添加成功");
+				Debug.Log("AI添加成功");
 			}
 			//Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");
 		};

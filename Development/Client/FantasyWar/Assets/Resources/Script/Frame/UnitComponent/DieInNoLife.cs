@@ -32,12 +32,12 @@ public class DieInNoLife : MonoBehaviour {
 		// if (unitinfo is Building) {
 		if (unitinfo is RTSBuilding) {
 			
-			UnitManager.ShareInstance.Buildings [unitinfo.playerInfo].Remove(gameObject);
+			//gameObject.GetComponent<RTSGameUnit> ().playerInfo.BuildingUnits ["Base"].Remove (gameObject.GetComponent<RTSGameUnit> ());
 		}
 //		if (unitinfo is Building) {
 		if (unitinfo is RTSBuilding) {
 			
-			UnitManager.ShareInstance.Armys [unitinfo.playerInfo].Remove (gameObject);
+			//UnitManager.ShareInstance.Armys [unitinfo.playerInfo].Remove (gameObject);
 		}
 		else {
 			return;

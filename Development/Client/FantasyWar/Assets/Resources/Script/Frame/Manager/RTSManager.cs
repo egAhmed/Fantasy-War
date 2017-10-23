@@ -32,17 +32,17 @@ public class RTSManager : UnitySingleton<RTSManager> {
 
 	}
 
-	void RegistInput(){
-		//TODO
-		//在InputManager中
-		//註冊點選方法
-		//註冊框選方法
-		//註冊編隊方法
-		//註冊選隊方法
-
-		//测试用点选
-		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Mouse0,RTSOperations.PointSelect);
-	}
+//	void RegistInput(){
+//		//TODO
+//		//在InputManager中
+//		//註冊點選方法
+//		//註冊框選方法
+//		//註冊編隊方法
+//		//註冊選隊方法
+//
+//		//测试用点选
+//		InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.Mouse0,RTSOperations.PointSelect);
+//	}
 
 	/// <summary>
 	/// 建造初始单位

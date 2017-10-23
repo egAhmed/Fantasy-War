@@ -41,8 +41,8 @@ public class ActionUpdate : Interaction {
         // if (TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
         //Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
         // if (RTSGameUnitManager.ShareInstance.SelectedUnits [0] == this.gameObject) {
-        if (RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
-			
+		//Debug.Log(GetComponent<RTSGameUnit>().GetType());
+		if (RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
 			ActionManager.ShareInstance.ClearButtons ();
 			//将所有ActionBehaviour组件映射到操作面板上
 			foreach (ActionBehaviour ab in gameObject.GetComponent<RTSGameUnit>().ActionList) {

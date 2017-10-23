@@ -60,14 +60,14 @@ public class PlayerAIController : PlayerAdvancedFSM
     //在FSM基类Update中调用
     protected override void FSMUpdate()
     {
-
+		Debug.Log (CurrentState.GetType());
     }
 
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
-        CurrentState.Reason(enemyTransform, transform);
-        CurrentState.Act(enemyTransform, transform);
+		CurrentState.Reason(transform, transform);
+		CurrentState.Act(transform, transform);
     }
 
     //这个方法在每个状态类的Reason中调用
@@ -146,4 +146,12 @@ public class PlayerAIController : PlayerAdvancedFSM
         }
 
     }
+	void OnDisable()
+	{
+		Debug.Log ("d");
+	}
+	void OnEnable()
+	{
+		
+	}
 }

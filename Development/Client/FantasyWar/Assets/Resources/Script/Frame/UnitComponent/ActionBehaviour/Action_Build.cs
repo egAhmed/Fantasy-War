@@ -17,8 +17,10 @@ public class Action_Build : ActionBehaviour {
 			//TODO
 			//建造方法
 			Debug.Log("加载建筑");
+			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
+			//Debug.Log(pi.name);
 			//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
-			RTSGamePlayManager.ShareInstance.build();
+			RTSGamePlayManager.ShareInstance.build(pi);
 		};
 	}
 

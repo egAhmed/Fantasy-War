@@ -440,13 +440,15 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         base.actionBehaviourInit();
         //
         //
+		Debug.Log(playerInfo.name);
+		playerInfo.ArmyUnits["worker"].Add(this);
+
         if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
 			ActionList.Add (ac);
 			ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
 			ActionList.Add (ab);
-			ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
-			ActionList.Add (apro);
+		
             //
             Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
             acc.collectDelegate += OnSetTargetUnit;

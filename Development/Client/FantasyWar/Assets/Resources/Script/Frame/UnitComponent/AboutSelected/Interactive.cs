@@ -16,8 +16,12 @@ public class Interactive : MonoBehaviour {
 	/// </summary>
 	public void Select()
 	{
+		Debug.Log (gameObject.GetComponent<RTSGameUnit> () == null);
+		Debug.Log ("xxx");
+		RTSGameUnitManager.ShareInstance.SelectedUnits.Add (gameObject.GetComponent<RTSGameUnit> ());
+		Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
 		_Selected = true;
-        // if (RTSGameUnitManager.ShareInstance.SelectedUnits != null) { 
+		// if (RTSGameUnitManager.ShareInstance.SelectedUnits != null) { 
 
         // TeamManager.ShareInstance.currentSelections.Add (this.gameObject);
 		// }
