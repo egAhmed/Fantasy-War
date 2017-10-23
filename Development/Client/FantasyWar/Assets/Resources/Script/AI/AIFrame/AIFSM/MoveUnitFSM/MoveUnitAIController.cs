@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class MoveUnitAIController : MoveUnitAdvanceFSM
 {
-    public delegate void DelAIMove(Vector3 pos);
-    public delegate void Attack(RTSGameUnit tar);
-    public delegate void GetResources(RTSGameUnit tar);
 
-    public DelAIMove AIMove;
-    public Attack AIAttack;
-    public GetResources AIGetResources;
 
 
     //Initialize the Finite state machine for the NPC tank
@@ -44,35 +38,35 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     {
 
 
-        MoveUnitIdleState idle = new MoveUnitIdleState();
+        MoveUnitIdleState idle = new MoveUnitIdleState(this);
         idle.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
         idle.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitChaseState chase = new MoveUnitChaseState();
+        MoveUnitChaseState chase = new MoveUnitChaseState(this);
         chase.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
         chase.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
         chase.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitAttackingState attack = new MoveUnitAttackingState();
+        MoveUnitAttackingState attack = new MoveUnitAttackingState(this);
         attack.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
         attack.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
         attack.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitDeadState dead = new MoveUnitDeadState();
+        MoveUnitDeadState dead = new MoveUnitDeadState(this);
 
-        MoveUnitBuildState build = new MoveUnitBuildState();
+        MoveUnitBuildState build = new MoveUnitBuildState(this);
         build.AddTransition(MoveUnitFSMTransition.GetCollectCommand, MoveUnitFSMStateID.Collect);
         build.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitCollectingState collecting = new MoveUnitCollectingState();
+        MoveUnitCollectingState collecting = new MoveUnitCollectingState(this);
         collecting.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
 
-        MoveUnitPatrolState patrol = new MoveUnitPatrolState();
+        MoveUnitPatrolState patrol = new MoveUnitPatrolState(this);
         patrol.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
         patrol.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitMoveState move = new MoveUnitMoveState();
+        MoveUnitMoveState move = new MoveUnitMoveState(this);
         move.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
         move.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 

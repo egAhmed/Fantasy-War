@@ -7,9 +7,11 @@ using UnityEngine;
 /// </summary>
 public class MoveUnitDeadState : MoveUnitFSMState {
 
-	public MoveUnitDeadState(){
+	public MoveUnitDeadState(MoveUnitAIController AICon)
+    {
 		StateID = MoveUnitFSMStateID.Dead;
-	}
+        this.AICon = AICon;
+    }
 
 	public override void Act (Transform enemy, Transform myself)
 	{

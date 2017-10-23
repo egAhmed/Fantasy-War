@@ -6,9 +6,11 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 	RTSGameUnit AttackTarget = null;
 
-	public MoveUnitPatrolState(){
+	public MoveUnitPatrolState(MoveUnitAIController AICon)
+    {
 		StateID = MoveUnitFSMStateID.Patrol;
-	}
+        this.AICon = AICon;
+    }
 
 	public override void SwitchIn ()
 	{
@@ -60,8 +62,8 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 		}
 
 		//没有找到要打的敌人，继续移动
-		MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();
-		if (AICon.AIMove != null)
-			AICon.AIMove(destPos);
+		//MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();
+		if (MoveUnitAIController.AIMove != null)
+            MoveUnitAIController.AIMove(destPos);
 	}
 }

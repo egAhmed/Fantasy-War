@@ -10,6 +10,13 @@ public struct ForAIBuild
 public class FSM : MonoBehaviour {
 
     public delegate ForAIBuild delAIBuild(Vector3 pos, string path);
+    public delegate void DelAIMove(Vector3 pos);
+    public delegate void Attack(RTSGameUnit tar);
+    public delegate void GetResources(RTSGameUnit tar);
+
+    public static DelAIMove AIMove;
+    public static Attack AIAttack;
+    public static GetResources AIGetResources;
     //AI建造委托
     public static delAIBuild DelAIBuild;
     protected virtual void Initialize() { }

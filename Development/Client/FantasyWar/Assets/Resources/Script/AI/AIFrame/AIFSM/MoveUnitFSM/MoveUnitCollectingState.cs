@@ -7,11 +7,11 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 	public RTSGameUnit nearestMine = null;
 	RTSGameUnit currentMine = null;
 
-	public MoveUnitCollectingState()
+	public MoveUnitCollectingState(MoveUnitAIController AICon)
 	{
 		StateID = MoveUnitFSMStateID.Collect;
-
-	}
+        this.AICon = AICon;
+    }
 
 	public override void Reason(Transform enemy, Transform myself)
 	{

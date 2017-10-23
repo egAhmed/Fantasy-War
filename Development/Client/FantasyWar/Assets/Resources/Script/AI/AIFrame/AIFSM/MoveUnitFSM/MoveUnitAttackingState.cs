@@ -6,11 +6,11 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 
 	RTSGameUnit AttackTarget = null;
 
-	public MoveUnitAttackingState()
+	public MoveUnitAttackingState(MoveUnitAIController AICon)
 	{
 		StateID = MoveUnitFSMStateID.Attacking;
-
-	}
+        this.AICon = AICon;
+    }
 
 	public override void SwitchIn ()
 	{

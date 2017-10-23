@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MoveUnitBuildState : MoveUnitFSMState {
 
-	public MoveUnitBuildState()
+	public MoveUnitBuildState(MoveUnitAIController AICon)
 	{
 		StateID = MoveUnitFSMStateID.Building;
-	}
+        this.AICon = AICon;
+    }
 
 	public override void Reason(Transform enemy, Transform myself)
 	{
@@ -25,9 +26,9 @@ public class MoveUnitBuildState : MoveUnitFSMState {
 			//isFinish = true;
 		}
 		else {
-			MoveUnitAIController AICon = npc.GetComponent<MoveUnitAIController>();
-			if (AICon.AIMove != null) {
-				AICon.AIMove (destPos);
+			//MoveUnitAIController AICon = npc.GetComponent<MoveUnitAIController>();
+			if (MoveUnitAIController.AIMove != null) {
+                MoveUnitAIController.AIMove (destPos);
 			}
 		}
 	}

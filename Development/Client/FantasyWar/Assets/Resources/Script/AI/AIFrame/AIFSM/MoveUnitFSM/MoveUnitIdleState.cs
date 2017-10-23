@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MoveUnitIdleState : MoveUnitFSMState {
 
-	public MoveUnitIdleState()
+	public MoveUnitIdleState(MoveUnitAIController AICon)
 	{
-		StateID = MoveUnitFSMStateID.Idle;
+        this.AICon = AICon;
+        StateID = MoveUnitFSMStateID.Idle;
 	}
 
 	public override void Reason(Transform enemy, Transform myself)
