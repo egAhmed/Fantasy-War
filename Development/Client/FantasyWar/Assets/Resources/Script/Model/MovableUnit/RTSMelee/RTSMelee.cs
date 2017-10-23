@@ -231,7 +231,8 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         //
         base.aiBehaviourDelegateRegister();
         //
-        FSM.AIAttack += OnSetTargetUnit;
+        FSM AICon =transform.GetComponent<FSM>();
+        AICon.AIAttack += OnSetTargetUnit;
         //
     }
     //

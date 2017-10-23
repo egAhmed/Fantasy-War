@@ -55,7 +55,8 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
         //
         base.aiBehaviourDelegateRegister();
         //
-        FSM.AIMove += OnSetTargetPosition;
+        FSM AICon = transform.GetComponent<FSM>();
+        AICon.AIMove += OnSetTargetPosition;
         //
     }
 }
