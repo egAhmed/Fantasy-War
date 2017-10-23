@@ -20,9 +20,11 @@ public class Action_Production : ActionBehaviour  {
 			//TODO
 			//生产方法
 			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
-			GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
-			RTSWorker rtsw = go.GetComponent<RTSWorker>();
-			rtsw.playerInfo = pi;
+            RTSWorker rtsw = PrefabFactory.ShareInstance.createClone<RTSWorker>("Prefab/RTSCharacter/RTSWorker/RTSWorker", transform.position + new Vector3(2, 0, 0), Quaternion.identity);
+            GameObject go = rtsw.gameObject;
+            // GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
+            // RTSWorker rtsw = go.GetComponent<RTSWorker>();
+            rtsw.playerInfo = pi;
 			rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits["Base"][0];
 			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
 			Debug.Log(pi.ArmyUnits["worker"].Count);
@@ -30,8 +32,10 @@ public class Action_Production : ActionBehaviour  {
 				Debug.Log("是AI");
 				go.AddComponent<MoveUnitAIController>();
 				Debug.Log("添加成功");
+			}else { 
+				Debug.Log("rtsw.playerInfo =>"+rtsw.playerInfo.name);
 			}
-			//Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");
-		};
+            //Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");
+        };
 	}
 }

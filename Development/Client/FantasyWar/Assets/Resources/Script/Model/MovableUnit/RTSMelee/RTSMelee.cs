@@ -201,7 +201,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 
 		playerInfo.ArmyUnits["Melee"].Add(this);
 
-		if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			ActionBehaviour ask = gameObject.AddComponent<Action_Skill1> ();
 			ActionList.Add (ask);
 			//

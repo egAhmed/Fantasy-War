@@ -24,11 +24,11 @@ public class HightLight : Interaction {
 		RTSGameUnit un = GetComponent<RTSGameUnit> ();
 		if (un != null) {
 			//gameUnitBelongSide==RTSGameUnitBelongSide.Player
-			if (un.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
+			if (un.playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
 				tgo = Resources.Load<GameObject> ("Prefab/SelectedEffect/SelectedGreed");
-			} else if (un.gameUnitBelongSide == RTSGameUnitBelongSide.EnemyGroup) {
+			} else if (un.playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.EnemyGroup) {
 				tgo = Resources.Load<GameObject> ("Prefab/SelectedEffect/SelectedRed");
-			} else if (un.gameUnitBelongSide == RTSGameUnitBelongSide.FriendlyGroup) {
+			} else if (un.playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.FriendlyGroup) {
 				tgo = Resources.Load<GameObject> ("Prefab/SelectedEffect/SelectedYellow");
 			} else {
 				tgo = Resources.Load<GameObject> ("Prefab/SelectedEffect/Selected");

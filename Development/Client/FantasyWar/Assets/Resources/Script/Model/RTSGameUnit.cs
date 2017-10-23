@@ -91,7 +91,7 @@ public class RTSGameUnit : MonoBehaviour
     protected Vector3 targetPosition;
     protected RTSGameUnit targetGameUnit;
     //
-    public RTSGameUnitBelongSide gameUnitBelongSide;
+    // public RTSGameUnitBelongSide gameUnitBelongSide;
     //protected RTSGameUnitSelectionBottomCircleController unitSelectionBottomCircleController;
     //
     //
@@ -135,6 +135,7 @@ public class RTSGameUnit : MonoBehaviour
             //
             interactionAutoSwitch();
             //
+            // Debug.LogError("Selected = "+value);
             //selectionSpriteSwitch();
             unitActionEventControl();
         }
@@ -180,7 +181,7 @@ public class RTSGameUnit : MonoBehaviour
     private void selectedEventRegister()
     {
         //RTSGameUnitSelectionManager.addSelectionReleaseListener(this);
-        if (gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
         {
             RTSGameUnitActionManager.eventRegister(OnSetTargetPosition);
             RTSGameUnitActionManager.eventRegister(OnSetTargetUnit);
@@ -190,7 +191,7 @@ public class RTSGameUnit : MonoBehaviour
     private void selectedEventUnRegister()
     {
         //RTSGameUnitSelectionManager.removeSelectionReleaseListener(this);
-        if (gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
         {
             RTSGameUnitActionManager.eventUnRegister(OnSetTargetPosition);
             RTSGameUnitActionManager.eventUnRegister(OnSetTargetUnit);
@@ -282,30 +283,32 @@ public class RTSGameUnit : MonoBehaviour
 
     }
 
-    private void testingCreateUnitInfo() {
-        unitInfo = new RTSGameUnitDataInfo();
-    }
+    // private void testingCreateUnitInfo() {
+    //     unitInfo = new RTSGameUnitDataInfo();
+    // }
 
     //
-    private void testingCreatePlayInfo() { 
-        PlayerInfo p1=new PlayerInfo();
-        p1.name = "p1";
-        p1.gameUnitBelongSide = RTSGameUnitBelongSide.Player;
-        playerInfo = p1;
-        if (!UnitManager.ShareInstance.Buildings.ContainsKey(p1)) { 
-        UnitManager.ShareInstance.Buildings.Add(p1,new List<GameObject> ());
-        }
-        if (!UnitManager.ShareInstance.Armys.ContainsKey(p1))
-        {
-            UnitManager.ShareInstance.Armys.Add(p1, new List<GameObject>());
-        }
-    }
+    // private void testingCreatePlayInfo() { 
+    //     PlayerInfo p1=new PlayerInfo();
+    //     p1.name = "p1";
+    //     p1.gameUnitBelongSide = RTSGameUnitBelongSide.Player;
+    //     playerInfo = p1;
+    //     if (!UnitManager.ShareInstance.Buildings.ContainsKey(p1)) { 
+    //     UnitManager.ShareInstance.Buildings.Add(p1,new List<GameObject> ());
+    //     }
+    //     if (!UnitManager.ShareInstance.Armys.ContainsKey(p1))
+    //     {
+    //         UnitManager.ShareInstance.Armys.Add(p1, new List<GameObject>());
+    //     }
+    // }
 
     protected virtual void actionBehaviourInit() {
         //
+        Debug.LogError ("playerInfo =>" + playerInfo.name);
         //
 		playerInfo.AllUnits.Add(this);
-
+        Debug.Log ("我是" + this.GetType ().ToString());
+//
         gameObject.AddComponent<DieInNoLife> ();
 		gameObject.AddComponent<MapBip> ();
 		// gameObject.AddComponent<MarkColor> ();
@@ -350,8 +353,11 @@ public class RTSGameUnit : MonoBehaviour
         }else {
             //
 			if(RTSGameUnitManager.ShareInstance.SelectedUnits.Contains(this)){
+                //
 				RTSGameUnitManager.ShareInstance.SelectedUnits.Remove (this);
+                //
 			}
+            //
             InactiveInteractions();
         }
     }
