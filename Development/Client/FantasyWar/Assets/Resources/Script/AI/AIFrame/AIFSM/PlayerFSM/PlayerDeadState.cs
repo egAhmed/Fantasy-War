@@ -12,6 +12,7 @@ public class PlayerDeadState : PlayerFSMState
     }
     public override void Act(Transform enemy, Transform myself)
     {
+		Debug.Log ("deaddead");
         PlayerInfoManager.ShareInstance.Players.Remove(AIController.playerInfo);
         foreach (var item in AIController.playerInfo.BuildingUnits.Keys)
         {

@@ -27,7 +27,6 @@ public class PlayerAdvancedFSM : FSM
     {
         if (fsmState == null)
             return;
-
         //若列表是空的，则加入列表并设置状态
         if (fsmStates.Count == 0)
         {

@@ -79,7 +79,8 @@ public abstract class PlayerFSMState
 			Settings.TableManage.Start();
         //获得基地对象
 		RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits["Base"][0];
-        //基地爆炸（问题不大）
+
+		//基地爆炸（问题不大）
         if (mainunit == null || mainunit.HP == 0)
         {
             AIController.SetTransition(PlayerFSMTransition.BaseNoHealth);
