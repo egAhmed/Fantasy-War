@@ -41,8 +41,7 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
 		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			Interaction m = gameObject.AddComponent<Move> ();
 			interactionList.Add (m);
-			ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
-			ActionList.Add (aa);
+		
 		}
         //
     }

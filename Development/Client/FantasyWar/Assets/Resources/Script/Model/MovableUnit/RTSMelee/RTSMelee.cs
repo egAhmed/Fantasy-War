@@ -205,6 +205,9 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 			ActionBehaviour ask = gameObject.AddComponent<Action_Skill1> ();
 			ActionList.Add (ask);
 			//
+            ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
+			ActionList.Add (aa);
+            //
 		}
 
         Action_Attack ab = GetComponent<Action_Attack>();
