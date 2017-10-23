@@ -147,6 +147,7 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
                 else
                 {
                     bc.IsAI = true;
+                    playerInfoTemp.isAI = true;
                 }
                 //
                 playerInfos.Add(playerInfoTemp);
