@@ -202,6 +202,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 		playerInfo.ArmyUnits["Melee"].Add(this);
 
 		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+            //
 			ActionBehaviour ask = gameObject.AddComponent<Action_Skill1> ();
 			ActionList.Add (ask);
 			//
@@ -209,7 +210,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 			ActionList.Add (aa);
             //
 		}
-
+        //
         Action_Attack ab = GetComponent<Action_Attack>();
         ab.attackDelegate += OnSetTargetUnit;
         //
@@ -218,4 +219,13 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         // 	ActionList.Add (att);
         // }
     }
+
+    protected override void aiBehaviourDelegateRegister() {
+        //
+        base.aiBehaviourDelegateRegister();
+        //
+        FSM.AIAttack += OnSetTargetUnit;
+        //
+    }
+    //
 }

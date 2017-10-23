@@ -455,4 +455,12 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             //
         }
     }
+    //
+    protected override void aiBehaviourDelegateRegister() {
+        //
+        base.aiBehaviourDelegateRegister();
+        //
+        FSM.AIGetResources += OnSetTargetUnit;
+        //
+    }
 }

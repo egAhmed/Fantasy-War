@@ -270,6 +270,11 @@ public class RTSGameUnit : MonoBehaviour
         //testingCreatePlayInfo();
         //
         actionBehaviourInit();
+        //
+        if (playerInfo != null && playerInfo.isAI) { 
+            aiBehaviourDelegateRegister();
+        }
+        //
     }
 
     protected virtual void OnDestroy()
@@ -360,5 +365,11 @@ public class RTSGameUnit : MonoBehaviour
             //
             InactiveInteractions();
         }
+    }
+
+    protected virtual void aiBehaviourDelegateRegister() {
+        //
+        // Debug.Log("Base register");
+        //
     }
 }

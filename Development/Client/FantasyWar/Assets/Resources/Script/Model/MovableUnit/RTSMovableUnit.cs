@@ -21,7 +21,7 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
         base.Start();
         //
         unitPathFindingController = gameObject.GetComponent<RTSGameUnitPathFindingController>();
-		//
+        //
     }
 	//
 	protected override void OnSetTargetPosition(Vector3 pos)
@@ -46,4 +46,11 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
         //
     }
 
+    protected override void aiBehaviourDelegateRegister() { 
+        //
+        base.aiBehaviourDelegateRegister();
+        //
+        FSM.AIMove += OnSetTargetPosition;
+        //
+    }
 }
