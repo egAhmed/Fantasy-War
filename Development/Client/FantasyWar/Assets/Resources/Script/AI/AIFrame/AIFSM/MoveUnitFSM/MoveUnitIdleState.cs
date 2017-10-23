@@ -15,12 +15,12 @@ public class MoveUnitIdleState : MoveUnitFSMState {
         base.Reason(enemy, myself);
         if (enemy == null)
 			return;
-		
-		destPos = enemy.position;
+
+        AICon.DesPos = enemy.position;
 
 		//Check the distance with player tank
 		//When the distance is near, transition to attack state
-		float dist = Vector3.Distance(myself.position, destPos);
+		float dist = Vector3.Distance(myself.position, AICon.DesPos);
 
 		//Go back to patrol is it become too far
 		if (dist <= chaseDistance)

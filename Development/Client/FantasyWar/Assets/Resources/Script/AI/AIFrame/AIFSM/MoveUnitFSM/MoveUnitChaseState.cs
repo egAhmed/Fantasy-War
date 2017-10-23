@@ -22,13 +22,13 @@ public class MoveUnitChaseState : MoveUnitFSMState
         {
             Debug.LogError(StateID+"Enemy is null");
         }
-            
-        destPos = enemy.position;
+
+        AICon.DesPos = enemy.position;
 
 
         //Check the distance with player tank
         //When the distance is near, transition to attack state
-        float dist = Vector3.Distance(myself.position, destPos);
+        float dist = Vector3.Distance(myself.position, AICon.DesPos);
         if (dist <= attackDistance)
         {
             Debug.Log("Switch to Attack state");
@@ -45,10 +45,10 @@ public class MoveUnitChaseState : MoveUnitFSMState
     public override void Act(Transform enemy, Transform myself)
     {
         //Rotate to the target point
-        destPos = enemy.position;
+        AICon.DesPos = enemy.position;
         //MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();
-        if (MoveUnitAIController.AIMove != null)
-            MoveUnitAIController.AIMove(destPos);
+        //if (MoveUnitAIController.AIMove != null)
+        //    MoveUnitAIController.AIMove(AICon.DesPos);
     }
 
     public override void SwitchIn()

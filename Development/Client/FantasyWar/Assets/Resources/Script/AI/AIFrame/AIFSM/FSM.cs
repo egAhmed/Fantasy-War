@@ -13,10 +13,12 @@ public class FSM : MonoBehaviour {
     public delegate void DelAIMove(Vector3 pos);
     public delegate void Attack(RTSGameUnit tar);
     public delegate void GetResources(RTSGameUnit tar);
+    public delegate void CreatArmy(PlayerInfo playerinfo, int resourcesID);
 
-    public static DelAIMove AIMove;
-    public static Attack AIAttack;
-    public static GetResources AIGetResources;
+    public DelAIMove AIMove;
+    public Attack AIAttack;
+    public GetResources AIGetResources;
+    public CreatArmy creatArmy;
     //AI建造委托
     public static delAIBuild DelAIBuild;
     protected virtual void Initialize() { }

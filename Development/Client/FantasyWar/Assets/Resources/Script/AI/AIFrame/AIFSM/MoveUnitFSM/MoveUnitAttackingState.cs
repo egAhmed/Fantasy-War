@@ -29,11 +29,11 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 		if (enemy == null)
 			return;
 		
-		destPos = enemy.position;
+		AICon.DesPos = enemy.position;
 
 		//Check the distance with player tank
 		//When the distance is near, transition to attack state
-		float dist = Vector3.Distance(myself.position, destPos);
+		float dist = Vector3.Distance(myself.position, AICon.DesPos);
 		if (dist >= attackDistance)
 		{
 			Debug.Log("Switch to Chase state");

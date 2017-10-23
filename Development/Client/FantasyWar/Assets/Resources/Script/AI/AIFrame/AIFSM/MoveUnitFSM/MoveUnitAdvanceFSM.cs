@@ -4,7 +4,23 @@ using UnityEngine;
 
 public class MoveUnitAdvanceFSM : FSM
 {
-	public Vector3 destPos;
+    private Vector3 _desPos;
+    public Vector3 DesPos
+    {
+        get { return _desPos; }
+        set
+        {
+            if (Vector3.Distance(_desPos, value) > 1)
+            {
+                _desPos = value;
+                if (AIMove != null)
+                {
+                    Debug.Log(value);
+                    AIMove(_desPos);
+                }
+            }
+        }
+    }
     public Transform enemyTransform;
     //所有状态的集合
     public List<MoveUnitFSMState> fsmStates;
@@ -24,7 +40,7 @@ public class MoveUnitAdvanceFSM : FSM
                 return;
             currentState.SwitchOut();
             currentState = value;
-			currentState.SwitchIn();
+            currentState.SwitchIn();
         }
     }
 

@@ -48,7 +48,7 @@ public class PlayerAttackState : PlayerFSMState
 					MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
 					//control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
 					control.enemyTransform=nearestPlayer.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform;
-					control.destPos = nearestPlayer.location;
+					control.DesPos = nearestPlayer.location;
 					control.CurrentStateID = MoveUnitFSMStateID.Patrol;
 					foreach (var state in control.fsmStates)
 					{
@@ -67,7 +67,7 @@ public class PlayerAttackState : PlayerFSMState
 				foreach (RTSGameUnit unit in AIController.playerInfo.ArmyUnits[item]) {
 					MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
 					//control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
-					control.CurrentState.destPos = nearestPlayer.location;
+					control.DesPos = nearestPlayer.location;
 				}
 			}
 			population = tempPopulation;

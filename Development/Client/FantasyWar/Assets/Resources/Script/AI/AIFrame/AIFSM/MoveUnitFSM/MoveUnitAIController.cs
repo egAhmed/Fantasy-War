@@ -24,6 +24,7 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
+        
         CurrentState.Reason(enemyTransform, transform);
         CurrentState.Act(enemyTransform, transform);
     }
@@ -126,7 +127,7 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
                 break;
             }
         }
-        CurrentState.destPos = pos;
+        this.DesPos = pos;
         
     }
 }

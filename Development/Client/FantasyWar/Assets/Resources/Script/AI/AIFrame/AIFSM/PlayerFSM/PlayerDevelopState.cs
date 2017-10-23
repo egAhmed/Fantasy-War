@@ -73,7 +73,7 @@ public class PlayerDevelopState : PlayerFSMState
 				if (AIController.playerInfo.ArmyUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
                 {
                     //没达标，造一个
-                    creatArmy(TargetResourcesNums[i, 0]);
+                    creatArmy(Convert.ToInt32(TargetResourcesNums[i, 0]));
                     return false;
                 }
                 continue;
@@ -122,19 +122,23 @@ public class PlayerDevelopState : PlayerFSMState
     //    Physics.Raycast(ray, out rayinfo,1000.0f, RTSLayerManager.ShareInstance.LayerMaskRayCastMouse1, QueryTriggerInteraction.Ignore);
     //    return rayinfo.point;
     //}
-    void creatArmy(string armyName)
+    void creatArmy(int resourcesID)
 	{
-		if (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count > 0&&Time.time>Time.deltaTime&&armyName==1009.ToString()) {
+        if(AIController.creatArmy!=null)
+            AIController.creatArmy(AIController.playerInfo, resourcesID);
+
+        if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1009)
+        {
             //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
-            if(AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_Production> ()==null)
-            Debug.LogError("kong");
-            AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ().RunAction (KeyCode.A);
-		}
-		if (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count > 0&&Time.time>Time.deltaTime&&armyName==1002.ToString()) {
-//			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
-			AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_ProductionRider> ().RunAction (KeyCode.A);
-		}
-	}
+            AIController.StartCoroutine(tmpworker());
+        }
+        if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1002)
+        {
+            //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
+            AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_ProductionRider>().RunAction(KeyCode.A);
+            AIController.StartCoroutine(tmpknight());
+        }
+    }
     bool isNoArmy()
     {
         foreach (var item in AIController.playerInfo.ArmyUnits.Values)
@@ -143,6 +147,18 @@ public class PlayerDevelopState : PlayerFSMState
                 return false;
         }
         return true;
+    }
+
+    IEnumerator tmpworker()
+    {
+        yield return null;
+        AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
+    }
+
+    IEnumerator tmpknight()
+    {
+        yield return null;
+        AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_ProductionRider>().RunAction(KeyCode.A);
     }
 }
 

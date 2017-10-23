@@ -30,7 +30,7 @@ public abstract class MoveUnitFSMState : FSMState
 
     protected MoveUnitAIController AICon;
     //目标点位置
-	public Vector3 destPos;
+	//public Vector3 destPos;
     //字典，用于保存“转换-状态”的信息
     protected Dictionary<MoveUnitFSMTransition, MoveUnitFSMStateID> _map;
     public Dictionary<MoveUnitFSMTransition, MoveUnitFSMStateID> Map
