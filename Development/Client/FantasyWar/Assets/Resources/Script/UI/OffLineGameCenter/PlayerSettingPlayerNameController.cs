@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerSettingPlayerNameController : MonoBehaviour {
+    public PlayerSettingPlayerBarController barController;
     Text playerNameText;
 	/// <summary>
 	/// Awake is called when the script instance is being loaded.

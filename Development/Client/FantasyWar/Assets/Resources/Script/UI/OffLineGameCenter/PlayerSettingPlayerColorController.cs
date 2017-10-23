@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerSettingPlayerColorController : MonoBehaviour
 {
+    public PlayerSettingPlayerBarController barController;
+    public Text label;
     int SelectedDropListIndex
     {
         get;
@@ -39,9 +41,14 @@ public class PlayerSettingPlayerColorController : MonoBehaviour
         dropdownList = GetComponentInChildren<Dropdown>();
         dropdownList.onValueChanged.AddListener((x) =>
         {
-            SelectedDropListIndex = x;
-            Debug.Log("SelectedDropListIndex:" + SelectedDropListIndex);
 			//
+            SelectedDropListIndex = x;
+           // Debug.Log("SelectedDropListIndex:" + SelectedDropListIndex);
+            //
+            if (label != null) {
+                label.color = SelectedColor;
+            }
+            //
         });
     }
 }

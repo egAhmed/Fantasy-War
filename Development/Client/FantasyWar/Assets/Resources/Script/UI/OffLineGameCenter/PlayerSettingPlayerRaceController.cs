@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerSettingPlayerRaceController : MonoBehaviour {
+	public PlayerSettingPlayerBarController barController;
 	int SelectedDropListIndex{
         get;
         set;

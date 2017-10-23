@@ -2,34 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSettingPlayerBarController : MonoBehaviour {
+public class PlayerSettingPlayerBarController : MonoBehaviour
+{
     //
-    public Color PlayerColor{
+    public bool IsAI
+    {
         get;
         set;
     }
-    public string PlayerName{
-		get;
-        set;
-	}
-	public int PlayerGroup{
-		get;
-        set;
-	}
-
-    public Racial PlayerRaceType{
-        get;
-        set;
-    }
-
     //
-    PlayerSettingPlayerNameController playerNameController;
-    PlayerSettingPlayerRaceController playerRaceController;
-    PlayerSettingPlayerTeamController playerTeamController;
-    PlayerSettingPlayerColorController playerColorController;
-	
-	void Awake()
-	{
+    public PlayerSettingPlayerNameController playerNameController;
+    public PlayerSettingPlayerRaceController playerRaceController;
+    public PlayerSettingPlayerTeamController playerTeamController;
+    public PlayerSettingPlayerColorController playerColorController;
+
+    void Awake()
+    {
         playerNameController = GetComponentInChildren<PlayerSettingPlayerNameController>();
         playerRaceController = GetComponentInChildren<PlayerSettingPlayerRaceController>();
         playerTeamController = GetComponentInChildren<PlayerSettingPlayerTeamController>();

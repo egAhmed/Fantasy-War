@@ -12,7 +12,7 @@ public class LoginBtnOfflineGame : MonoBehaviour {
         loginBtn = GetComponent<Button>();
         loginBtn.onClick.AddListener(()=> {
             //
-
+            RTSSceneManager.ShareInstance.loadScene(1);
             //
         });
     }

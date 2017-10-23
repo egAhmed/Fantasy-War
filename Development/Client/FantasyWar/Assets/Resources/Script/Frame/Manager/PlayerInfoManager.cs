@@ -72,11 +72,11 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 				item.gameUnitBelongSide = RTSGameUnitBelongSide.Player;
 			}
 		}
-		Debug.Log ("playerinfo初始化完毕");
+		//Debug.Log ("playerinfo初始化完毕");
 	}
 
 	public void LoadInitBuild(){
-		Debug.Log ("加载建筑列表");
+		//Debug.Log ("加载建筑列表");
 		foreach (PlayerInfo item in Players) {
 
 			GameObject go = PrefabFactory.ShareInstance.createClone ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
@@ -88,7 +88,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 			item.BuildingUnits ["Base"].Add (go.GetComponent<RTSBuilding> ());
 			item.AllUnits.Add (rb);
 		}
-		Debug.Log ("加载建筑列表完毕");
+		//Debug.Log ("加载建筑列表完毕");
 	}
 
 	public void LoadAIController(){
@@ -98,7 +98,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 				PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
 				pac.playerInfo = item;
 				pac.enabled = true;
-				Debug.Log (pac.playerInfo.name);
+				//Debug.Log (pac.playerInfo.name);
 			}
 		}
 
