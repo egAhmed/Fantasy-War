@@ -19,7 +19,7 @@ public class PlayerAIController : PlayerAdvancedFSM
     private string[,] _targetResourcesNums;
 
 
-    //阶段性目标兵种和建筑数量
+    //阶段性目标兵种和建筑数量[id,数量]
     public string[,] TargetResourcesNums
     {
         get
@@ -60,14 +60,14 @@ public class PlayerAIController : PlayerAdvancedFSM
     //在FSM基类Update中调用
     protected override void FSMUpdate()
     {
-		Debug.Log (CurrentState.GetType());
+		//Debug.Log (CurrentState.GetType());
     }
 
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
 		CurrentState.Reason(transform, transform);
-		Debug.Log ("currenss"+CurrentState);
+		//Debug.Log ("currenss is "+CurrentState);
 		CurrentState.Act(transform, transform);
     }
 
@@ -122,16 +122,16 @@ public class PlayerAIController : PlayerAdvancedFSM
     //加载发展目标表
     void loadTargetnums()
     {
-        if (Settings.AIhunmandevelop.idList == null)
-            Settings.TableManage.Start();
+//        if (Settings.AIhunmandevelop.idList == null)
+//            Settings.TableManage.Start();
         _targetResourcesNums = new string[Settings.AIhunmandevelop.idList.Count, 2];
         for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
         {
-            _targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(i).resid.ToString();
-            _targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(i).nums.ToString();
+			_targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(Settings.AIhunmandevelop.idList[i]).resid.ToString();
+			_targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(Settings.AIhunmandevelop.idList[i]).nums.ToString();
 
         }
-        loadResources();
+        //loadResources();
 
     }
 

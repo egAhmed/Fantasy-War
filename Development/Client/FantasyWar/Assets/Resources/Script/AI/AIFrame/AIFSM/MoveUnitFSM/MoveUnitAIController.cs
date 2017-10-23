@@ -18,7 +18,7 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     //在FSM基类Update中调用
     protected override void FSMUpdate()
     {
-
+		//Debug.Log (CurrentState.GetType ());
     }
 
     //在FSM基类FixedUpdate中调用
@@ -37,7 +37,7 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     private void ConstructFSM()
     {
 
-
+		//Debug.Log ("start" + Time.time);
         MoveUnitIdleState idle = new MoveUnitIdleState(this);
         idle.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
         idle.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
@@ -77,6 +77,21 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
         AddFSMState(build);
         AddFSMState(collecting);
         AddFSMState(patrol);
+
+		if (gameObject.GetComponent<RTSWorker> () != null) {
+			CurrentStateID = MoveUnitFSMStateID.Collect;
+			//Debug.Log ("改状态" + Time.time);
+			foreach (var state in fsmStates)
+			{
+				//Debug.Log("改状态1");
+				if (state.StateID == CurrentStateID)
+				{
+					CurrentState = state;
+					//Debug.Log("改状态2");
+					break;
+				}
+			}
+		}
     }
 
     //战略层使用，强制进入攻击状态

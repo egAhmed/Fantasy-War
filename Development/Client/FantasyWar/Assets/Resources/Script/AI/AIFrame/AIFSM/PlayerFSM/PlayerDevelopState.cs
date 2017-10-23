@@ -32,8 +32,7 @@ public class PlayerDevelopState : PlayerFSMState
 
         //没钱没农民
         //判断是否还有农民
-        //Settings.ResourcesTable.Get(1009).type更换下面第二个判断条件
-        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits["worker"].Count == 0)
+        if (AIController.playerInfo.Resources == 0 && AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count == 0)
         {
             //还要没兵
             if (isNoArmy())
@@ -50,10 +49,11 @@ public class PlayerDevelopState : PlayerFSMState
     //依次建造建筑或建造兵种
     bool develop(string[,] TargetResourcesNums)
     {
+		
         for (int i = 0; i < TargetResourcesNums.GetLength(0); i++)
         {
-            int IndexOfName = TargetResourcesNums[i, 0].LastIndexOf(@"/")+1;
-            string name = TargetResourcesNums[i, 0].Substring(IndexOfName);
+            //int IndexOfName = TargetResourcesNums[i, 0].LastIndexOf(@"/")+1;
+			string name = Settings.ResourcesTable.Get(Convert.ToInt32(TargetResourcesNums[i, 0])).type; //TargetResourcesNums[i, 0].Substring(IndexOfName);
             //先判断是否存在于建筑的字典里。
             if (AIController.playerInfo.BuildingUnits.ContainsKey(name))
             {
@@ -70,7 +70,7 @@ public class PlayerDevelopState : PlayerFSMState
             if (AIController.playerInfo.ArmyUnits.ContainsKey(name))
             {
                 //判断部队数量是否达标
-                if (AIController.playerInfo.BuildingUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
+				if (AIController.playerInfo.ArmyUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
                 {
                     //没达标，造一个
                     creatArmy(TargetResourcesNums[i, 0]);
@@ -88,8 +88,7 @@ public class PlayerDevelopState : PlayerFSMState
         if (Settings.ResourcesTable.idList == null)
             Settings.TableManage.Start();
         //获取基地坐标
-        //Settings.ResourcesTable.Get(1101).type更换以下“Base”
-        Vector3 basePos = AIController.playerInfo.BuildingUnits["Base"][0].transform.position;
+        Vector3 basePos = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
         Vector3 buildPos = basePos;
         float anchor = 0;
         if (FSM.DelAIBuild == null)
@@ -110,8 +109,7 @@ public class PlayerDevelopState : PlayerFSMState
 
 
         //找一个农民去建房子
-        //Settings.ResourcesTable.Get(1009).type更换以下worker
-        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits["worker"][0].GetComponent<MoveUnitAIController>();
+        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<MoveUnitAIController>();
         farmerAI.SetBuildState(FSM.DelAIBuild(buildPos, buildPath).pos, buildPath);
     }
 
@@ -125,9 +123,16 @@ public class PlayerDevelopState : PlayerFSMState
     //    return rayinfo.point;
     //}
     void creatArmy(string armyName)
-    {
-        AIController.playerInfo.BuildingUnits["人族兵营"][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
-    }
+	{
+		if (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count > 0&&Time.time>Time.deltaTime&&armyName==1009.ToString()) {
+//			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
+			AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ().RunAction (KeyCode.A);
+		}
+		if (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count > 0&&Time.time>Time.deltaTime&&armyName==1002.ToString()) {
+//			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
+			AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_ProductionRider> ().RunAction (KeyCode.A);
+		}
+	}
     bool isNoArmy()
     {
         foreach (var item in AIController.playerInfo.ArmyUnits.Values)

@@ -16,6 +16,8 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 		initialPos.Add (GameObject.FindWithTag ("P5pos").transform.position);
 	}
 
+	public List<RTSResource> resourceses = new List<RTSResource> ();
+
 	public void AddAIPlayerInfo(){
 		PlayerInfo p = new PlayerInfo ();
 		p.name = "AI" + (Players.Count + 1);
@@ -43,26 +45,25 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 //				Settings.TableManage.Start ();
 //			
 //
-//			for (int j= 0; j < Settings.ResourcesTable.idList.Count; j++) {
-//				int id = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).id;
-//				Debug.LogError (Settings.ResourcesTable.idList[i]);
-//				int typeid = (id % 1000) / 100;
+			for (int j= 0; j < Settings.ResourcesTable.idList.Count; j++) {
+				int id = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).id;
+				//Debug.LogError (Settings.ResourcesTable.idList[i]);
+				int typeid = (id % 1000) / 100;
 //				int index = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).path.LastIndexOf (@"/")+1;
-//				string name = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).path.Substring (index);
-//				if (typeid==0) {
-//					//Debug.LogError (item.ArmyUnits.ContainsKey(name));
-//					item.ArmyUnits.Add (name, new List<RTSGameUnit> ());
-//				}
-//				if (typeid==1) {
-//					item.BuildingUnits.Add (name, new List<RTSGameUnit> ());
-//				}
-//			}
-
-			item.BuildingUnits.Add ("Base", new List<RTSGameUnit> ());
-			item.ArmyUnits.Add ("worker", new List<RTSGameUnit> ());
-			item.BuildingUnits.Add ("barracks", new List<RTSGameUnit> ());
-			item.ArmyUnits.Add ("Melee", new List<RTSGameUnit> ());
-			item.ArmyUnits.Add ("Rider", new List<RTSGameUnit> ());
+				string name = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).type;
+				if (typeid==0) {
+					//Debug.LogError (item.ArmyUnits.ContainsKey(name));
+					item.ArmyUnits.Add (name, new List<RTSGameUnit> ());
+				}
+				if (typeid==1) {
+					item.BuildingUnits.Add (name, new List<RTSGameUnit> ());
+				}
+			}
+//			item.BuildingUnits.Add ("Base", new List<RTSGameUnit> ());
+//			item.ArmyUnits.Add ("worker", new List<RTSGameUnit> ());
+//			item.BuildingUnits.Add ("barracks", new List<RTSGameUnit> ());
+//			item.ArmyUnits.Add ("Melee", new List<RTSGameUnit> ());
+//			item.ArmyUnits.Add ("Rider", new List<RTSGameUnit> ());
 			item.Resources = 500;
 			item.location = initialPos[i];
 			if (item.name != TestingScript.virCurrentName) {
@@ -85,7 +86,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 			//go.SetActive (true);
 			RTSBuilding rb = go.AddComponent<RTSBuilding> ();
 			rb.playerInfo = item;
-			item.BuildingUnits ["Base"].Add (go.GetComponent<RTSBuilding> ());
+			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
 			item.AllUnits.Add (rb);
 		}
 		//Debug.Log ("加载建筑列表完毕");
@@ -98,7 +99,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 				PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
 				pac.playerInfo = item;
 				pac.enabled = true;
-				//Debug.Log (pac.playerInfo.name);
+//				Debug.Log (pac.playerInfo.name);
 			}
 		}
 

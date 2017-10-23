@@ -14,9 +14,8 @@ public class TestingScript : MonoBehaviour {
     public static List<PlayerInfo> playerInfos = null;
     //
 
-
-    void Start () {
-		
+	void Start () {
+		Settings.TableManage.Start ();
 		//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
 
 		// RTSGamePlayManager.ShareInstance.build();

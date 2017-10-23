@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(RTSMeleeAnimatorStateController))]
 public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 {
+
     public float AttackFrequency
     {
         get;
@@ -175,6 +176,9 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
     {
         base.Awake();
         //
+		maxHP = 100;
+		HP = maxHP;
+
         if(animatorStateController==null)
             animatorStateController = GetComponent<RTSMeleeAnimatorStateController>();
         //
@@ -199,18 +203,21 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         base.actionBehaviourInit();
         //
 
-		playerInfo.ArmyUnits["Melee"].Add(this);
+		playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1002).type].Add(this);
 
-		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-            //
-			ActionBehaviour ask = gameObject.AddComponent<Action_Skill1> ();
-			ActionList.Add (ask);
-			//
-            ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
-			ActionList.Add (aa);
-            //
-		}
-        //
+		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
+		ActionList.Add (aa);
+
+		ActionBehaviour ask = gameObject.AddComponent<Action_Skill1> ();
+		ActionList.Add (ask);
+
+//		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+//			
+//			//
+//
+//            //
+//		}
+
         Action_Attack ab = GetComponent<Action_Attack>();
         ab.attackDelegate += OnSetTargetUnit;
         //

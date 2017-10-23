@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(RTSGameUnitPathFindingController))]
 public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
 
+	protected override void Awake ()
+	{
+		base.Awake ();
+	}
+
     protected RTSGameUnitPathFindingController unitPathFindingController;
 
     public float MovingSpeed { get;set; }
@@ -21,7 +26,7 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
         base.Start();
         //
         unitPathFindingController = gameObject.GetComponent<RTSGameUnitPathFindingController>();
-        //
+		//
     }
 	//
 	protected override void OnSetTargetPosition(Vector3 pos)

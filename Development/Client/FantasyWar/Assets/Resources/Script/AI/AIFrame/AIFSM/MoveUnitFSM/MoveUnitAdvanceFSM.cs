@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveUnitAdvanceFSM : FSM
 {
+	public Vector3 destPos;
     public Transform enemyTransform;
     //所有状态的集合
     public List<MoveUnitFSMState> fsmStates;

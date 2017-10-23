@@ -25,13 +25,13 @@ public class Action_Production : ActionBehaviour  {
             // GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
             // RTSWorker rtsw = go.GetComponent<RTSWorker>();
             rtsw.playerInfo = pi;
-			rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits["Base"][0];
+			rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0];
 			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
-			Debug.Log(pi.ArmyUnits["worker"].Count);
+//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
 			if(pi.isAI){
-				Debug.Log("是AI");
+//				Debug.Log("是AI");
 				go.AddComponent<MoveUnitAIController>();
-				Debug.Log("添加成功");
+//				Debug.Log("添加成功");
 			}else { 
 				Debug.Log("rtsw.playerInfo =>"+rtsw.playerInfo.name);
 			}

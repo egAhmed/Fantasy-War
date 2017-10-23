@@ -42,11 +42,22 @@ public class PlayerAttackState : PlayerFSMState
 			//让小兵打过去
 			foreach (string item in AIController.playerInfo.ArmyUnits.Keys) {
 				foreach (RTSGameUnit unit in AIController.playerInfo.ArmyUnits[item]) {
-					if (unit is RTSWorker)
+					if (unit is RTSWorker) {
 						continue;
+					}
 					MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
-					control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
-					control.CurrentState.destPos = nearestPlayer.location;
+					//control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
+					control.enemyTransform=nearestPlayer.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform;
+					control.destPos = nearestPlayer.location;
+					control.CurrentStateID = MoveUnitFSMStateID.Patrol;
+					foreach (var state in control.fsmStates)
+					{
+						if (state.StateID == control.CurrentStateID)
+						{
+							control.CurrentState = state;
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -55,10 +66,11 @@ public class PlayerAttackState : PlayerFSMState
 			foreach (string item in AIController.playerInfo.ArmyUnits.Keys) {
 				foreach (RTSGameUnit unit in AIController.playerInfo.ArmyUnits[item]) {
 					MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
-					control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
+					//control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
 					control.CurrentState.destPos = nearestPlayer.location;
 				}
 			}
+			population = tempPopulation;
 		}
 
 	}
@@ -66,7 +78,7 @@ public class PlayerAttackState : PlayerFSMState
     public override void Reason(Transform enemy, Transform myself)
     {
         base.Reason(enemy, myself);
-		if (population < 10) {
+		if ( population < 10) {
 			AIController.SetTransition (PlayerFSMTransition.ArmyUseUp);
 		}
 		//基地没血
