@@ -67,7 +67,6 @@ public class PlayerAIController : PlayerAdvancedFSM
     protected override void FSMFixedUpdate()
     {
 		CurrentState.Reason(transform, transform);
-		Debug.Log ("currenss"+CurrentState);
 		CurrentState.Act(transform, transform);
     }
 
@@ -147,4 +146,12 @@ public class PlayerAIController : PlayerAdvancedFSM
         }
 
     }
+	void OnDisable()
+	{
+		Debug.Log ("d");
+	}
+	void OnEnable()
+	{
+		
+	}
 }

@@ -28,13 +28,13 @@ public class RTSGameUnitGamePlayNetworkingMsgSender : MonoBehaviour {
         //
         data.unitID = Unit.unitInfo.unitID;
         //
-        data.positionX = gameObject.transform.position.x;
-        data.positionY = gameObject.transform.position.y;
-        data.positionZ = gameObject.transform.position.z;
+        // data.positionX =gameObject.transform.position.x;
+        // data.positionY = gameObject.transform.position.y;
+        // data.positionZ = gameObject.transform.position.z;
         //
-        //data.positionX =transform.localPosition.x;
-        //data.positionY = transform.localPosition.y;
-        //data.positionZ = transform.localPosition.z;
+        data.positionX =transform.localPosition.x;
+        data.positionY = transform.localPosition.y;
+        data.positionZ = transform.localPosition.z;
         //
         data.eulerX = gameObject.transform.rotation.x;
         data.eulerY = gameObject.transform.rotation.y;

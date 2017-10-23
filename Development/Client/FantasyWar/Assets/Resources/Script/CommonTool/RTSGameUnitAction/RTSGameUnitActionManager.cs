@@ -195,7 +195,7 @@ public class RTSGameUnitActionManager : UnitySingleton<RTSGameUnitActionManager>
                 if (hitObj != null)
                 {
                     //
-                    Debug.LogError("hit obj");
+                    //Debug.LogError("hit obj");
                     //
                     if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberUI)
                     {

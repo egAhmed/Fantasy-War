@@ -7,14 +7,13 @@ public class Action_Attack : ActionBehaviour {
 	public delegate void AttackDelegate(RTSGameUnit attackTarget);
 	public AttackDelegate attackDelegate;
 
+
 	void Awake(){
-		//
 		index = 2;
 		shortCutKey = KeyCode.A;
 		actionIcon = Resources.Load<Sprite> ("Texture/AtkIcon");
 		attackDelegate += DebugAttack;
 		canRepeat = true;
-		//
 	}
 
 	void DebugAttack(RTSGameUnit attackTarget){

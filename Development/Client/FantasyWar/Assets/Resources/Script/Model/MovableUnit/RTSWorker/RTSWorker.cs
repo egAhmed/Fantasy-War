@@ -443,7 +443,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 		Debug.Log(playerInfo.name);
 		playerInfo.ArmyUnits["worker"].Add(this);
 
-        if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+        if(gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
 			ActionList.Add (ac);
 			ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
@@ -454,13 +454,5 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
             acc.collectDelegate += OnSetTargetUnit;
             //
         }
-    }
-    //
-    protected override void aiBehaviourDelegateRegister() {
-        //
-        base.aiBehaviourDelegateRegister();
-        //
-        FSM.AIGetResources += OnSetTargetUnit;
-        //
     }
 }

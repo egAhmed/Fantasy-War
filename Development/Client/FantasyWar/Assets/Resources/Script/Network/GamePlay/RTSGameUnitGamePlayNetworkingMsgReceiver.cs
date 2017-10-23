@@ -25,17 +25,16 @@ public class RTSGameUnitGamePlayNetworkingMsgReceiver : MonoBehaviour {
     //
     public void receive(RTSGameUnitGamePlayNetworkingData data) {
         //
-        Debug.Log("receive");
-        //
-        if (data==null||data.unitID==null)
+        // Debug.Log("receive");
+		//
+		if(data==null||data.unitID==null)
             return;
 			//
 		if(UnitID!=data.unitID)
             return;
         //
         UnitData = data;
-        //
-        Debug.Log(UnitData);
+     
         //
     }
 

@@ -99,11 +99,11 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
         {
             return false;
         }
-        if (!GameUnitsDic.ContainsKey(unit.playerInfo.gameUnitBelongSide))
+        if (!GameUnitsDic.ContainsKey(unit.gameUnitBelongSide))
         {
-            GameUnitsDic.Add(unit.playerInfo.gameUnitBelongSide, new List<RTSGameUnit>());
+            GameUnitsDic.Add(unit.gameUnitBelongSide, new List<RTSGameUnit>());
         }
-        List<RTSGameUnit> unitsList = GameUnitsDic[unit.playerInfo.gameUnitBelongSide];
+        List<RTSGameUnit> unitsList = GameUnitsDic[unit.gameUnitBelongSide];
         lock (unitsList)
         {
             unitsList.Add(unit);
@@ -117,9 +117,9 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
         {
             return false;
         }
-        if (GameUnitsDic.ContainsKey(unit.playerInfo.gameUnitBelongSide))
+        if (GameUnitsDic.ContainsKey(unit.gameUnitBelongSide))
         {
-            List<RTSGameUnit> unitsList = GameUnitsDic[unit.playerInfo.gameUnitBelongSide];
+            List<RTSGameUnit> unitsList = GameUnitsDic[unit.gameUnitBelongSide];
             lock (unitsList)
             {
                 unitsList.Remove(unit);

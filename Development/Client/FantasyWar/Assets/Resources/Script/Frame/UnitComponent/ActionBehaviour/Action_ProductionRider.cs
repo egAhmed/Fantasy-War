@@ -20,10 +20,8 @@ public class Action_ProductionRider : ActionBehaviour {
 			//TODO
 			//生产方法
 			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
-			// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
-			// RTSMelee rtsm = go.GetComponent<RTSMelee>();
-			RTSMelee rtsm = PrefabFactory.ShareInstance.createClone<RTSMelee>("Prefab/RTSCharacter/RTSCavalryman/RTSCavalryman", transform.position + new Vector3(2, 0, 0), Quaternion.identity);
-            GameObject go = rtsm.gameObject;
+			GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
+			RTSMelee rtsm = go.GetComponent<RTSMelee>();
 			rtsm.playerInfo = pi;
 			//rtsm.homeBuilding = (RTSBuilding)pi.BuildingUnits["Base"][0];
 			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());

@@ -262,18 +262,16 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
     {
         if (singleSelectedUnit != null)
         {
-            //
             singleSelectedUnit.IsSelected = false;
             singleSelectedUnit = null;
-            //
         }
         //
+
 		List<RTSGameUnit> selectedUnits =PlayerInfoManager.ShareInstance.currentPlayer.SelectedUnits;
         if (selectedUnits == null || selectedUnits.Count <= 0)
         {
             return;
         }
-        //
         for (int i = 0; i < selectedUnits.Count; i++)
         {
             RTSGameUnit unit = selectedUnits[i];
@@ -282,9 +280,7 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 unit.IsSelected = false;
             }
         }
-        //
         selectedUnits.Clear();
-        //
     }
 
     //public static void addSelectionReleaseListener(RTSGameUnit unit)
@@ -329,7 +325,6 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
             //
             if (Physics.Raycast(ray.origin, ray.direction, out hitInfo, 2000f, RTSLayerManager.ShareInstance.LayerMaskRayCastMouse0, QueryTriggerInteraction.Ignore))
             {
-                //
                 GameObject hitObj = hitInfo.collider.gameObject;
                 // Debug.Log("hit");
                 // Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
@@ -431,7 +426,7 @@ public class RTSGameUnitSelectionManager : MonoBehaviour
                 //
                 if (screenPos.x >= xMin && screenPos.x <= xMax && screenPos.y >= yMin && screenPos.y <= yMax)
 				{
-					//Debug.Log ("选中一个");
+					Debug.Log ("选中一个");
                     //inside the rect
                     unit.IsSelected = true;
                     //lock (UnitsSelected)
