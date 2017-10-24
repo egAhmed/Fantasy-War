@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerInfo{
 
+	public PlayerAIController AICon;
+
 	public int groupTeam;
 
 	public Racial racial;

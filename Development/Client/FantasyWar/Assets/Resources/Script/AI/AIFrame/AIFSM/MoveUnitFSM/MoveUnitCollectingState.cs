@@ -23,7 +23,7 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 	{
 		//当前挖的为空  或者  当前挖的矿不是最近的矿
 		if (currentMine == null ||(nearestMine != null && nearestMine != currentMine)) {
-			Debug.Log ("挖矿");
+//			Debug.Log ("挖矿");
 			currentMine = nearestMine;
 			myself.GetComponent<Action_Collect> ().collectDelegate (nearestMine);
 		}
@@ -31,7 +31,7 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 
 	public void FindNearMine(Transform myself){
 		//现在还没有矿物的矿石的列表
-		Debug.Log("寻找最近的矿");
+//		Debug.Log("寻找最近的矿");
 		foreach (RTSResource item in PlayerInfoManager.ShareInstance.resourceses) {
 			if (nearestMine == null) {
 				nearestMine = item;

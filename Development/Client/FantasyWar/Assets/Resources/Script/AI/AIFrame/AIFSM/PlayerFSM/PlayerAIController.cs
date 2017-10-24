@@ -7,7 +7,7 @@ using System;
 public class PlayerAIController : PlayerAdvancedFSM
 {
     public delegate void CreatArmy(int resourcesID);
-    public delegate void CreatWorker();
+	public delegate void CreatWorker(KeyCode v);
 
     public CreatWorker AICreatWorker;
     protected Dictionary<RTSBuilding, CreatArmy> dicCreatArmy;

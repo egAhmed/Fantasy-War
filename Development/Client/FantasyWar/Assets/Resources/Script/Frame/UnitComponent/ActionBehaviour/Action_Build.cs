@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Action_Build : ActionBehaviour {
 
+	PlayerInfo pi;
+	RTSWorker rtsw;
+
 	void Awake(){
+		rtsw = gameObject.GetComponent<RTSWorker> ();
+		pi = rtsw.playerInfo;
 		index = 6;
 		shortCutKey = KeyCode.B;
 		actionIcon = Resources.Load<Sprite> ("Texture/BuildIcon");
@@ -17,12 +22,13 @@ public class Action_Build : ActionBehaviour {
 			//TODO
 			//建造方法
 			Debug.Log("加载建筑");
-			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
+			if(pi.Resources>200){
 			//Debug.Log(pi.name);
 			//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
 			//RTSGamePlayManager.ShareInstance.build(pi);
-			buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
+				buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
 			//
+			}
 		};
 	}
 
@@ -45,17 +51,27 @@ public class Action_Build : ActionBehaviour {
 		//
 	}
 
-	private void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
+	public void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
 	{
-		RTSBuildingHomeBase gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase>(path, pos, Quaternion.identity);
-		gameUnit.GetComponent<RTSBuildingHomeBase> ().playerInfo = info;
+		rtsw.move (pos);
+		StartCoroutine (BuildNew(pos,info));
 		//
+	}
 
-		//
-		if(info.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-			gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
+	IEnumerator BuildNew(Vector3 pos,PlayerInfo info){
+		while (true) {
+			if (Vector3.Distance (transform.position, pos) < 1) {
+				yield return new WaitForSeconds (5);
+				RTSBuildingHomeBase gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase>(path, pos, Quaternion.identity);
+				gameUnit.GetComponent<RTSBuildingHomeBase> ().playerInfo = info;
+				//
+				if(info.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+					gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
+				}
+				break;
+			}
+			yield return null;
 		}
-		//
 	}
 
 	private void returnTheBuildingCost()

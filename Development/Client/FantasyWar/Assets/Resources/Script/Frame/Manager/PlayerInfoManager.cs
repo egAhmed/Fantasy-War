@@ -38,13 +38,12 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 	/// </summary>
 	public void InitPlayers(){
 		for (int i = 0; i < Players.Count; i++) {
-//			Debug.Log ("进循环");
 			PlayerInfo item = Players[i];
 //
 //			if (Settings.ResourcesTable.idList == null)
 //				Settings.TableManage.Start ();
-//			
-//
+
+			//添加playerinfo单位列表
 			for (int j= 0; j < Settings.ResourcesTable.idList.Count; j++) {
 				int id = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).id;
 				//Debug.LogError (Settings.ResourcesTable.idList[i]);
@@ -59,13 +58,17 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 					item.BuildingUnits.Add (name, new List<RTSGameUnit> ());
 				}
 			}
+
 //			item.BuildingUnits.Add ("Base", new List<RTSGameUnit> ());
 //			item.ArmyUnits.Add ("worker", new List<RTSGameUnit> ());
 //			item.BuildingUnits.Add ("barracks", new List<RTSGameUnit> ());
 //			item.ArmyUnits.Add ("Melee", new List<RTSGameUnit> ());
 //			item.ArmyUnits.Add ("Rider", new List<RTSGameUnit> ());
+
 			item.Resources = 500;
 			item.location = initialPos[i];
+
+			//敌人或是自己
 			if (item.name != TestingScript.virCurrentName) {
 				item.gameUnitBelongSide = RTSGameUnitBelongSide.EnemyGroup;
 			}
@@ -73,7 +76,6 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 				item.gameUnitBelongSide = RTSGameUnitBelongSide.Player;
 			}
 		}
-		//Debug.Log ("playerinfo初始化完毕");
 	}
 
 	public void LoadInitBuild(){
@@ -95,23 +97,30 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 			rb.playerInfo = item;
 			//item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
 			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (rb);
-			item.AllUnits.Add (rb);
+			//item.AllUnits.Add (rb);
+			//Debug.Log (item.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count);
 		}
 		//Debug.Log ("加载建筑列表完毕");
 	}
 
 	public void LoadAIController(){
-				Debug.Log ("我是AI哦");
-		
 		foreach (PlayerInfo item in Players) {
+			Debug.Log ("判断");
 			if (item.isAI) {
-				Debug.Log ("我是AI哦");
+				Debug.Log ("是AI");
 				PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
 				pac.playerInfo = item;
+				pac.AICreatWorker += item.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0]
+					.GetComponent<Action_Production>().RunAction;
+				item.AICon = pac;
 				pac.enabled = true;
-//				Debug.Log (pac.playerInfo.name);
+			} else {
+				Debug.Log ("不是AI");	
 			}
 		}
+	}
 
+	public void AICreatWorker(){
+		
 	}
 }

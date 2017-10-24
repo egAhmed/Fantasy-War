@@ -61,15 +61,20 @@ public class TestingScript : MonoBehaviour {
 		// pim.AddPlayer ("xxixxxlx", Color.cyan);
         //add AI
 		// pim.AddAIPlayerInfo ();
-        PlayerInfoManager.ShareInstance.currentPlayer = currentPlayer;
-        PlayerInfoManager.ShareInstance.Players = playerInfos;
+		pim.currentPlayer = currentPlayer;
+        pim.Players = playerInfos;
         //
 		pim.InitPlayers ();
 		pim.LoadInitBuild ();
-		pim.LoadAIController ();
-        //
+		//pim.LoadAIController ();
+		StartCoroutine(LoadAI());
+		//
 	}
 
+	IEnumerator LoadAI(){
+		yield return new WaitForSeconds (0.1f);
+		PlayerInfoManager.ShareInstance.LoadAIController ();
+	}
 
     RTSGameUnit testingGetHurtUnit;
     private void getHurtTesting(KeyCode key) {

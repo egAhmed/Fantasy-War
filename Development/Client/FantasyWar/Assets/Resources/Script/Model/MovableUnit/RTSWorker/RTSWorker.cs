@@ -459,4 +459,14 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 //            //
 //        }
     }
+
+	public void CreatBuilding(Vector3 pos, int ID){
+		switch (ID) {
+		case 1101:
+			gameObject.GetComponent<Action_Build> ().beginToBuildTheBuilding (pos, playerInfo);
+			break;
+		default:
+			break;
+		}
+	}
 }

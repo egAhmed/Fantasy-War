@@ -23,6 +23,7 @@ public class Action_BuildBarrack : ActionBehaviour {
 			//Debug.Log(pi.name);
 			buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks");
 			//
+
 		};
 		//
 	}
@@ -45,18 +46,27 @@ public class Action_BuildBarrack : ActionBehaviour {
 		//
 	}
 
-	private void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
+	/// <summary>
+	/// 真正建出来调用这个
+	/// </summary>
+	/// <param name="pos">Position.</param>
+	/// <param name="info">Info.</param>
+	public void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
 	{
 		if (info == null)
 			return;
 		//
-		RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack>(path, pos, Quaternion.identity);
+		//下面就是造出来的建筑
+		RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack> (path, pos, Quaternion.identity);
 		gameUnit.GetComponent<RTSBuildingBarrack> ().playerInfo = info;
 		//
-		if(info.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+		if (info.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
 			gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
 		}
 		//
+		if (info.isAI) {
+			info.AICon.registerDelCreatArmy (gameUnit.CreatArmy, gameUnit);
+		}
 	}
 
 	private void returnTheBuildingCost()
