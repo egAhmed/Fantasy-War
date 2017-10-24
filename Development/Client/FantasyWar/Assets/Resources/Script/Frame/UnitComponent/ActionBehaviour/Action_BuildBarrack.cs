@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action_Build : ActionBehaviour {
-
+public class Action_BuildBarrack : ActionBehaviour {
+		//
 	void Awake(){
-		index = 6;
-		shortCutKey = KeyCode.B;
-		actionIcon = Resources.Load<Sprite> ("Texture/BuildIcon");
+		index = 7;
+		shortCutKey = KeyCode.R;
+		actionIcon = Resources.Load<Sprite> ("Texture/BarrIcon");
 		canRepeat = false;
 	}
-
+	
 	public override Action GetClickAction ()
 	{
+		//
 		return delegate() {
 			//TODO
 			//建造方法
 			Debug.Log("加载建筑");
+			//
 			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
 			//Debug.Log(pi.name);
-			//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
-			//RTSGamePlayManager.ShareInstance.build(pi);
-			buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
+			buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks");
 			//
 		};
+		//
 	}
-
 
 	string path;
 
@@ -47,10 +47,11 @@ public class Action_Build : ActionBehaviour {
 
 	private void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
 	{
-		RTSBuildingHomeBase gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase>(path, pos, Quaternion.identity);
-		gameUnit.GetComponent<RTSBuildingHomeBase> ().playerInfo = info;
+		if (info == null)
+			return;
 		//
-
+		RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack>(path, pos, Quaternion.identity);
+		gameUnit.GetComponent<RTSBuildingBarrack> ().playerInfo = info;
 		//
 		if(info.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 			gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;

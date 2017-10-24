@@ -448,6 +448,8 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 		ActionList.Add (ac);
 		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
 		ActionList.Add (ab);
+		ActionBehaviour abb = gameObject.AddComponent<Action_BuildBarrack> ();
+		ActionList.Add (abb);
 
 		Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
 		acc.collectDelegate += OnSetTargetUnit;

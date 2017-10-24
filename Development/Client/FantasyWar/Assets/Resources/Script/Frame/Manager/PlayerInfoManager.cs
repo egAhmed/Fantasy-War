@@ -80,13 +80,21 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 		//Debug.Log ("加载建筑列表");
 		foreach (PlayerInfo item in Players) {
 
-			GameObject go = PrefabFactory.ShareInstance.createClone ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
+			//GameObject go = PrefabFactory.ShareInstance.createClone ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
 			//GameObject buildPrefab = Resources.Load<GameObject> ("3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
 			//GameObject go = GameObject.Instantiate (buildPrefab, item.location, Quaternion.identity);
 			//go.SetActive (true);
-			RTSBuilding rb = go.AddComponent<RTSBuilding> ();
+			//RTSBuilding rb = go.AddComponent<RTSBuilding> ();
+
+			//GameObject go = PrefabFactory.ShareInstance.createClone ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
+			//GameObject buildPrefab = Resources.Load<GameObject> ("3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
+			//GameObject go = GameObject.Instantiate (buildPrefab, item.location, Quaternion.identity);
+			//go.SetActive (true);
+			RTSBuilding rb =PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase> ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
+
 			rb.playerInfo = item;
-			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
+			//item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
+			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (rb);
 			item.AllUnits.Add (rb);
 		}
 		//Debug.Log ("加载建筑列表完毕");

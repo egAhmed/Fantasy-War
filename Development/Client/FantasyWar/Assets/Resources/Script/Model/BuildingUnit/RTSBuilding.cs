@@ -121,15 +121,6 @@ public class RTSBuilding : RTSGameUnit
     protected override void actionBehaviourInit() {
         ///
         base.actionBehaviourInit();
-        //
-        // UnitManager.ShareInstance.Buildings[playerInfo].Add (gameObject);
-        //
-//		ActionBehaviour aa = gameObject.AddComponent<Action_Attack> ();
-//		ActionList.Add (aa);
-        //
-		ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
-		ActionList.Add (apro);
-		ActionBehaviour apr = gameObject.AddComponent<Action_ProductionRider> ();
-		ActionList.Add (apr);
+      //
     }
 }

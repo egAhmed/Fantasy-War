@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerInfo{
 
+	public int groupTeam;
+
 	public Racial racial;
 
 	public string name;

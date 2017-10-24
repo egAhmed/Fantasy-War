@@ -131,7 +131,11 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
                 {
                     continue;
                 }
+//				if (i >= 2) {
+//					break;
+//				}
                 //
+				playerInfoTemp.groupTeam = i;
                 playerInfoTemp.name = bc.playerNameController.PlayerName;
                 playerInfoTemp.racial = bc.playerRaceController.SelectedRacial;
                 playerInfoTemp.accentColor = bc.playerColorController.SelectedColor;

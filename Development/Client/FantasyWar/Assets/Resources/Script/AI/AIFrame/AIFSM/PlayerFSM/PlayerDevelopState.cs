@@ -135,8 +135,8 @@ public class PlayerDevelopState : PlayerFSMState
         if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1002)
         {
             //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
-            AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_ProductionRider>().RunAction(KeyCode.A);
-            AIController.StartCoroutine(tmpknight());
+            //AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_ProductionRider>().RunAction(KeyCode.A);
+            //AIController.StartCoroutine(tmpknight());
         }
     }
     bool isNoArmy()
