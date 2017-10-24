@@ -139,19 +139,14 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
                 playerInfoTemp.name = bc.playerNameController.PlayerName;
                 playerInfoTemp.racial = bc.playerRaceController.SelectedRacial;
                 playerInfoTemp.accentColor = bc.playerColorController.SelectedColor;
+                playerInfoTemp.isAI = bc.IsAI;
                 //
                 if (i == 0)
                 {
-                    playerInfoTemp.isAI = false;
                     //
                     TestingScript.currentPlayer = playerInfoTemp;
                     TestingScript.virCurrentName = playerInfoTemp.name;
                     //
-                }
-                else
-                {
-                    bc.IsAI = true;
-                    playerInfoTemp.isAI = true;
                 }
                 //
                 playerInfos.Add(playerInfoTemp);
