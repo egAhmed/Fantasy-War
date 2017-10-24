@@ -58,16 +58,16 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
                 if (i == 0)
                 {
                     bc.IsAI = false;
-                    bc.playerTeamController.SelectedTeamNumber=1;
-                    bc.playerTeamController.setSelectable(false);
-                    continue;
+                    // bc.playerTeamController.SelectedTeamNumber=1;
+                    // bc.playerTeamController.setSelectable(false);
+                    // continue;
                 }
                 else
                 {
                     bc.IsAI = true;
                     bc.gameObject.SetActive(false);
-                    bc.playerTeamController.SelectedTeamNumber=2;
-                    bc.playerTeamController.setSelectable(false);
+                    // bc.playerTeamController.SelectedTeamNumber=2;
+                    // bc.playerTeamController.setSelectable(false);
                 }
                 //
             }
@@ -135,23 +135,18 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
 //					break;
 //				}
                 //
-				playerInfoTemp.groupTeam = i;
+				playerInfoTemp.groupTeam = bc.playerTeamController.SelectedTeamNumber;
                 playerInfoTemp.name = bc.playerNameController.PlayerName;
                 playerInfoTemp.racial = bc.playerRaceController.SelectedRacial;
                 playerInfoTemp.accentColor = bc.playerColorController.SelectedColor;
+                playerInfoTemp.isAI = bc.IsAI;
                 //
                 if (i == 0)
                 {
-                    playerInfoTemp.isAI = false;
                     //
                     TestingScript.currentPlayer = playerInfoTemp;
                     TestingScript.virCurrentName = playerInfoTemp.name;
                     //
-                }
-                else
-                {
-                    bc.IsAI = true;
-                    playerInfoTemp.isAI = true;
                 }
                 //
                 playerInfos.Add(playerInfoTemp);

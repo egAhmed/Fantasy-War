@@ -16,10 +16,8 @@ public class MapBlip : MonoBehaviour
     private Image BlipImage;
     private RectTransform BlipRect;
 
-    void Start()
+    void Awake()
     {
-
-
         blip = GameObject.Instantiate(Map.Current.BlipPrefab);
         mask = GameObject.Instantiate(Map.Current.MaskPrefab);
         blip.transform.SetParent(Map.Current.transform);
@@ -30,6 +28,21 @@ public class MapBlip : MonoBehaviour
         BlipImage.color = unitColor;
         BlipRect = blip.GetComponent<RectTransform>();
     }
+
+    // void Start()
+    // {
+
+
+    //     blip = GameObject.Instantiate(Map.Current.BlipPrefab);
+    //     mask = GameObject.Instantiate(Map.Current.MaskPrefab);
+    //     blip.transform.SetParent(Map.Current.transform);
+    //     mask.transform.SetParent(Map.Current.transform);
+       
+
+    //     BlipImage = blip.GetComponent<Image>();
+    //     BlipImage.color = unitColor;
+    //     BlipRect = blip.GetComponent<RectTransform>();
+    // }
 
     //单位颜色
     public Color UnitColor
