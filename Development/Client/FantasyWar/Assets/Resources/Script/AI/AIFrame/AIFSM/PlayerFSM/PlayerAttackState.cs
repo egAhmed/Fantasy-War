@@ -62,16 +62,16 @@ public class PlayerAttackState : PlayerFSMState
 			}
 		}
 
-		if (tempPopulation != population) {
-			foreach (string item in AIController.playerInfo.ArmyUnits.Keys) {
-				foreach (RTSGameUnit unit in AIController.playerInfo.ArmyUnits[item]) {
-					MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
-					//control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
-					control.DesPos = nearestPlayer.location;
-				}
-			}
-			population = tempPopulation;
-		}
+		//if (tempPopulation != population) {
+		//	foreach (string item in AIController.playerInfo.ArmyUnits.Keys) {
+		//		foreach (RTSGameUnit unit in AIController.playerInfo.ArmyUnits[item]) {
+		//			MoveUnitAIController control = unit.GetComponent<MoveUnitAIController> ();
+		//			//control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
+		//			control.DesPos = nearestPlayer.location;
+		//		}
+		//	}
+		//	population = tempPopulation;
+		//}
 
 	}
 

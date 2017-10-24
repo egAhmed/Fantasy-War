@@ -15,7 +15,6 @@ public class MoveUnitAdvanceFSM : FSM
                 _desPos = value;
                 if (AIMove != null)
                 {
-                    Debug.Log(value);
                     AIMove(_desPos);
                 }
             }

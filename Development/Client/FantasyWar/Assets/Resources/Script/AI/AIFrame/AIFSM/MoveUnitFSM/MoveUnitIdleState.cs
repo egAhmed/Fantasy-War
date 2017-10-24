@@ -16,7 +16,7 @@ public class MoveUnitIdleState : MoveUnitFSMState {
         if (enemy == null)
 			return;
 
-        AICon.DesPos = enemy.position;
+        //AICon.DesPos = enemy.position;
 
 		//Check the distance with player tank
 		//When the distance is near, transition to attack state

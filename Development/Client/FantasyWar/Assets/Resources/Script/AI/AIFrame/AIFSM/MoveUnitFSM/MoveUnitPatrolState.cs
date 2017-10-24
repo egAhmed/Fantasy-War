@@ -35,7 +35,6 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 		float dist = Vector3.Distance(myself.position, AICon.DesPos);
 		if (dist <= attackDistance)
 		{
-			Debug.LogError("Switch to Attack state");
 			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.ReachEnemy);
 			//AttackTarget = null;
 		}

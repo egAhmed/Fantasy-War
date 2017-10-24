@@ -35,7 +35,7 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
         PerformTransition(t);
     }
 
-    private void ConstructFSM()
+    protected virtual void ConstructFSM()
     {
 
 		//Debug.Log ("start" + Time.time);
