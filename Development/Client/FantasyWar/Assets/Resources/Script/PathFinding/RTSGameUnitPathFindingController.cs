@@ -6,6 +6,7 @@ using Pathfinding.RVO;
 
 [RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(RVOController))]
+[RequireComponent(typeof(FunnelModifier))]
 public class RTSGameUnitPathFindingController : MonoBehaviour
 {
     public float repathRate = 1;

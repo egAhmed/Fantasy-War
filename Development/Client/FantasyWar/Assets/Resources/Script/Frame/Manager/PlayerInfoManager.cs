@@ -95,7 +95,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 			rb.playerInfo = item;
 			//item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
 			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (rb);
-			item.AllUnits.Add (rb);
+			// item.AllUnits.Add (rb);
 		}
 		//Debug.Log ("加载建筑列表完毕");
 	}

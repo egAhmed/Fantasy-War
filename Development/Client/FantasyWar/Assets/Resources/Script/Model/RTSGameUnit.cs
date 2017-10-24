@@ -14,13 +14,13 @@ public enum RTSGameUnitBelongSide
 [RequireComponent(typeof(RTSGameUnitFogController))]
 public class RTSGameUnit : MonoBehaviour
 {
-	public int maxHP;
+    public int maxHP;
     //
     [SerializeField]
     public PlayerInfo playerInfo;
-//
-	protected List<Interaction> interactionList = new List<Interaction> ();
-	public List<ActionBehaviour> ActionList = new List<ActionBehaviour> ();
+    //
+    protected List<Interaction> interactionList = new List<Interaction>();
+    public List<ActionBehaviour> ActionList = new List<ActionBehaviour>();
     //
 
     public string UnitTag
@@ -141,7 +141,7 @@ public class RTSGameUnit : MonoBehaviour
         }
     }
     //
-    private bool _isVisible=true;
+    private bool _isVisible = true;
     public bool IsVisible
     {
         get
@@ -152,7 +152,7 @@ public class RTSGameUnit : MonoBehaviour
     //
     [SerializeField]
     public RTSGameUnitDataInfo unitInfo;
- 
+
     private void OnBecameVisible()
     {
         //Debug.Log("is visible");
@@ -240,11 +240,13 @@ public class RTSGameUnit : MonoBehaviour
     //        }
     //    }
     //
-    public virtual void getHurt(RTSGameUnit attackSourceUnit) {
+    public virtual void getHurt(RTSGameUnit attackSourceUnit)
+    {
         //do attack damage calculate
 
         //do getHurt effect
-        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        {
             //
             BloodHit.current.BloodScreen(3f, 1f);
             Map.Current.battleWarning(transform.position);
@@ -271,10 +273,36 @@ public class RTSGameUnit : MonoBehaviour
         //
         actionBehaviourInit();
         //
-        if (playerInfo != null && playerInfo.isAI) { 
-            aiBehaviourDelegateRegister();
+        MapBlip mb = GetComponent<MapBlip>();
+        //
+        //
+        if (mb == null)
+        {
+            mb = gameObject.AddComponent<MapBlip>();
         }
         //
+        //
+        if (playerInfo == null)
+        {
+            //
+            // if (mb != null) {
+            //     mb.UnitColor =Color.gray;
+            // }
+            //
+        }
+        else
+        {
+            //
+            if (mb != null) {
+                mb.UnitColor =playerInfo.accentColor;
+            }
+            //
+            if (playerInfo.isAI)
+            {
+                aiBehaviourDelegateRegister();
+            }
+            //
+        }
     }
 
     protected virtual void OnDestroy()
@@ -307,67 +335,83 @@ public class RTSGameUnit : MonoBehaviour
     //     }
     // }
 
-    protected virtual void actionBehaviourInit() {
+    protected virtual void actionBehaviourInit()
+    {
         //
         //Debug.LogError ("playerInfo =>" + playerInfo.name);
         //
-		playerInfo.AllUnits.Add(this);
+        playerInfo.AllUnits.Add(this);
         //Debug.Log ("我是" + this.GetType ().ToString());
-//
-        gameObject.AddComponent<DieInNoLife> ();
-		gameObject.AddComponent<MapBip> ();
-		// gameObject.AddComponent<MarkColor> ();
-//
-		// Debug.Log ("我是" + this.GetType ().ToString());
-		if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-//			Debug.Log (this.GetType () + "是自己人");
-			Interaction au = gameObject.AddComponent<ActionUpdate> ();
-			interactionList.Add (au);
-		}
-//
-		if (IsAllowSingleSelection||IsAllowMultipleSelection) {
-			gameObject.AddComponent<Interactive> ();
-		}
-//
-		Interaction hl = gameObject.AddComponent<HightLight> ();
-		interactionList.Add (hl);
-		// Interaction si = gameObject.AddComponent<ShowInfoUI> ();
-		// interactionList.Add (si);
+        //
+        gameObject.AddComponent<DieInNoLife>();
+        gameObject.AddComponent<MapBip>();
+        // gameObject.AddComponent<MarkColor> ();
+        //
+        // Debug.Log ("我是" + this.GetType ().ToString());
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        {
+            //			Debug.Log (this.GetType () + "是自己人");
+            Interaction au = gameObject.AddComponent<ActionUpdate>();
+            interactionList.Add(au);
+        }
+        //
+        if (IsAllowSingleSelection || IsAllowMultipleSelection)
+        {
+            gameObject.AddComponent<Interactive>();
+        }
+        //
+        Interaction hl = gameObject.AddComponent<HightLight>();
+        interactionList.Add(hl);
+        // Interaction si = gameObject.AddComponent<ShowInfoUI> ();
+        // interactionList.Add (si);
         //
     }
     //
-    public void ActiveInteractions(){
-		//Debug.Log ("组件数量:"+interactionList.Count);
-		foreach (Interaction selection in interactionList) {
-			selection.Select();
-		}
-	}
-
-	public void InactiveInteractions(){
-		foreach (Interaction selection in interactionList) {
-			//Debug.Log ("取消"+selection.GetType());
-			selection.Deselect();
-		}
-	}
-    //
-    private void interactionAutoSwitch() {
-        if (IsSelected) {
-            //activate
-			RTSGameUnitManager.ShareInstance.SelectedUnits.Add(this);
-            ActiveInteractions();
-        }else {
-            //
-			if(RTSGameUnitManager.ShareInstance.SelectedUnits.Contains(this)){
-                //
-				RTSGameUnitManager.ShareInstance.SelectedUnits.Remove (this);
-                //
-			}
-            //
-            InactiveInteractions();
+    public void ActiveInteractions()
+    {
+        //Debug.Log ("组件数量:"+interactionList.Count);
+        foreach (Interaction selection in interactionList)
+        {
+            selection.Select();
         }
     }
 
-    protected virtual void aiBehaviourDelegateRegister() {
+    public void InactiveInteractions()
+    {
+        foreach (Interaction selection in interactionList)
+        {
+            //Debug.Log ("取消"+selection.GetType());
+            selection.Deselect();
+        }
+    }
+    //
+    private void interactionAutoSwitch()
+    {
+        //
+        if (IsSelected)
+        {
+            //activate
+            RTSGameUnitManager.ShareInstance.SelectedUnits.Add(this);
+            ActiveInteractions();
+            //
+        }
+        else
+        {
+            //
+            if (RTSGameUnitManager.ShareInstance.SelectedUnits.Contains(this))
+            {
+                //
+                RTSGameUnitManager.ShareInstance.SelectedUnits.Remove(this);
+                //
+            }
+            //
+            InactiveInteractions();
+            //
+        }
+    }
+
+    protected virtual void aiBehaviourDelegateRegister()
+    {
         //
         // Debug.Log("Base register");
         //
