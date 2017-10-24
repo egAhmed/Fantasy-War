@@ -49,7 +49,6 @@ public class PlayerDevelopState : PlayerFSMState
     //依次建造建筑或建造兵种
     bool develop(string[,] TargetResourcesNums)
     {
-		
         for (int i = 0; i < TargetResourcesNums.GetLength(0); i++)
         {
             //int IndexOfName = TargetResourcesNums[i, 0].LastIndexOf(@"/")+1;
@@ -124,8 +123,7 @@ public class PlayerDevelopState : PlayerFSMState
     //}
     void creatArmy(int resourcesID)
 	{
-        if(AIController.creatArmy!=null)
-            AIController.creatArmy(AIController.playerInfo, resourcesID);
+            AIController.creatArmy(resourcesID);
 
         if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1009)
         {

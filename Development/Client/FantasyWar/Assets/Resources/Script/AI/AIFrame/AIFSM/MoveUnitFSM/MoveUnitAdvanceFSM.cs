@@ -37,6 +37,7 @@ public class MoveUnitAdvanceFSM : FSM
         {
             if (value == currentState)
                 return;
+            if(currentState!=null)
             currentState.SwitchOut();
             currentState = value;
             currentState.SwitchIn();
@@ -60,8 +61,8 @@ public class MoveUnitAdvanceFSM : FSM
         if (fsmStates.Count == 0)
         {
             fsmStates.Add(fsmState);
-            currentState = fsmState;
-            currentStateID = fsmState.StateID;
+            CurrentState = fsmState;
+            CurrentStateID = fsmState.StateID;
             return;
         }
 
@@ -91,14 +92,14 @@ public class MoveUnitAdvanceFSM : FSM
     //根据当前状态，和参数中传递的转换，转移到新状态
     public void PerformTransition(MoveUnitFSMTransition trans)
     {
-        MoveUnitFSMStateID id = currentState.GetOutputState(trans);
+        MoveUnitFSMStateID id = CurrentState.GetOutputState(trans);
 
-        currentStateID = id;
+        CurrentStateID = id;
         foreach (var state in fsmStates)
         {
-            if (state.StateID == currentStateID)
+            if (state.StateID == CurrentStateID)
             {
-                currentState = state;
+                CurrentState = state;
                 break;
             }
         }

@@ -30,7 +30,7 @@ public class Action_ProductionRider : ActionBehaviour {
 //			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1002).type].Count);
 			if(pi.isAI){
 				//Debug.Log("是AI");
-				go.AddComponent<MoveUnitAIController>();
+				go.AddComponent<MeleeAIController>();
 				//Debug.Log("AI添加成功");
 			}
 			//Debug.Log("现在有"+RTSGameUnitManager.ShareInstance.PlayerUnits.Count +"个单位");

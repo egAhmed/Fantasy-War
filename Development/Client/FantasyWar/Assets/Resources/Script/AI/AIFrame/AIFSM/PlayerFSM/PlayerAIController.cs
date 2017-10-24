@@ -6,7 +6,11 @@ using System;
 
 public class PlayerAIController : PlayerAdvancedFSM
 {
+    public delegate void CreatArmy(int resourcesID);
+    public delegate void CreatWorker();
 
+    public CreatWorker AICreatWorker;
+    protected Dictionary<RTSBuilding, CreatArmy> dicCreatArmy;
     //public delegate void DelAIMove(Vector3 pos);
     //public delegate void Attack(RTSGameUnit tar);
     //public delegate void GetResources(RTSGameUnit tar);
@@ -146,5 +150,40 @@ public class PlayerAIController : PlayerAdvancedFSM
 
         }
 
+    }
+
+    /// <summary>
+    /// 每个兵营都会注册自己的建造方法到字典委托中
+    /// </summary>
+    /// <param name="del"></param>
+    /// <param name="barracks"></param>
+     public void registerDelCreatArmy(CreatArmy del, RTSBuilding barracks)
+    {
+        if (dicCreatArmy == null)
+            dicCreatArmy = new Dictionary<RTSBuilding, CreatArmy>();
+        dicCreatArmy.Add(barracks, del);
+    }
+
+    public bool creatArmy(int ID)
+    {
+        if (dicCreatArmy == null)
+            return false;
+        float mostLeisure = 0;//空闲值初始化
+        RTSBuilding barrack=null;
+        foreach (var key in dicCreatArmy.Keys)
+        {
+            //if (兵营没空)
+            //    return;
+            if (barrack == null)
+                barrack = key;
+            //空闲值判断
+            //造兵队列上限判断
+        }
+        if (barrack == null)
+            return false;
+        dicCreatArmy[barrack](ID);
+        return true;
+        //判断哪个兵营最有空
+        //判断兵营是否还存在或激活
     }
 }

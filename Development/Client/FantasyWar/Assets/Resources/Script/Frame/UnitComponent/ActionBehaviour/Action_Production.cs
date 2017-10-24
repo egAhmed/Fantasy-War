@@ -30,7 +30,7 @@ public class Action_Production : ActionBehaviour  {
 //			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
 			if(pi.isAI){
 //				Debug.Log("是AI");
-				go.AddComponent<MoveUnitAIController>();
+				go.AddComponent<WorkerAIController>();
 //				Debug.Log("添加成功");
 			}else { 
 				Debug.Log("rtsw.playerInfo =>"+rtsw.playerInfo.name);

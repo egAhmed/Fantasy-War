@@ -18,13 +18,13 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     //在FSM基类Update中调用
     protected override void FSMUpdate()
     {
-		//Debug.Log (CurrentState.GetType ());
+        //Debug.Log (CurrentState.GetType ());
     }
 
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
-        
+
         CurrentState.Reason(enemyTransform, transform);
         CurrentState.Act(enemyTransform, transform);
     }
@@ -38,61 +38,47 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     protected virtual void ConstructFSM()
     {
 
-		//Debug.Log ("start" + Time.time);
-        MoveUnitIdleState idle = new MoveUnitIdleState(this);
-        idle.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
-        idle.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //Debug.Log ("start" + Time.time);
+        //MoveUnitIdleState idle = new MoveUnitIdleState(this);
+        //idle.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
+        //idle.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitChaseState chase = new MoveUnitChaseState(this);
-        chase.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
-        chase.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
-        chase.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //MoveUnitChaseState chase = new MoveUnitChaseState(this);
+        //chase.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
+        //chase.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
+        //chase.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitAttackingState attack = new MoveUnitAttackingState(this);
-        attack.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
-        attack.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
-        attack.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //MoveUnitAttackingState attack = new MoveUnitAttackingState(this);
+        //attack.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
+        //attack.AddTransition(MoveUnitFSMTransition.SawEnemy, MoveUnitFSMStateID.Chasing);
+        //attack.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitDeadState dead = new MoveUnitDeadState(this);
+        //MoveUnitDeadState dead = new MoveUnitDeadState(this);
 
-        MoveUnitBuildState build = new MoveUnitBuildState(this);
-        build.AddTransition(MoveUnitFSMTransition.GetCollectCommand, MoveUnitFSMStateID.Collect);
-        build.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //MoveUnitBuildState build = new MoveUnitBuildState(this);
+        //build.AddTransition(MoveUnitFSMTransition.GetCollectCommand, MoveUnitFSMStateID.Collect);
+        //build.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitCollectingState collecting = new MoveUnitCollectingState(this);
-        collecting.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //MoveUnitCollectingState collecting = new MoveUnitCollectingState(this);
+        //collecting.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
 
-        MoveUnitPatrolState patrol = new MoveUnitPatrolState(this);
-        patrol.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
-        patrol.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //MoveUnitPatrolState patrol = new MoveUnitPatrolState(this);
+        //patrol.AddTransition(MoveUnitFSMTransition.ReachEnemy, MoveUnitFSMStateID.Attacking);
+        //patrol.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        MoveUnitMoveState move = new MoveUnitMoveState(this);
-        move.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
-        move.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
+        //MoveUnitMoveState move = new MoveUnitMoveState(this);
+        //move.AddTransition(MoveUnitFSMTransition.LostEnemy, MoveUnitFSMStateID.Idle);
+        //move.AddTransition(MoveUnitFSMTransition.NoHealth, MoveUnitFSMStateID.Dead);
 
-        AddFSMState(idle);
-        AddFSMState(chase);
-        AddFSMState(attack);
-        AddFSMState(dead);
-        AddFSMState(build);
-        AddFSMState(collecting);
-        AddFSMState(patrol);
+        //AddFSMState(idle);
+        //AddFSMState(chase);
+        //AddFSMState(attack);
+        //AddFSMState(dead);
+        //AddFSMState(build);
+        //AddFSMState(collecting);
+        //AddFSMState(patrol);
 
-		if (gameObject.GetComponent<RTSWorker> () != null) {
-			CurrentStateID = MoveUnitFSMStateID.Collect;
-			//Debug.Log ("改状态" + Time.time);
-			foreach (var state in fsmStates)
-			{
-				//Debug.Log("改状态1");
-				if (state.StateID == CurrentStateID)
-				{
-					CurrentState = state;
-					//Debug.Log("改状态2");
-					break;
-				}
-			}
-		}
     }
 
     //战略层使用，强制进入攻击状态
@@ -104,11 +90,11 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
             fsmStates[i].chaseDistance = float.MaxValue;
         }
 
-        CurrentStateID = MoveUnitFSMStateID.Attacking;
         foreach (var state in fsmStates)
         {
-            if (state.StateID == CurrentStateID)
+            if (state.StateID == MoveUnitFSMStateID.Attacking)
             {
+                CurrentStateID = MoveUnitFSMStateID.Attacking;
                 CurrentState = state;
                 break;
             }
@@ -116,18 +102,35 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     }
 
     //战略层使用，强制进入建造状态
-    public void SetBuildState(Vector3 pos,string name)
+    public void SetBuildState(Vector3 pos, string name)
     {
-        CurrentStateID = MoveUnitFSMStateID.Building;
         foreach (var state in fsmStates)
         {
-            if (state.StateID == CurrentStateID)
+            if (state.StateID == MoveUnitFSMStateID.Building)
             {
+                CurrentStateID = MoveUnitFSMStateID.Building;
                 CurrentState = state;
                 break;
             }
         }
         this.DesPos = pos;
-        
+
+    }
+
+    /// <summary>
+    /// 强制状态转换，返回是否转换成功
+    /// </summary>
+    public bool StateSwitchCompel(MoveUnitFSMStateID targetStateID)
+    {
+        foreach (var item in fsmStates)
+        {
+            if (item.StateID == targetStateID)
+            {
+                CurrentState = item;
+                CurrentStateID = targetStateID;
+                return true;
+            }
+        }
+        return false;
     }
 }
