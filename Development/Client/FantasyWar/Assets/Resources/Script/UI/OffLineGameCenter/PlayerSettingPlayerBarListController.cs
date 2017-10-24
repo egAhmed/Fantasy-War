@@ -127,7 +127,7 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
                 PlayerSettingPlayerBarController bc = playerSettingPlayerBarControllers[i];
                 PlayerInfo playerInfoTemp = new PlayerInfo();
                 //
-                if (bc == null)
+                if (bc == null||!bc.gameObject.activeSelf)
                 {
                     continue;
                 }
@@ -162,6 +162,7 @@ public class PlayerSettingPlayerBarListController : MonoBehaviour
 
     void playerAdd()
     {
+        //
         if (AddedPlayerNum >= playerSettingPlayerBarControllers.Length)
         {
             return;
