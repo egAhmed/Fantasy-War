@@ -5,11 +5,12 @@ using UnityEngine;
 public class Action_Production : ActionBehaviour  {
 
 	GameObject workerPrefeb;
-
-	bool isProducting = false;
+	float scheduleTime =0;
+	RTSBuilding rtsb;
 	PlayerInfo pi = null;
 
 	void Awake(){
+		rtsb = gameObject.GetComponent<RTSBuilding> ();
 		pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
 		index = 0;
 		shortCutKey = KeyCode.W;
@@ -23,11 +24,11 @@ public class Action_Production : ActionBehaviour  {
 		return delegate() {
 			//TODO
 			//生产方法
-			if(!isProducting){
+			if(!rtsb.isProducting){
 				if(pi.Resources>=50){
-					isProducting = true;
+					rtsb.isProducting = true;
 					pi.Resources -= 50;
-					//Debug.Log(pi.name + pi.Resources.ToString());
+					Debug.Log(pi.name + pi.Resources.ToString());
 					StartCoroutine(Producting());
 				}
 			}
@@ -36,8 +37,15 @@ public class Action_Production : ActionBehaviour  {
 	}
 
 	IEnumerator Producting(){
-		yield return new WaitForSeconds (5);
-		RTSWorker rtsw = PrefabFactory.ShareInstance.createClone<RTSWorker>("Prefab/RTSCharacter/RTSWorker/RTSWorker", transform.position + new Vector3(2, 0, 0), Quaternion.identity);
+		scheduleTime = 0;
+		while(scheduleTime < 5)
+		{
+			scheduleTime += 0.2f;
+			yield return new WaitForSeconds(0.2f);
+			rtsb.schedule = scheduleTime / 5;
+		}
+		rtsb.schedule = 0;
+		RTSWorker rtsw = PrefabFactory.ShareInstance.createClone<RTSWorker>("Prefab/RTSCharacter/RTSWorker/RTSWorker", transform.position + new Vector3(3, 0, 0), Quaternion.identity);
 		GameObject go = rtsw.gameObject;
 		// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
 		// RTSWorker rtsw = go.GetComponent<RTSWorker>();
@@ -49,6 +57,6 @@ public class Action_Production : ActionBehaviour  {
 			WorkerAIController AICon = go.AddComponent<WorkerAIController>();
 			//AICon.DelAIBuild = rtsw.CreatBuilding;
 		}
-		isProducting = false;
+		rtsb.isProducting = false;
 	}
 }

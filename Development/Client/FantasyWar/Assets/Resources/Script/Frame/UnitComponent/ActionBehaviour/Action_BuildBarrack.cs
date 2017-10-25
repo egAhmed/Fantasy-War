@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Action_BuildBarrack : ActionBehaviour {
 		//
+	PlayerInfo pi;
+	RTSWorker rtsw;
+
 	void Awake(){
+		rtsw = gameObject.GetComponent<RTSWorker> ();
+		pi = rtsw.playerInfo;
 		index = 7;
 		shortCutKey = KeyCode.R;
 		actionIcon = Resources.Load<Sprite> ("Texture/BarrIcon");
@@ -19,11 +24,10 @@ public class Action_BuildBarrack : ActionBehaviour {
 			//建造方法
 			Debug.Log("加载建筑");
 			//
-			PlayerInfo pi = gameObject.GetComponent<RTSGameUnit>().playerInfo;
 			//Debug.Log(pi.name);
-			buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks");
-			//
-
+			if(pi.Resources>150){
+				buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks");
+			}
 		};
 		//
 	}
@@ -53,19 +57,30 @@ public class Action_BuildBarrack : ActionBehaviour {
 	/// <param name="info">Info.</param>
 	public void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
 	{
+		rtsw.move (pos);
+		StartCoroutine (BuildNew(pos,info));
+
 		if (info == null)
 			return;
 		//
-		//下面就是造出来的建筑
-		RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack> (path, pos, Quaternion.identity);
-		gameUnit.GetComponent<RTSBuildingBarrack> ().playerInfo = info;
-		//
-		if (info.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
-			gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
-		}
-		//
-		if (info.isAI) {
-			info.AICon.registerDelCreatArmy (gameUnit.CreatArmy, gameUnit);
+		StartCoroutine (BuildNew(pos,info));
+	}
+
+	IEnumerator BuildNew(Vector3 pos,PlayerInfo info){
+		while (true) {
+			if (Vector3.Distance (transform.position, pos) < 1) {
+				yield return new WaitForSeconds (5);
+				RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack> (path, pos, Quaternion.identity);
+				gameUnit.GetComponent<RTSBuildingBarrack> ().playerInfo = info;
+				if (info.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
+					gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
+				}
+				if (info.isAI) {
+					info.AICon.registerDelCreatArmy (gameUnit.CreatArmy,gameUnit);
+				}
+				break;
+			}
+			yield return null;
 		}
 	}
 

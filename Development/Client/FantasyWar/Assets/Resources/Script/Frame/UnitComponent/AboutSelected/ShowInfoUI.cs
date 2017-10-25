@@ -5,11 +5,11 @@ using UnityEngine;
 public class ShowInfoUI : Interaction {
 
 	ObjectInfoShow showPanel;
-	RTSGameUnit RTSGameUnit;
+	RTSGameUnit RtsGameUnit;
 	bool isShow;
 
 	void Start(){
-		RTSGameUnit = gameObject.GetComponent<RTSGameUnit> ();
+		RtsGameUnit = gameObject.GetComponent<RTSGameUnit> ();
 		showPanel = ObjectInfoShow.Current;
 		isShow = false;
 	}
@@ -21,7 +21,7 @@ public class ShowInfoUI : Interaction {
         {
             if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits[0] == this.gameObject)
             {
-                showPanel.SetText(RTSGameUnit.unitInfo.unitName, RTSGameUnit.HP.ToString(), RTSGameUnit.playerInfo.accentColor.ToString());
+                showPanel.SetText(RtsGameUnit.unitInfo.unitName, RtsGameUnit.HP.ToString(), RtsGameUnit.playerInfo.accentColor.ToString());
             }
         }
     }

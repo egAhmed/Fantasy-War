@@ -54,6 +54,8 @@ public class Action_Build : ActionBehaviour {
 	public void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
 	{
 		rtsw.move (pos);
+		if (info == null)
+			return;
 		StartCoroutine (BuildNew(pos,info));
 		//
 	}

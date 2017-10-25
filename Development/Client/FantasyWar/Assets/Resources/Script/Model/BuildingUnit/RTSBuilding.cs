@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class RTSBuilding : RTSGameUnit
 {
+
+	public float schedule = 0;
+	public bool isProducting = false;
     MeshCollider collider;
     public float BuildTime = 3;
     public float DestoryTime = 3;
@@ -121,6 +124,9 @@ public class RTSBuilding : RTSGameUnit
     protected override void actionBehaviourInit() {
         ///
         base.actionBehaviourInit();
+
+		Interaction scdui = gameObject.AddComponent<ScheduleShowUI>();
+		interactionList.Add(scdui);
       //
     }
 }
