@@ -6,6 +6,7 @@ public class Action_Build : ActionBehaviour {
 
 	PlayerInfo pi;
 	RTSWorker rtsw;
+	public string pathh = @"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house";
 
 	void Awake(){
 		rtsw = gameObject.GetComponent<RTSWorker> ();
@@ -26,7 +27,7 @@ public class Action_Build : ActionBehaviour {
 			//Debug.Log(pi.name);
 			//InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.B,buildingTesting);
 			//RTSGamePlayManager.ShareInstance.build(pi);
-				buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
+				buildBarr(pi,pathh);
 			//
 			}
 		};
@@ -42,7 +43,7 @@ public class Action_Build : ActionBehaviour {
 		if (status)
 		{
 			beginToBuildTheBuilding(pos,info);
-			Debug.Log (info.name);
+			//Debug.Log (info.name);
 		}
 		else
 		{

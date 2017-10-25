@@ -6,6 +6,7 @@ public class Action_BuildBarrack : ActionBehaviour {
 		//
 	PlayerInfo pi;
 	RTSWorker rtsw;
+	public string pathh = @"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks";
 
 	void Awake(){
 		rtsw = gameObject.GetComponent<RTSWorker> ();
@@ -26,7 +27,7 @@ public class Action_BuildBarrack : ActionBehaviour {
 			//
 			//Debug.Log(pi.name);
 			if(pi.Resources>150){
-				buildBarr(pi,@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks");
+				buildBarr(pi,pathh);
 			}
 		};
 		//
