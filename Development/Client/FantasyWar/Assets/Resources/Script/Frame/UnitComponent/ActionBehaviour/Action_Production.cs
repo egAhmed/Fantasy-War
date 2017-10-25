@@ -55,7 +55,7 @@ public class Action_Production : ActionBehaviour  {
 		//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
 		if(pi.isAI){
 			WorkerAIController AICon = go.AddComponent<WorkerAIController>();
-			AICon.DelAIBuild = rtsw.CreatBuilding;
+			AICon.DelAIBuild += rtsw.CreatBuilding;
 		}
 		rtsb.isProducting = false;
 	}

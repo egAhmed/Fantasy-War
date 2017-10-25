@@ -460,13 +460,34 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 //        }
     }
 
-	public void CreatBuilding(Vector3 pos, int ID){
+	public ForAIBuild CreatBuilding(Vector3 pos, int ID){
+		ForAIBuild foraibuild = new ForAIBuild ();
+		Ray ray = new Ray (pos,Vector3.up);
+		RaycastHit hitinfo;
+		Physics.Raycast (ray,out hitinfo);
+		Vector3 hitpos = hitinfo.point;
+		foraibuild.pos = hitpos;
 		switch (ID) {
 		case 1101:
-			gameObject.GetComponent<Action_Build> ().beginToBuildTheBuilding (pos, playerInfo);
+			Action_Build ab = gameObject.GetComponent<Action_Build> ();
+			string path = ab.pathh;
+			bool canBuild = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, path);
+			foraibuild.canbuild = canBuild;
+			if (canBuild) {
+				ab.beginToBuildTheBuilding (pos, playerInfo);
+			}
+			break;
+		case 1102:
+			Action_BuildBarrack abb = gameObject.GetComponent<Action_BuildBarrack> ();
+			string pathh = abb.pathh;
+			bool canBuildd = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, pathh);
+			if (canBuildd) {
+				abb.beginToBuildTheBuilding (pos, playerInfo);
+			}
 			break;
 		default:
 			break;
 		}
+		return foraibuild;
 	}
 }
