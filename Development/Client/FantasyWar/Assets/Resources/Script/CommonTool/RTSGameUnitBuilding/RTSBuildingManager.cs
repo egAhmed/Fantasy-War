@@ -279,57 +279,14 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         //
         bool flag = false;
         //
-        Vector3 validBuildPos;
-        //
         try { 
             //
-        RTSBuildingTempUnit unit=PrefabFactory.ShareInstance.createClone<RTSBuildingTempUnit>(path,Vector3.zero,Quaternion.identity);
-        //
-        Debug.Log("fucking here");
-        //
-        if (RTSCameraController.RTSCamera && unit != null)
-        {
-                Debug.Log("ready to cast");
-                //
-                Vector3 direction = pos - RTSCameraController.RTSCamera.transform.position;
-            RaycastHit hitInfo = new RaycastHit();
+        RTSBuildingTempUnit unit=PrefabFactory.ShareInstance.createClone<RTSBuildingTempUnit>(path,pos,Quaternion.identity);
             //
-            if (Physics.Raycast(RTSCameraController.RTSCamera.transform.position, direction, out hitInfo, 1000f, RTSLayerManager.ShareInstance.LayerMaskRayCastMouse1, QueryTriggerInteraction.Ignore))
+            if (unit != null && !unit.IsBlocked)
             {
-                //
-                Debug.Log("raycast hit something");
-                //
-                GameObject hitObj = hitInfo.collider.gameObject;
-                //
-                if (hitObj != null)
-                {
-                    //
-                    Debug.LogError("hit obj");
-                    //
-                    if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentGround)
-                    {
-                        Debug.LogError("hit Ground");
-                        //
-                        unit.transform.position = hitInfo.point;
-                        //
-                        flag = !buildingTempUnit.IsBlocked;
-                        //
-                    }
-                    else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnemyGameUnit)
-                    {
-                        Debug.LogError("hit LayerNumberEnemyGameUnit");
-                    }else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberFriendlyGameUnit)
-                    {
-                        Debug.LogError("hit LayerNumberFriendlyGameUnit");
-                    }
-                    else if (hitObj.layer == RTSLayerManager.ShareInstance.LayerNumberEnvironmentObstacle)
-                    {
-                        Debug.LogError("hit LayerNumberEnvironmentObstacle");
-                    }
-                }
+                flag = true;
             }
-            //
-        }
         //
         }catch(Exception e){ 
             Debug.Log(e.Message);
