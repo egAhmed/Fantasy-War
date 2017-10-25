@@ -24,10 +24,9 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
-//		Debug.Log ("enemyTransform"+"  "+(enemyTransform == null));
-//		Debug.Log ("transform" + "  " + ((enemyTransform == null) == null));
-        CurrentState.Reason(enemyTransform, transform);
-        CurrentState.Act(enemyTransform, transform);
+
+        CurrentState.Reason(EnemyTransform, transform);
+        CurrentState.Act(EnemyTransform, transform);
     }
 
     //这个方法在每个状态类的Reason中调用
