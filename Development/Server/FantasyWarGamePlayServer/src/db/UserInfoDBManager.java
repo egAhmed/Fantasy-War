@@ -99,4 +99,6 @@ public class UserInfoDBManager {
 		return user;
 	}
 	//
+	//public bool
+	//
 }
