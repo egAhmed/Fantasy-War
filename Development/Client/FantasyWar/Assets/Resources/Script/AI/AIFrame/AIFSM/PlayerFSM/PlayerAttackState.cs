@@ -8,6 +8,16 @@ public class PlayerAttackState : PlayerFSMState
     int population;
 
     PlayerInfo nearestPlayer;
+    PlayerInfo NearestPlayer
+    {
+        get { return nearestPlayer; }
+        set
+        {
+            if (value.groupTeam == AIController.playerInfo.groupTeam)
+                Debug.LogError("选择了同队队友作为目标");
+            nearestPlayer = value;
+        }
+    }
     bool targetChange = false;
 
     public PlayerAttackState(PlayerAIController AICon)
@@ -25,23 +35,25 @@ public class PlayerAttackState : PlayerFSMState
             tempPopulation += AIController.playerInfo.ArmyUnits[item].Count;
         }
 
-        if (nearestPlayer == null)
+        if (NearestPlayer == null)
         {
             //找到最近的主基地
             foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players)
             {
+                if (item.groupTeam == AIController.playerInfo.groupTeam)
+                    continue;
                 if (item != AIController.playerInfo)
                 {
-                    if (nearestPlayer != null)
+                    if (NearestPlayer != null)
                     {
-                        if (Vector3.Distance(item.location, AIController.playerInfo.location) < Vector3.Distance(nearestPlayer.location, AIController.playerInfo.location))
+                        if (Vector3.Distance(item.location, AIController.playerInfo.location) < Vector3.Distance(NearestPlayer.location, AIController.playerInfo.location))
                         {
-                            nearestPlayer = item;
+                            NearestPlayer = item;
                         }
                     }
                     else
                     {
-                        nearestPlayer = item;
+                        NearestPlayer = item;
                     }
                 }
             }
@@ -57,8 +69,8 @@ public class PlayerAttackState : PlayerFSMState
                     }
                     MoveUnitAIController control = unit.GetComponent<MoveUnitAIController>();
                     //control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
-                    control.enemyTransform = nearestPlayer.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform;
-                    control.DesPos = nearestPlayer.location;
+                    control.EnemyTransform = NearestPlayer.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform;
+                    control.DesPos = NearestPlayer.location;
                     foreach (var state in control.fsmStates)
                     {
                         if (state.StateID == MoveUnitFSMStateID.Patrol)

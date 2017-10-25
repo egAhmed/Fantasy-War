@@ -20,7 +20,37 @@ public class MoveUnitAdvanceFSM : FSM
             }
         }
     }
-    public Transform enemyTransform;
+    private PlayerInfo _playerInfo;
+    public PlayerInfo playerInfo
+    {
+        get
+        {
+            if (_playerInfo == null)
+                _playerInfo = transform.GetComponent<RTSGameUnit>().playerInfo;
+            return _playerInfo;
+        }
+    }
+
+    private Transform enemyTransform;
+    public Transform EnemyTransform
+    {
+        get { return enemyTransform; }
+        set
+        {
+            RTSGameUnit unit = value.GetComponent<RTSGameUnit>();
+
+            if (unit == null)
+            {
+                Debug.LogError("攻击目标没有RTSGameUnit");
+            }
+            else
+            {
+                if (unit.playerInfo.groupTeam == playerInfo.groupTeam)
+                    Debug.LogError("选择了自己人作为攻击目标");
+            }
+            enemyTransform = value;
+        }
+    }
     //所有状态的集合
     public List<MoveUnitFSMState> fsmStates;
 
@@ -37,8 +67,8 @@ public class MoveUnitAdvanceFSM : FSM
         {
             if (value == currentState)
                 return;
-            if(currentState!=null)
-            currentState.SwitchOut();
+            if (currentState != null)
+                currentState.SwitchOut();
             currentState = value;
             currentState.SwitchIn();
         }
