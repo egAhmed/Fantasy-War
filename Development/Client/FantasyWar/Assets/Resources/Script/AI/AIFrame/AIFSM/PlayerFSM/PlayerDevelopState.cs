@@ -95,11 +95,11 @@ public class PlayerDevelopState : PlayerFSMState
             if (AIController.playerInfo.ArmyUnits.ContainsKey(name))
             {
                 //判断部队数量是否达标
-                Debug.LogError("target"+Convert.ToInt32(TargetResourcesNums[i, 1]));
-                Debug.Log("now"+AIController.playerInfo.ArmyUnits[name].Count);
+               // Debug.LogError("target"+Convert.ToInt32(TargetResourcesNums[i, 1]));
+               // Debug.Log("now"+AIController.playerInfo.ArmyUnits[name].Count);
                 if (AIController.playerInfo.ArmyUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
                 {
-                    Debug.Log("进来了");
+                    //Debug.Log("进来了");
                     creatArmy(Convert.ToInt32(TargetResourcesNums[i, 0]));
                     //没达标，造一个
                     return false;
@@ -156,7 +156,7 @@ public class PlayerDevelopState : PlayerFSMState
 
         if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1009)
         {
-            Debug.Log("tmpwww");
+            //Debug.Log("tmpwww");
             //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
             AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
         }

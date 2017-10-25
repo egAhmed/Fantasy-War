@@ -27,7 +27,7 @@ public class Action_Production : ActionBehaviour  {
 				if(pi.Resources>=50){
 					isProducting = true;
 					pi.Resources -= 50;
-					Debug.Log(pi.name + pi.Resources.ToString());
+					//Debug.Log(pi.name + pi.Resources.ToString());
 					StartCoroutine(Producting());
 				}
 			}

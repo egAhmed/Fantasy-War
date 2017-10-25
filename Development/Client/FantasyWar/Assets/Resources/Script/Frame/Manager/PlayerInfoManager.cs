@@ -97,21 +97,18 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 			rb.playerInfo = item;
 			//item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
 			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (rb);
-<<<<<<< HEAD
 			//item.AllUnits.Add (rb);
 			//Debug.Log (item.BuildingUnits [Settings.ResourcesTable.Get (1101).type].Count);
-=======
 			// item.AllUnits.Add (rb);
->>>>>>> e208f50f79415aa3de73ed19ee2054995b489239
 		}
 		//Debug.Log ("加载建筑列表完毕");
 	}
 
 	public void LoadAIController(){
 		foreach (PlayerInfo item in Players) {
-			Debug.Log ("判断");
+			//Debug.Log ("判断");
 			if (item.isAI) {
-				Debug.Log ("是AI");
+				//Debug.Log ("是AI");
 				PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
 				pac.playerInfo = item;
 				pac.AICreatWorker += item.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0]
@@ -119,7 +116,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 				item.AICon = pac;
 				pac.enabled = true;
 			} else {
-				Debug.Log ("不是AI");	
+				//Debug.Log ("不是AI");	
 			}
 		}
 	}
