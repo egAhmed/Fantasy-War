@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class MoveUnitAdvanceFSM : FSM
 {
+    private RTSGameUnit myUnit;
+    public RTSGameUnit MyUnit
+    {
+        get
+        {
+            if (myUnit == null)
+                myUnit = transform.GetComponent<RTSGameUnit>();
+            return myUnit;
+        }
+    }
     private Vector3 _desPos;
     public Vector3 DesPos
     {
@@ -26,7 +36,7 @@ public class MoveUnitAdvanceFSM : FSM
         get
         {
             if (_playerInfo == null)
-                _playerInfo = transform.GetComponent<RTSGameUnit>().playerInfo;
+                _playerInfo = myUnit.playerInfo;
             return _playerInfo;
         }
     }
@@ -53,6 +63,12 @@ public class MoveUnitAdvanceFSM : FSM
     }
     //所有状态的集合
     public List<MoveUnitFSMState> fsmStates;
+
+    private MoveUnitFSMState lastState;
+    public MoveUnitFSMState LastState
+    {
+        get { return lastState; }set { lastState = value; }
+    }
 
     //当前状态编号
     private MoveUnitFSMStateID currentStateID;

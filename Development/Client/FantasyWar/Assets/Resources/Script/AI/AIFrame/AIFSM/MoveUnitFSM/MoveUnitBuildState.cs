@@ -16,15 +16,16 @@ public class MoveUnitBuildState : MoveUnitFSMState {
         return;
 	}
 		
-	public override void Act (Transform player, Transform npc)
+	public override void Act (Transform enemy, Transform myself)
 	{
-		if (Vector3.Distance (npc.position, AICon.DesPos) < 3) {
-			RTSBuilding gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuilding> (@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house", AICon.DesPos, Quaternion.identity);
-			MeshCollider collider = gameUnit.gameObject.AddComponent<MeshCollider> ();
-			collider.convex = true;
-			npc.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.GetCollectCommand);
-			//isFinish = true;
-		}
+        base.Act(enemy, myself);
+		//if (Vector3.Distance (npc.position, AICon.DesPos) < 3) {
+		//	RTSBuilding gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuilding> (@"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house", AICon.DesPos, Quaternion.identity);
+		//	MeshCollider collider = gameUnit.gameObject.AddComponent<MeshCollider> ();
+		//	collider.convex = true;
+		//	npc.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.GetCollectCommand);
+		//	//isFinish = true;
+		//}
 		//else {
   //          //MoveUnitAIController AICon = npc.GetComponent<MoveUnitAIController>();
   //          AICon.DesPos = npc.position;
@@ -38,6 +39,6 @@ public class MoveUnitBuildState : MoveUnitFSMState {
 
 	public override void SwitchOut ()
 	{
-		
-	}
+        base.SwitchOut();
+    }
 }

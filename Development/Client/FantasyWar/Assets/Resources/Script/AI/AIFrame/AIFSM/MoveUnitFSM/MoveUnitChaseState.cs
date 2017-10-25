@@ -58,6 +58,6 @@ public class MoveUnitChaseState : MoveUnitFSMState
 
     public override void SwitchOut()
     {
-
+        base.SwitchOut();
     }
 }

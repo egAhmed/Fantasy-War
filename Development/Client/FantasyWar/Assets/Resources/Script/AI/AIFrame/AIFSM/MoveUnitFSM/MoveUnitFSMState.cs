@@ -12,6 +12,7 @@ public enum MoveUnitFSMTransition
 	SetBuild,//设置建造建筑
 	GetCollectCommand,
 	GetPatrolCommand,
+    BeAttack,
 }
 //可能的状态
 public enum MoveUnitFSMStateID
@@ -24,6 +25,7 @@ public enum MoveUnitFSMStateID
     Dead,//死亡状态
 	Move,//移动状态
 	Patrol,//巡逻寻敌状态
+    RunAway,//逃跑状态
 }
 public abstract class MoveUnitFSMState : FSMState
 {
@@ -62,6 +64,7 @@ public abstract class MoveUnitFSMState : FSMState
     //与巡逻点的距离
     protected float arriveDistance = 3.0f;
 
+    protected float lastHp=0;
     //向字典添加转换-状态
     public void AddTransition(MoveUnitFSMTransition transition, MoveUnitFSMStateID stateID)
     {
@@ -85,16 +88,30 @@ public abstract class MoveUnitFSMState : FSMState
     //用来确定是否需要转换到其他状态
     public virtual void Reason(Transform enemy, Transform myself)
     {
-        RTSGameUnit unit = myself.GetComponent<RTSGameUnit>();
-        if(unit.HP<=0)
+       
+        if(AICon.MyUnit.HP<=0)
         {
             myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.NoHealth);
         }
     }
     //本状态的角色行为
-    public abstract void Act(Transform enemy, Transform myself);
+    public virtual void Act(Transform enemy, Transform myself)
+    {
+        
+        //仅限农民和建筑使用
+        if(AICon.MyUnit.HP<lastHp)
+        {
+            //告诉战略层受到攻击，请求派兵支援
+
+            AICon.playerInfo.AICon.WorkerOrBuildingBeAttack(AICon.transform.position);
+        }
+        lastHp = AICon.MyUnit.HP;
+    }
     //切入状态a后，会调用的a的SwitchIn函数
     public abstract void SwitchIn();
     //切出状态a后，会调用a的SwitchOut函数
-    public abstract void SwitchOut();
+    public virtual void SwitchOut()
+    {
+        AICon.LastState = this;
+    }
 }

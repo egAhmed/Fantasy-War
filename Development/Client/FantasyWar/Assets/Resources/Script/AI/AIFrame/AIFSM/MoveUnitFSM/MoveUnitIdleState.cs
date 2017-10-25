@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveUnitIdleState : MoveUnitFSMState {
-
-	public MoveUnitIdleState(MoveUnitAIController AICon)
+    RTSGameUnit AttackTarget = null;
+    public MoveUnitIdleState(MoveUnitAIController AICon)
 	{
         this.AICon = AICon;
         StateID = MoveUnitFSMStateID.Idle;
@@ -30,9 +30,37 @@ public class MoveUnitIdleState : MoveUnitFSMState {
 		}
 	}
 
-	public override void Act (Transform player, Transform npc)
+	public override void Act (Transform enemy, Transform myself)
 	{
-		return;
+        if (AttackTarget == null)
+        {
+            //遍历所有玩家
+            foreach (PlayerInfo playerinfo in PlayerInfoManager.ShareInstance.Players)
+            {
+                //如果不是自己
+                if (playerinfo.groupTeam != myself.GetComponent<RTSGameUnit>().playerInfo.groupTeam)
+                {
+                    //遍历所有单位
+                    foreach (string item in playerinfo.ArmyUnits.Keys)
+                    {
+                        foreach (RTSGameUnit target in playerinfo.ArmyUnits[item])
+                        {
+                            if (Vector3.Distance(target.transform.position, myself.position) < attackDistance)
+                            {
+                                AttackTarget = target;
+                                AICon.DesPos = AttackTarget.transform.position;
+                                myself.GetComponent<Action_Attack>().attackDelegate(target);
+                                return;
+                            }
+                        }
+                    }
+
+                    AICon.DesPos = enemy.position;
+
+                }
+            }
+        }
+        return;
 	}
 
 
@@ -43,6 +71,6 @@ public class MoveUnitIdleState : MoveUnitFSMState {
 
 	public override void SwitchOut ()
 	{
-
-	}
+        base.SwitchOut();
+    }
 }

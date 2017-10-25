@@ -7,7 +7,7 @@ using System;
 public class PlayerAIController : PlayerAdvancedFSM
 {
     public delegate void CreatArmy(int resourcesID);
-	public delegate void CreatWorker(KeyCode v);
+    public delegate void CreatWorker(KeyCode v);
 
     public CreatWorker AICreatWorker;
     protected Dictionary<RTSBuilding, CreatArmy> dicCreatArmy;
@@ -64,15 +64,15 @@ public class PlayerAIController : PlayerAdvancedFSM
     //在FSM基类Update中调用
     protected override void FSMUpdate()
     {
-		//Debug.Log (CurrentState.GetType());
+        //Debug.Log (CurrentState.GetType());
     }
 
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
-		CurrentState.Reason(transform, transform);
-		//Debug.Log ("currenss is "+CurrentState);
-		CurrentState.Act(transform, transform);
+        CurrentState.Reason(transform, transform);
+        //Debug.Log ("currenss is "+CurrentState);
+        CurrentState.Act(transform, transform);
     }
 
     //这个方法在每个状态类的Reason中调用
@@ -83,7 +83,7 @@ public class PlayerAIController : PlayerAdvancedFSM
 
     private void ConstructFSM()
     {
-        
+
         PlayerDevelopState develop = new PlayerDevelopState(this);
         develop.AddTransition(PlayerFSMTransition.ArmyEnough, PlayerFSMStateID.Attack);
         develop.AddTransition(PlayerFSMTransition.BaseNoHealth, PlayerFSMStateID.Dead);
@@ -126,13 +126,13 @@ public class PlayerAIController : PlayerAdvancedFSM
     //加载发展目标表
     void loadTargetnums()
     {
-//        if (Settings.AIhunmandevelop.idList == null)
-//            Settings.TableManage.Start();
+        //        if (Settings.AIhunmandevelop.idList == null)
+        //            Settings.TableManage.Start();
         _targetResourcesNums = new string[Settings.AIhunmandevelop.idList.Count, 2];
         for (int i = 0; i < _targetResourcesNums.GetLength(0); i++)
         {
-			_targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(Settings.AIhunmandevelop.idList[i]).resid.ToString();
-			_targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(Settings.AIhunmandevelop.idList[i]).nums.ToString();
+            _targetResourcesNums[i, 0] = Settings.AIhunmandevelop.Get(Settings.AIhunmandevelop.idList[i]).resid.ToString();
+            _targetResourcesNums[i, 1] = Settings.AIhunmandevelop.Get(Settings.AIhunmandevelop.idList[i]).nums.ToString();
 
         }
         //loadResources();
@@ -157,7 +157,7 @@ public class PlayerAIController : PlayerAdvancedFSM
     /// </summary>
     /// <param name="del"></param>
     /// <param name="barracks"></param>
-     public void registerDelCreatArmy(CreatArmy del, RTSBuilding barracks)
+    public void registerDelCreatArmy(CreatArmy del, RTSBuilding barracks)
     {
         if (dicCreatArmy == null)
             dicCreatArmy = new Dictionary<RTSBuilding, CreatArmy>();
@@ -169,7 +169,7 @@ public class PlayerAIController : PlayerAdvancedFSM
         if (dicCreatArmy == null)
             return false;
         float mostLeisure = 0;//空闲值初始化
-        RTSBuilding barrack=null;
+        RTSBuilding barrack = null;
         foreach (var key in dicCreatArmy.Keys)
         {
             //if (兵营没空)
@@ -185,5 +185,23 @@ public class PlayerAIController : PlayerAdvancedFSM
         return true;
         //判断哪个兵营最有空
         //判断兵营是否还存在或激活
+    }
+
+    /// <summary>
+    /// 农民被攻击时候，向基地求救
+    /// </summary>
+    public void WorkerOrBuildingBeAttack(Vector3 pos)
+    {
+        PlayerDevelopState developState = null;
+        foreach (var item in fsmStates)
+        {
+            if (item is PlayerDevelopState)
+            {
+                developState = item as PlayerDevelopState;
+                break;
+            }
+        }
+        if (developState != null)
+            developState.RequireSupportPos = pos;
     }
 }

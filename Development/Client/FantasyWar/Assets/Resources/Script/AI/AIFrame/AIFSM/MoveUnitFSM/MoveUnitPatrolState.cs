@@ -19,7 +19,8 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 	public override void SwitchOut ()
 	{
-		AttackTarget = null;
+        base.SwitchOut();
+        AttackTarget = null;
 	}
 
 	public override void Reason(Transform enemy, Transform myself)
@@ -28,7 +29,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
         if (enemy == null)
 			return;
 
-        AICon.DesPos = enemy.position;
+        //AICon.DesPos = enemy.position;
 
 		//Check the distance with player tank
 		//When the distance is near, transition to attack state
@@ -42,26 +43,31 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 	public override void Act(Transform enemy, Transform myself)
 	{
-		AICon.DesPos = enemy.position;
+		
 
 		if (AttackTarget == null) {
 			//遍历所有玩家
 			foreach (PlayerInfo playerinfo in PlayerInfoManager.ShareInstance.Players) {
 				//如果不是自己
-				if (playerinfo != myself.GetComponent<RTSGameUnit> ().playerInfo) {
+				if (playerinfo.groupTeam != myself.GetComponent<RTSGameUnit> ().playerInfo.groupTeam) {
 					//遍历所有单位
 					foreach (string item in playerinfo.ArmyUnits.Keys) {
 						foreach (RTSGameUnit target in playerinfo.ArmyUnits[item]) {
 							if (Vector3.Distance(target.transform.position, myself.position) < attackDistance) {
 								AttackTarget = target;
+                                AICon.DesPos = AttackTarget.transform.position;
 								myself.GetComponent<Action_Attack> ().attackDelegate (target);
 								return;
 							}
 						}
 					}
-				}
+
+                    AICon.DesPos = enemy.position;
+
+                }
 			}
 		}
+
 
 		//没有找到要打的敌人，继续移动
 		//MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();

@@ -19,7 +19,8 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 
 	public override void SwitchOut ()
 	{
-		AttackTarget = null;
+        base.SwitchOut();
+        AttackTarget = null;
 	}
 
 	//用来确定是否需要转到其他状态

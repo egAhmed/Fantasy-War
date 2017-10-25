@@ -35,6 +35,6 @@ public class MoveUnitMoveState : MoveUnitFSMState {
 
 	public override void SwitchOut ()
 	{
-
-	}
+        base.SwitchOut();
+    }
 }
