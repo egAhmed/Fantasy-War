@@ -19,14 +19,14 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     protected override void FSMUpdate()
     {
         //Debug.Log (CurrentState.GetType ());
+        
+        CurrentState.Reason(EnemyTransform, transform);
+        CurrentState.Act(EnemyTransform, transform);
     }
 
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
-
-        CurrentState.Reason(EnemyTransform, transform);
-        CurrentState.Act(EnemyTransform, transform);
     }
 
     //这个方法在每个状态类的Reason中调用
@@ -37,8 +37,7 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
 
     protected virtual void ConstructFSM()
     {
-
-
+        
     }
 
     //战略层使用，强制进入攻击状态
@@ -62,18 +61,19 @@ public class MoveUnitAIController : MoveUnitAdvanceFSM
     }
 
     //战略层使用，强制进入建造状态
-    public void SetBuildState(Vector3 pos, string name)
+    public void SetBuildState( int id)
     {
         foreach (var state in fsmStates)
         {
             if (state.StateID == MoveUnitFSMStateID.Building)
             {
+                (state as MoveUnitBuildState).buildid = id;
                 CurrentStateID = MoveUnitFSMStateID.Building;
                 CurrentState = state;
                 break;
             }
         }
-        this.DesPos = pos;
+
 
     }
 

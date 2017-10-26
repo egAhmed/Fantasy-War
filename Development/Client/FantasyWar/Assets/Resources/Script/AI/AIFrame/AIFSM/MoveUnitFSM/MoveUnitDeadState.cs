@@ -10,7 +10,7 @@ public class MoveUnitDeadState : MoveUnitFSMState {
 	public MoveUnitDeadState(MoveUnitAIController AICon)
     {
 		StateID = MoveUnitFSMStateID.Dead;
-        this.AICon = AICon;
+        this.AIController = AICon;
     }
 
 	public override void Act (Transform enemy, Transform myself)

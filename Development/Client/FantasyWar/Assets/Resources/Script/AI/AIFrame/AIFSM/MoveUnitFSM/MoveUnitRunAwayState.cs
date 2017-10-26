@@ -8,7 +8,7 @@ public class MoveUnitRunAwayState : MoveUnitFSMState
     float returnToWorkTime = 5;
     public MoveUnitRunAwayState(MoveUnitAIController AICon)
     {
-        this.AICon = AICon;
+        this.AIController = AICon;
         StateID = MoveUnitFSMStateID.RunAway;
     }
 
@@ -18,10 +18,10 @@ public class MoveUnitRunAwayState : MoveUnitFSMState
         //多久没受到攻击，就回去继续该干嘛干嘛
         if(attackTimeCount>returnToWorkTime)
         {
-            if(AICon.LastState is MoveUnitCollectingState)
-                AICon.SetTransition(MoveUnitFSMTransition.GetCollectCommand);
-            if (AICon.LastState is MoveUnitBuildState)
-                AICon.SetTransition(MoveUnitFSMTransition.SetBuild);
+            if(AIController.LastState is MoveUnitCollectingState)
+                AIController.SetTransition(MoveUnitFSMTransition.GetCollectCommand);
+            if (AIController.LastState is MoveUnitBuildState)
+                AIController.SetTransition(MoveUnitFSMTransition.SetBuild);
 
         }
 
@@ -31,7 +31,7 @@ public class MoveUnitRunAwayState : MoveUnitFSMState
     {
         base.Act(enemy, myself);
         //回到基地附近
-        AICon.DesPos=AICon.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
+        AIController.DesPos=AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
         return;
     }
 

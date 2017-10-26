@@ -113,32 +113,13 @@ public class PlayerDevelopState : PlayerFSMState
     //查找建筑点，然后建建筑的方法
     void build(int id)
     {
-        if (Settings.ResourcesTable.idList == null)
-            Settings.TableManage.Start();
-        //获取基地坐标
-        Vector3 basePos = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
-        Vector3 buildPos = basePos;
-        float anchor = 0;
-        if (AIController.DelAIBuild == null)
-            return;
-        while (!AIController.DelAIBuild(buildPos, id).canbuild)
-        {
-            buildPos = basePos + new Vector3(Mathf.Sin(anchor), -100, Mathf.Cos(anchor));
-            if (anchor == 2 * Mathf.PI)
-                anchor = 0;
-            else
-                anchor += Mathf.PI / 4;
-        }
-        //以基地为圆心，在一个圆上寻找建筑点
-        //以基地坐标为初始值，计算水平增量后的坐标，
-        //在此坐标上，发射一条垂直的射线，射线与地面相交的一点，即使建造点
-        //把建造点传给建造函数，根据返回值，判断是否建造成功。不成功就继续查找建造点。
-        //若可以建造，则将建造点传给农民;
-
 
         //找一个农民去建房子
-        MoveUnitAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<MoveUnitAIController>();
-        farmerAI.SetBuildState(AIController.DelAIBuild(buildPos, id).pos, Settings.ResourcesTable.Get(id).type);
+        WorkerAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<WorkerAIController>();
+        farmerAI.SetBuildState(id);
+
+
+
     }
 
     ////，用于寻找合适的建造地点

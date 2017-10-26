@@ -9,7 +9,7 @@ public class MoveUnitChaseState : MoveUnitFSMState
 
     public MoveUnitChaseState(MoveUnitAIController AICon)
     {
-        this.AICon = AICon;
+        this.AIController = AICon;
         StateID = MoveUnitFSMStateID.Chasing;
 
     }
@@ -45,7 +45,7 @@ public class MoveUnitChaseState : MoveUnitFSMState
     public override void Act(Transform enemy, Transform myself)
     {
         //Rotate to the target point
-        AICon.DesPos = enemy.position;
+        AIController.DesPos = enemy.position;
         //MoveUnitAIController AICon = myself.GetComponent<MoveUnitAIController>();
         //if (MoveUnitAIController.AIMove != null)
         //    MoveUnitAIController.AIMove(AICon.DesPos);
