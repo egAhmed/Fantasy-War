@@ -194,7 +194,8 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         animatorStateController.doIdle();
         //
         HPMax = 100;
-        HP = HPMax;
+		HP = HPMax;
+		IconCameraPos = new Vector3 (1998, 5001, 1.167f);
         //
     }
 

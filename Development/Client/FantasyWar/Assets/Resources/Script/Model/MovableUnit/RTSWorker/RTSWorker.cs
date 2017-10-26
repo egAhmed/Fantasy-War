@@ -430,8 +430,9 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         //
         animatorStateController.WorkerAnimator_idle();
         //
-        HPMax = 100;
-        HP = HPMax;
+		maxHP = 100;
+		HP = maxHP;
+		IconCameraPos = new Vector3 (2000, 5001, 1.167f);
         //
     }
 

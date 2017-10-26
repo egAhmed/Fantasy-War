@@ -18,6 +18,7 @@ public class RTSGameUnit : MonoBehaviour
     //
     [SerializeField]
     public PlayerInfo playerInfo;
+	public Vector3 IconCameraPos;
     //
     protected List<Interaction> interactionList = new List<Interaction>();
     public List<ActionBehaviour> ActionList = new List<ActionBehaviour>();
@@ -348,6 +349,10 @@ public class RTSGameUnit : MonoBehaviour
         // gameObject.AddComponent<MarkColor> ();
         //
         // Debug.Log ("我是" + this.GetType ().ToString());
+
+		Interaction us = gameObject.AddComponent<ShowInfoUI> ();
+		interactionList.Add (us);
+
         if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
         {
             //			Debug.Log (this.GetType () + "是自己人");

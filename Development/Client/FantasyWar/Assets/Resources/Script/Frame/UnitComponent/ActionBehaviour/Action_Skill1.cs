@@ -34,6 +34,9 @@ public class Action_Skill1 : ActionBehaviour {
 		RTSGameUnit targetinfo = hit.transform.GetComponent<RTSGameUnit> ();
 		if (targetinfo != null){
 			Debug.Log(gameObject.GetComponent<RTSGameUnit>().playerInfo.name + "放技能");
+			RTSMovableUnit rtsm = gameObject.GetComponent<RTSMovableUnit> ();
+			rtsm.move (targetinfo.transform.position);
+			transform.position = targetinfo.transform.position;
 			if (skill1Delegate != null) {
 				skill1Delegate (targetinfo);
 			}

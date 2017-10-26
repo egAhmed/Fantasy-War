@@ -42,6 +42,8 @@ public class RTSBuilding : RTSGameUnit
         }
         //
         collider.convex = true;
+
+		IconCameraPos = new Vector3 (2000, 5005, 1.167f);
         //
         // materials = GetMaterials();
         //
