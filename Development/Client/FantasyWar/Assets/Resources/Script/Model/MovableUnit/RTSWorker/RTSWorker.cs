@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(WorkerAnimatorStateController))]
 public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 {
+    GetCoinBehaviour getCoinBehaviour;
     //
     WorkerAnimatorStateController animatorStateController = null;
     //
@@ -56,6 +57,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     protected float repairingAchievementAddingFrequency = 1f;
     #endregion
     //
+
     protected virtual bool IsTargetClosingEnough
     {
         get
@@ -172,6 +174,8 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         // Debug.Log("startMining");
         isWorking = true;
         StartCoroutine(doMining());
+        getCoinBehaviour = GetComponent<GetCoinBehaviour>();
+       
     }
 
     protected virtual void stopMining()
@@ -179,12 +183,14 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         // Debug.Log("stopMining");
         isWorking = false;
         StopCoroutine(doMining());
+        
     }
 
     protected virtual IEnumerator doMining()
     {
         // Debug.Log("doMining");
-        //
+       
+        getCoinBehaviour.WorkStart(miningAchievementAddingFrequency); //采集头顶动画
         while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningHarvestedFull&&targetGameUnit!=null&&targetGameUnit is RTSResource)
         {
             // Debug.Log("doMining inside while");
@@ -221,8 +227,11 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         if (IsMiningHarvestedFull)
         {
             startReturning();
-        }else {
+            getCoinBehaviour.WorkDone();//采集完成,取消头顶动画
+        }
+        else {
             stopWork();
+            getCoinBehaviour.WorkDone();//采集中断,取消头顶动画
         }
     }
 
@@ -306,13 +315,11 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 
     protected virtual void startReturning()
     {
-        // Debug.Log("startReturning");
         StartCoroutine(doReturning());
     }
 
     protected virtual void stopReturning()
-    {
-        // Debug.Log("stopReturning");
+    {       
         StopCoroutine(doReturning());
     }
 
@@ -353,7 +360,8 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 
     protected virtual void playerResourceAdded()
     {
-
+        //金币结算
+        CoinCollect.Current.Done(gameObject);
     }
 
     protected virtual void startWork()
@@ -434,6 +442,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
 		HP = maxHP;
 		IconCameraPos = new Vector3 (2000, 5001, 1.167f);
         //
+        
     }
 
     //
@@ -441,54 +450,27 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         base.actionBehaviourInit();
         //
         //
-//		Debug.Log(playerInfo.name);
-		playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Add(this);
+		Debug.Log(playerInfo.name);
+		playerInfo.ArmyUnits["worker"].Add(this);
 
-
-		ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
-		ActionList.Add (ac);
-		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
-		ActionList.Add (ab);
-		ActionBehaviour abb = gameObject.AddComponent<Action_BuildBarrack> ();
-		ActionList.Add (abb);
-
-		Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
-		acc.collectDelegate += OnSetTargetUnit;
-//        if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-//		
-//            //
-//            //
-//        }
+        if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+			ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
+			ActionList.Add (ac);
+			ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
+			ActionList.Add (ab);
+		
+            //
+            Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
+            acc.collectDelegate += OnSetTargetUnit;
+            //
+        }
     }
-
-	public ForAIBuild CreatBuilding(Vector3 pos, int ID){
-		ForAIBuild foraibuild = new ForAIBuild ();
-		Ray ray = new Ray (pos,Vector3.up);
-		RaycastHit hitinfo;
-		Physics.Raycast (ray,out hitinfo);
-		Vector3 hitpos = hitinfo.point;
-		foraibuild.pos = hitpos;
-		switch (ID) {
-		case 1101:
-			Action_Build ab = gameObject.GetComponent<Action_Build> ();
-			string path = ab.pathh;
-			bool canBuild = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, path);
-			foraibuild.canbuild = canBuild;
-			if (canBuild) {
-				ab.beginToBuildTheBuilding (pos, playerInfo);
-			}
-			break;
-		case 1102:
-			Action_BuildBarrack abb = gameObject.GetComponent<Action_BuildBarrack> ();
-			string pathh = abb.pathh;
-			bool canBuildd = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, pathh);
-			if (canBuildd) {
-				abb.beginToBuildTheBuilding (pos, playerInfo);
-			}
-			break;
-		default:
-			break;
-		}
-		return foraibuild;
-	}
+    //
+    protected override void aiBehaviourDelegateRegister() {
+        //
+        base.aiBehaviourDelegateRegister();
+        //
+        FSM.AIGetResources += OnSetTargetUnit;
+        //
+    }
 }
