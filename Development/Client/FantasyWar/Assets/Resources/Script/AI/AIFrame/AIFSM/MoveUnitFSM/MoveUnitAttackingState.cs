@@ -9,7 +9,7 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 	public MoveUnitAttackingState(MoveUnitAIController AICon)
 	{
 		StateID = MoveUnitFSMStateID.Attacking;
-        this.AICon = AICon;
+        this.AIController = AICon;
     }
 
 	public override void SwitchIn ()

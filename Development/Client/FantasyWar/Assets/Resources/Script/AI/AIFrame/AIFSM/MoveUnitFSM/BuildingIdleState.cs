@@ -7,7 +7,7 @@ public class BuildingIdleState : MoveUnitFSMState
 {
     public BuildingIdleState(MoveUnitAIController AICon)
     {
-        this.AICon = AICon;
+        this.AIController = AICon;
         StateID = MoveUnitFSMStateID.Idle;
     }
     public override void SwitchIn()

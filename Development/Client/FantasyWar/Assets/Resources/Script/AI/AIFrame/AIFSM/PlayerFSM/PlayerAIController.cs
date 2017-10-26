@@ -64,15 +64,15 @@ public class PlayerAIController : PlayerAdvancedFSM
     //在FSM基类Update中调用
     protected override void FSMUpdate()
     {
+        CurrentState.Reason(transform, transform);
+        //Debug.Log ("currenss is "+CurrentState);
+        CurrentState.Act(transform, transform);
         //Debug.Log (CurrentState.GetType());
     }
 
     //在FSM基类FixedUpdate中调用
     protected override void FSMFixedUpdate()
     {
-        CurrentState.Reason(transform, transform);
-        //Debug.Log ("currenss is "+CurrentState);
-        CurrentState.Act(transform, transform);
     }
 
     //这个方法在每个状态类的Reason中调用

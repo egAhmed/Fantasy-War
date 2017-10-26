@@ -441,7 +441,6 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         HPMax = 100;
         HP = HPMax;
         //
-        
     }
 
     //
@@ -449,27 +448,54 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         base.actionBehaviourInit();
         //
         //
-		Debug.Log(playerInfo.name);
-		playerInfo.ArmyUnits["worker"].Add(this);
+//		Debug.Log(playerInfo.name);
+		playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Add(this);
 
-        if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
-			ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
-			ActionList.Add (ac);
-			ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
-			ActionList.Add (ab);
-		
-            //
-            Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
-            acc.collectDelegate += OnSetTargetUnit;
-            //
-        }
+
+		ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
+		ActionList.Add (ac);
+		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
+		ActionList.Add (ab);
+		ActionBehaviour abb = gameObject.AddComponent<Action_BuildBarrack> ();
+		ActionList.Add (abb);
+
+		Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
+		acc.collectDelegate += OnSetTargetUnit;
+//        if(playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
+//		
+//            //
+//            //
+//        }
     }
-    //
-    protected override void aiBehaviourDelegateRegister() {
-        //
-        base.aiBehaviourDelegateRegister();
-        //
-        FSM.AIGetResources += OnSetTargetUnit;
-        //
-    }
+
+	public ForAIBuild CreatBuilding(Vector3 pos, int ID){
+		ForAIBuild foraibuild = new ForAIBuild ();
+		Ray ray = new Ray (pos,Vector3.up);
+		RaycastHit hitinfo;
+		Physics.Raycast (ray,out hitinfo);
+		Vector3 hitpos = hitinfo.point;
+		foraibuild.pos = hitpos;
+		switch (ID) {
+		case 1101:
+			Action_Build ab = gameObject.GetComponent<Action_Build> ();
+			string path = ab.pathh;
+			bool canBuild = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, path);
+			foraibuild.canbuild = canBuild;
+			if (canBuild) {
+				ab.AIBuild (pos, playerInfo);
+			}
+			break;
+		case 1102:
+			Action_BuildBarrack abb = gameObject.GetComponent<Action_BuildBarrack> ();
+			string pathh = abb.pathh;
+			bool canBuildd = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, pathh);
+			if (canBuildd) {
+				abb.AIBuild(pos, playerInfo);
+			}
+			break;
+		default:
+			break;
+		}
+		return foraibuild;
+	}
 }

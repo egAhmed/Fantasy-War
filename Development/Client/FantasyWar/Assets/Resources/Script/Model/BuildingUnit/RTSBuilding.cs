@@ -116,7 +116,7 @@ public class RTSBuilding : RTSGameUnit
         {
             count += Time.deltaTime;
             materials[1].SetFloat("_Progress", count / DestoryTime);
-
+            
             yield return null;
         }
     }

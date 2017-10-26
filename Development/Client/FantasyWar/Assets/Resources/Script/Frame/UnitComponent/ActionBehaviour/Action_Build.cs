@@ -61,6 +61,16 @@ public class Action_Build : ActionBehaviour {
 		//
 	}
 
+    public void AIBuild(Vector3 pos, PlayerInfo info) {
+        RTSBuildingHomeBase gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase>(path, pos, Quaternion.identity);
+        gameUnit.GetComponent<RTSBuildingHomeBase>().playerInfo = info;
+        //
+        if (info.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        {
+            gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
+        }
+    }
+
 	IEnumerator BuildNew(Vector3 pos,PlayerInfo info){
 		while (true) {
 			if (Vector3.Distance (transform.position, pos) < 1) {
@@ -71,7 +81,23 @@ public class Action_Build : ActionBehaviour {
 				if(info.gameUnitBelongSide==RTSGameUnitBelongSide.Player){
 					gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
 				}
-				break;
+                //懒得写回调，直接调用建造成功时的函数
+                if (pi.isAI)
+                {
+                    var list = transform.GetComponent<MoveUnitAIController>().fsmStates;
+                    MoveUnitBuildState buildstate = null;
+                    foreach (var item in list)
+                    {
+                        if (item.StateID == MoveUnitFSMStateID.Building)
+                        {
+                            buildstate = item as MoveUnitBuildState;
+                            break;
+                        }
+                    }
+                    if (buildstate != null)
+                        buildstate.buildSuccess();
+                }
+                break;
 			}
 			yield return null;
 		}

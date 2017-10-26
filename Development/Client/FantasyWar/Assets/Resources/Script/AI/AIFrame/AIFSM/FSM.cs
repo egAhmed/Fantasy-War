@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void CommonDelegaet();
 public struct ForAIBuild
 {
     public Vector3 pos;

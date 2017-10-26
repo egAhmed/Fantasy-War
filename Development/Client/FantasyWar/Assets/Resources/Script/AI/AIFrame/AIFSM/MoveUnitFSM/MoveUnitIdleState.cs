@@ -6,7 +6,7 @@ public class MoveUnitIdleState : MoveUnitFSMState {
     RTSGameUnit AttackTarget = null;
     public MoveUnitIdleState(MoveUnitAIController AICon)
 	{
-        this.AICon = AICon;
+        this.AIController = AICon;
         StateID = MoveUnitFSMStateID.Idle;
 	}
 
@@ -20,7 +20,7 @@ public class MoveUnitIdleState : MoveUnitFSMState {
 
 		//Check the distance with player tank
 		//When the distance is near, transition to attack state
-		float dist = Vector3.Distance(myself.position, AICon.DesPos);
+		float dist = Vector3.Distance(myself.position, AIController.DesPos);
 
 		//Go back to patrol is it become too far
 		if (dist <= chaseDistance)
@@ -48,14 +48,14 @@ public class MoveUnitIdleState : MoveUnitFSMState {
                             if (Vector3.Distance(target.transform.position, myself.position) < attackDistance)
                             {
                                 AttackTarget = target;
-                                AICon.DesPos = AttackTarget.transform.position;
+                                AIController.DesPos = AttackTarget.transform.position;
                                 myself.GetComponent<Action_Attack>().attackDelegate(target);
                                 return;
                             }
                         }
                     }
 
-                    AICon.DesPos = enemy.position;
+                    AIController.DesPos = enemy.position;
 
                 }
             }

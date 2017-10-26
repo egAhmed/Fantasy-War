@@ -30,7 +30,7 @@ public enum MoveUnitFSMStateID
 public abstract class MoveUnitFSMState : FSMState
 {
 
-    protected MoveUnitAIController AICon;
+    protected MoveUnitAIController AIController;
     //目标点位置
 	//public Vector3 destPos;
     //字典，用于保存“转换-状态”的信息
@@ -82,14 +82,14 @@ public abstract class MoveUnitFSMState : FSMState
     public MoveUnitFSMStateID GetOutputState(MoveUnitFSMTransition transition)
     {
 		Debug.Log (transition);
-		Debug.Log (AICon.CurrentState.GetType ());
+		Debug.Log (AIController.CurrentState.GetType ());
         return Map[transition];
     }
     //用来确定是否需要转换到其他状态
     public virtual void Reason(Transform enemy, Transform myself)
     {
        
-        if(AICon.MyUnit.HP<=0)
+        if(AIController.MyUnit.HP<=0)
         {
             myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.NoHealth);
         }
@@ -99,19 +99,19 @@ public abstract class MoveUnitFSMState : FSMState
     {
         
         //仅限农民和建筑使用
-        if(AICon.MyUnit.HP<lastHp)
+        if(AIController.MyUnit.HP<lastHp)
         {
             //告诉战略层受到攻击，请求派兵支援
 
-            AICon.playerInfo.AICon.WorkerOrBuildingBeAttack(AICon.transform.position);
+            AIController.playerInfo.AICon.WorkerOrBuildingBeAttack(AIController.transform.position);
         }
-        lastHp = AICon.MyUnit.HP;
+        lastHp = AIController.MyUnit.HP;
     }
     //切入状态a后，会调用的a的SwitchIn函数
     public abstract void SwitchIn();
     //切出状态a后，会调用a的SwitchOut函数
     public virtual void SwitchOut()
     {
-        AICon.LastState = this;
+        AIController.LastState = this;
     }
 }

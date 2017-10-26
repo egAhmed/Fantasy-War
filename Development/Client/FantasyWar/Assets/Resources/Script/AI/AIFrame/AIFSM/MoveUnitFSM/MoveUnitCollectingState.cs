@@ -10,7 +10,7 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 	public MoveUnitCollectingState(MoveUnitAIController AICon)
 	{
 		StateID = MoveUnitFSMStateID.Collect;
-        this.AICon = AICon;
+        this.AIController = AICon;
     }
 
 	public override void Reason(Transform enemy, Transform myself)
@@ -47,7 +47,7 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 
 	public override void SwitchIn ()
 	{
-		FindNearMine (AICon.transform);
+		FindNearMine (AIController.transform);
 	}
 
 	public override void SwitchOut ()

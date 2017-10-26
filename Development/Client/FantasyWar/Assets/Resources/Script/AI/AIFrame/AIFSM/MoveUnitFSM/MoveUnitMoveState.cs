@@ -7,13 +7,13 @@ public class MoveUnitMoveState : MoveUnitFSMState {
 	public MoveUnitMoveState(MoveUnitAIController AICon)
 	{
 		StateID = MoveUnitFSMStateID.Move;
-        this.AICon = AICon;
+        this.AIController = AICon;
     }
 
 	public override void Reason(Transform enemy, Transform myself)
 	{
         base.Reason(enemy, myself);
-        float dist = Vector3.Distance(myself.position, AICon.DesPos);
+        float dist = Vector3.Distance(myself.position, AIController.DesPos);
 		if (dist <= 2) {
 			Debug.Log ("Switch to Idle state");
 			myself.GetComponent<MoveUnitAIController> ().SetTransition (MoveUnitFSMTransition.LostEnemy);

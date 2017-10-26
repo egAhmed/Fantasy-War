@@ -9,7 +9,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 	public MoveUnitPatrolState(MoveUnitAIController AICon)
     {
 		StateID = MoveUnitFSMStateID.Patrol;
-        this.AICon = AICon;
+        this.AIController = AICon;
     }
 
 	public override void SwitchIn ()
@@ -33,10 +33,10 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 
 		//Check the distance with player tank
 		//When the distance is near, transition to attack state
-		float dist = Vector3.Distance(myself.position, AICon.DesPos);
+		float dist = Vector3.Distance(myself.position, AIController.DesPos);
 		if (dist <= attackDistance)
 		{
-			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.ReachEnemy);
+			AIController.SetTransition(MoveUnitFSMTransition.ReachEnemy);
 			//AttackTarget = null;
 		}
 	}
@@ -55,14 +55,14 @@ public class MoveUnitPatrolState : MoveUnitFSMState {
 						foreach (RTSGameUnit target in playerinfo.ArmyUnits[item]) {
 							if (Vector3.Distance(target.transform.position, myself.position) < attackDistance) {
 								AttackTarget = target;
-                                AICon.DesPos = AttackTarget.transform.position;
+                                AIController.DesPos = AttackTarget.transform.position;
 								myself.GetComponent<Action_Attack> ().attackDelegate (target);
 								return;
 							}
 						}
 					}
 
-                    AICon.DesPos = enemy.position;
+                    AIController.DesPos = enemy.position;
 
                 }
 			}
