@@ -19,7 +19,7 @@ public class RTSBuilding : RTSGameUnit
     {
         get
         {
-            return HP < HPMax;
+            return HP < HPMAX;
         }
     }
 
@@ -28,8 +28,8 @@ public class RTSBuilding : RTSGameUnit
 		base.Awake ();
 
 		//
-		maxHP = 100;
-		HP = maxHP;
+		HPMAX = 100;
+		HP = HPMAX;
 	}
 
     protected override void Start()

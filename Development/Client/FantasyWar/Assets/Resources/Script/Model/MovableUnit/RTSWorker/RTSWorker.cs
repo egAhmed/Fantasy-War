@@ -369,7 +369,7 @@ public virtual void startGoingToBuilding()
         // Debug.Log("startMining");
         isWorking = true;
         StartCoroutine(doMining());
-        getCoinBehaviour = GetComponent<GetCoinBehaviour>();
+        // getCoinBehaviour = GetComponent<GetCoinBehaviour>();
        
     }
 
@@ -424,11 +424,19 @@ public virtual void startGoingToBuilding()
         if (IsMiningHarvestedFull)
         {
             startReturning();
-            getCoinBehaviour.WorkDone();//采集完成,取消头顶动画
+            //
+            if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+            {
+                getCoinBehaviour.WorkDone();//采集完成,取消头顶动画
+            }
         }
         else {
             stopWork();
-            getCoinBehaviour.WorkDone();//采集中断,取消头顶动画
+            //
+            if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+            {
+                getCoinBehaviour.WorkDone();//采集中断,取消头顶动画
+            }
         }
     }
 
@@ -537,8 +545,17 @@ public virtual void startGoingToBuilding()
 
     protected virtual void playerResourceAdded()
     {
+        if (playerInfo == null) {
+            return;
+        }
+        //
+        playerInfo.Resources = playerInfo.Resources + 60;
+        //
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
         //金币结算
-        CoinCollect.Current.Done(gameObject);
+            CoinCollect.Current.Done(gameObject);
+        }
+        //
     }
 
     protected virtual void startWork()
@@ -620,13 +637,16 @@ public virtual void startGoingToBuilding()
         //
         animatorStateController.WorkerAnimator_idle();
         //
-		maxHP = 100;
-		HP = maxHP;
+		HPMAX = 100;
+		HP = HPMAX;
 		IconCameraPos = new Vector3 (2000, 5001, 1.167f);
         //
         if (playerInfo!=null&&playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player) {
             //
+            getCoinBehaviour = gameObject.GetComponent<GetCoinBehaviour>();
+            if (getCoinBehaviour == null) { 
             getCoinBehaviour = gameObject.AddComponent<GetCoinBehaviour>();
+            }
             //
         }
         //

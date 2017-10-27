@@ -27,10 +27,12 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     private TerrainData terrainData;
     private float scaleFactor = 1;
    
-    public Map()
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
     {
-        Current = this;
-
+         Current = this;
     }
     public float ScaleFactor
     {

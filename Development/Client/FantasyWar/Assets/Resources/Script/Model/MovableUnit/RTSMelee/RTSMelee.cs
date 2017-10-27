@@ -6,18 +6,23 @@ using UnityEngine;
 [RequireComponent(typeof(RTSMeleeAnimatorStateController))]
 public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
 {
-
+    public int AttackForce{
+        get;
+        set;
+    }
+    //
     public float AttackFrequency
     {
         get;
         set;
     }
-
+    //
     public bool AttackEnabled
     {
         get;
         set;
     }
+    //
     public float AttackDistance
     {
         get;
@@ -124,6 +129,8 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
                 //
                 animatorStateController.doAttack();
                 //
+                targetGameUnit.getHurt(this,AttackForce);
+                //
             }
             else
             {
@@ -176,8 +183,8 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
     {
         base.Awake();
         //
-		maxHP = 100;
-		HP = maxHP;
+		HPMAX = 100;
+		HP = HPMAX;
 
         if(animatorStateController==null)
             animatorStateController = GetComponent<RTSMeleeAnimatorStateController>();
@@ -193,9 +200,12 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         //
         animatorStateController.doIdle();
         //
-        HPMax = 100;
-		HP = HPMax;
-		IconCameraPos = new Vector3 (1998, 5001, 1.167f);
+        HPMAX = 100;
+		HP = HPMAX;
+        //
+        AttackForce = 10;
+        //
+        IconCameraPos = new Vector3 (1998, 5001, 1.167f);
         //
     }
 

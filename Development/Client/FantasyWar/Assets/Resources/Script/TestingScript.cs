@@ -80,7 +80,7 @@ public class TestingScript : MonoBehaviour {
     RTSGameUnit testingGetHurtUnit;
     private void getHurtTesting(KeyCode key) {
         //
-        testingGetHurtUnit.getHurt(null);
+        testingGetHurtUnit.getHurt(null,10);
         // PoolManager.ShareInstanceance.PushObject("testing",1,obj);
         //
     }

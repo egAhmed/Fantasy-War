@@ -9,11 +9,13 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 	public PlayerInfo currentPlayer = null;
 
 	void Awake(){
+		//
 		initialPos.Add (GameObject.FindWithTag ("P1pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P2pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P3pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P4pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P5pos").transform.position);
+		//
 	}
 
 	public List<RTSResource> resourceses = new List<RTSResource> ();
@@ -106,9 +108,9 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 
 	public void LoadAIController(){
 		foreach (PlayerInfo item in Players) {
-			Debug.Log ("判断");
+			// Debug.Log ("判断");
 			if (item.isAI) {
-				Debug.Log ("是AI");
+				// Debug.Log ("是AI");
 				PlayerAIController pac = gameObject.AddComponent<PlayerAIController> ();
 				pac.playerInfo = item;
 				pac.AICreatWorker += item.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0]

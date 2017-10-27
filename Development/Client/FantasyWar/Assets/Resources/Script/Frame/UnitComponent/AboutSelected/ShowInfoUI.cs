@@ -26,10 +26,10 @@ public class ShowInfoUI : Interaction {
 			showPanel.Camerax.transform.position = RtsGameUnit.IconCameraPos;
 			Action_Attack atkf = gameObject.GetComponent<Action_Attack> ();
 			if (atkf == null) {
-				showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.maxHP.ToString (), null);
+				showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), null);
 			}
 			else {
-				showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.maxHP.ToString (), "10");
+				showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), "10");
 			}
 		}
 

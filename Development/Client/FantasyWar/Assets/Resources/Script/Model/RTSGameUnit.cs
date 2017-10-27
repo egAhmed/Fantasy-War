@@ -14,7 +14,7 @@ public enum RTSGameUnitBelongSide
 [RequireComponent(typeof(RTSGameUnitFogController))]
 public class RTSGameUnit : MonoBehaviour
 {
-    public int maxHP;
+    public int HPMAX;
     //
     [SerializeField]
     public PlayerInfo playerInfo;
@@ -23,6 +23,10 @@ public class RTSGameUnit : MonoBehaviour
     protected List<Interaction> interactionList = new List<Interaction>();
     public List<ActionBehaviour> ActionList = new List<ActionBehaviour>();
     //
+    UnitBloodBar BloodBar{
+        get;
+        set;
+    }
 
     public string UnitTag
     {
@@ -48,21 +52,8 @@ public class RTSGameUnit : MonoBehaviour
         }
     }
     //
-    private float _hpMax;
-    public float HPMax
-    {
-        get
-        {
-            return _hpMax;
-        }
-        set
-        {
-            _hpMax = value;
-        }
-    }
-    //
-    private float _hp;
-    public float HP
+    private int _hp;
+    public int HP
     {
         get
         {
@@ -71,6 +62,22 @@ public class RTSGameUnit : MonoBehaviour
         set
         {
             _hp = value;
+            //
+            if (BloodBar != null) {
+                //
+                // Debug.LogError("HP:"+HP);
+                // Debug.LogError("HPMAX:"+HPMAX);
+                //
+                BloodBar.SetHp(HP, HPMAX);
+                //
+            }else {
+                //
+                // Debug.LogError("BloodBar null...");
+                //
+                BloodBar=GetComponent<UnitBloodBar>();
+                //
+            }
+            //
         }
     }
     //
@@ -241,10 +248,11 @@ public class RTSGameUnit : MonoBehaviour
     //        }
     //    }
     //
-    public virtual void getHurt(RTSGameUnit attackSourceUnit)
+    public virtual void getHurt(RTSGameUnit attackSourceUnit,int attackDamageSuffered)
     {
         //do attack damage calculate
-
+        HP = HP - attackDamageSuffered;
+        //
         //do getHurt effect
         if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
         {
@@ -276,12 +284,10 @@ public class RTSGameUnit : MonoBehaviour
         //
         MapBlip mb = GetComponent<MapBlip>();
         //
-        //
         if (mb == null)
         {
             mb = gameObject.AddComponent<MapBlip>();
         }
-        //
         //
         if (playerInfo == null)
         {
@@ -302,6 +308,8 @@ public class RTSGameUnit : MonoBehaviour
             {
                 aiBehaviourDelegateRegister();
             }
+            //
+            BloodBar = GetComponent<UnitBloodBar>();
             //
         }
     }
