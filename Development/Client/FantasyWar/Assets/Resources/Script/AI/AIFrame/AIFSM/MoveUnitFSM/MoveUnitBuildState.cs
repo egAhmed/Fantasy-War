@@ -31,10 +31,10 @@ public class MoveUnitBuildState : MoveUnitFSMState
     public override void Reason(Transform enemy, Transform myself)
     {
         base.Reason(enemy, myself);
-        //if(buildsucess)
-        //{
-        //    AIController.SetTransition(MoveUnitFSMTransition.GetCollectCommand);
-        //}
+        if (buildsucess)
+        {
+            AIController.SetTransition(MoveUnitFSMTransition.GetCollectCommand);
+        }
         return;
     }
 
@@ -46,27 +46,28 @@ public class MoveUnitBuildState : MoveUnitFSMState
         //获取基地坐标
         Vector3 buildPos = BasePos;
         float anchor = 0;
-        float radius = 20;
+        float radius = 5;
         int count = 0;
         if (AIController.DelAIBuild == null)
             return;
-        //do
-        //{
-        //    buildPos = BasePos + new Vector3(radius * Mathf.Sin(anchor), -100, radius * Mathf.Cos(anchor));
-        //    if (anchor == 2 * Mathf.PI)
-        //    {
-        //        anchor = 0;
-        //        radius += 20;
-        //    }
-        //    else
-        //        anchor += Mathf.PI / 4;
-        //    Debug.Log(count++);
-        //}
-        //while (!AIController.DelAIBuild(buildPos, buildid).canbuild);
-        buildPos += new Vector3(10, -100, 0);
-        Debug.Log("开始建造") ;
-        bool test = AIController.DelAIBuild(buildPos, buildid).canbuild;
-        Debug.Log("能否建造" + test);
+        do
+        {
+            buildPos = BasePos + new Vector3(radius * Mathf.Sin(anchor), -100, radius * Mathf.Cos(anchor));
+            if (anchor == 2 * Mathf.PI)
+            {
+                anchor = 0;
+                radius += 5;
+            }
+            else
+                anchor += Mathf.PI / 4;
+            Debug.Log(count++);
+        }
+        while (!AIController.DelAIBuild(buildPos, buildid).canbuild);
+        Debug.Log(count+=10);
+        //buildPos += new Vector3(30, -100, 0);
+        //Debug.Log("开始建造") ;
+        //bool test = AIController.DelAIBuild(buildPos, buildid).canbuild;
+        //Debug.Log("能否建造" + test);
 
         building = true;
         //以基地为圆心，在一个圆上寻找建筑点
@@ -99,6 +100,7 @@ public class MoveUnitBuildState : MoveUnitFSMState
     {
         base.SwitchOut();
         buildid = 0;
+        Debug.Log("出去建造状态");
     }
 
     public void buildSuccess()

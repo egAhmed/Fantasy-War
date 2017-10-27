@@ -174,13 +174,17 @@ public class PlayerAIController : PlayerAdvancedFSM
         {
             //if (兵营没空)
             //    return;
-            if (barrack == null)
+            if (!key.isProducting)
+            {
                 barrack = key;
+                break;
+            }
             //空闲值判断
             //造兵队列上限判断
         }
         if (barrack == null)
             return false;
+        Debug.Log("字典中方法的数量=>"+dicCreatArmy.Values.Count);
         dicCreatArmy[barrack](ID);
         return true;
         //判断哪个兵营最有空

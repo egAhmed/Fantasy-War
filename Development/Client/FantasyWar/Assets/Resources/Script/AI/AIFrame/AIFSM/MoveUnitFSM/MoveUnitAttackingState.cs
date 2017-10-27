@@ -54,7 +54,11 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 	{
 		//如果攻击目标和传进的目标不同，就A那个目标
 		if (enemy.GetComponent<RTSGameUnit>() != AttackTarget) {
-			myself.GetComponent<Action_Attack> ().attackDelegate (enemy.GetComponent<RTSGameUnit> ());
+            if(myself.GetComponent<Action_Attack>().attackDelegate==null)
+            {
+                Debug.Log("攻击委托为空");
+            }
+                myself.GetComponent<Action_Attack> ().attackDelegate (enemy.GetComponent<RTSGameUnit> ());
 			AttackTarget = enemy.GetComponent<RTSGameUnit>();
 		}
 	}

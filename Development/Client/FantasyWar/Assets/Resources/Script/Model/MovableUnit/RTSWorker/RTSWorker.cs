@@ -667,10 +667,12 @@ public virtual void startGoingToBuilding()
                 //
                 // Debug.LogError("fuck 3");
                 //
-                 RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_Build.PATH,hitpos,Quaternion.identity,playerInfo);
+                 RTSBuilding build=RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_Build.PATH,hitpos,Quaternion.identity,playerInfo);
                     //
-                    // alertAIControllerThatBuildingIsAlreadySuccess();
-                    // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_Build.PATH, hitpos, Quaternion.identity));
+                    //础瀚加的
+                    playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
+                    alertAIControllerThatBuildingIsAlreadySuccess();
+                    // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_Build.PATH, pos, Quaternion.identity));
                 }
 			break;
 		case 1102:
@@ -683,9 +685,12 @@ public virtual void startGoingToBuilding()
         //  Debug.LogError("fuck 5");
                 
                 //   Debug.LogError("fuck 5 pos =>"+pos);
-                 RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_BuildBarrack.PATH,hitpos,Quaternion.identity,playerInfo);
-                 //
-                //    alertAIControllerThatBuildingIsAlreadySuccess();
+                    RTSBuilding build = RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_BuildBarrack.PATH,hitpos,Quaternion.identity,playerInfo);
+                    //
+                    //础瀚加的
+                    playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
+
+                    alertAIControllerThatBuildingIsAlreadySuccess();
                 // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_BuildBarrack.PATH,hitpos, Quaternion.identity));
                 //
 			}

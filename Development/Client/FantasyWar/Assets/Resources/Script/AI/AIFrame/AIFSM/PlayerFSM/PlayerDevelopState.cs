@@ -10,13 +10,13 @@ public class PlayerDevelopState : PlayerFSMState
     {
         set
         {
-            if(requireSupportPos!=null)
-                if(Vector3.Distance(requireSupportPos,value)>1)
+            if (requireSupportPos != null)
+                if (Vector3.Distance(requireSupportPos, value) > 1)
                 {
                     requireSupportPos = value;
                     SendSupport(requireSupportPos);
                 }
-            else
+                else
                 {
                     requireSupportPos = value;
                     SendSupport(requireSupportPos);
@@ -36,13 +36,14 @@ public class PlayerDevelopState : PlayerFSMState
     public override void Act(Transform enemy, Transform myself)
     {
         armyEnough = develop(AIController.TargetResourcesNums);
+        //Debug.Log("armyEnough" + armyEnough);
     }
 
     public override void Reason(Transform enemy, Transform myself)
     {
         base.Reason(enemy, myself);
-        if (Settings.ResourcesTable.idList == null)
-            Settings.TableManage.Start();
+        //if (Settings.ResourcesTable.idList == null)
+        //    Settings.TableManage.Start();
         //士兵已满
         if (armyEnough)
         {
@@ -78,7 +79,7 @@ public class PlayerDevelopState : PlayerFSMState
         for (int i = 0; i < TargetResourcesNums.GetLength(0); i++)
         {
             //int IndexOfName = TargetResourcesNums[i, 0].LastIndexOf(@"/")+1;
-			string name = Settings.ResourcesTable.Get(Convert.ToInt32(TargetResourcesNums[i, 0])).type; //TargetResourcesNums[i, 0].Substring(IndexOfName);
+            string name = Settings.ResourcesTable.Get(Convert.ToInt32(TargetResourcesNums[i, 0])).type; //TargetResourcesNums[i, 0].Substring(IndexOfName);
             //先判断是否存在于建筑的字典里。
             if (AIController.playerInfo.BuildingUnits.ContainsKey(name))
             {
@@ -95,11 +96,11 @@ public class PlayerDevelopState : PlayerFSMState
             if (AIController.playerInfo.ArmyUnits.ContainsKey(name))
             {
                 //判断部队数量是否达标
-               // Debug.LogError("target"+Convert.ToInt32(TargetResourcesNums[i, 1]));
-               // Debug.Log("now"+AIController.playerInfo.ArmyUnits[name].Count);
+                //Debug.Log("ID" + Convert.ToInt32(TargetResourcesNums[i, 1]));
+                //Debug.Log("target" + Convert.ToInt32(TargetResourcesNums[i, 1]));
+                //Debug.Log("now" + AIController.playerInfo.ArmyUnits[name].Count);
                 if (AIController.playerInfo.ArmyUnits[name].Count < Convert.ToInt32(TargetResourcesNums[i, 1]))
                 {
-                    //Debug.Log("进来了");
                     creatArmy(Convert.ToInt32(TargetResourcesNums[i, 0]));
                     //没达标，造一个
                     return false;
@@ -113,7 +114,7 @@ public class PlayerDevelopState : PlayerFSMState
     //查找建筑点，然后建建筑的方法
     void build(int id)
     {
-
+        Debug.Log("兵营数量=>" + AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Count);
         //找一个农民去建房子
         WorkerAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<WorkerAIController>();
         farmerAI.SetBuildState(id);
@@ -132,8 +133,13 @@ public class PlayerDevelopState : PlayerFSMState
     //    return rayinfo.point;
     //}
     void creatArmy(int resourcesID)
-	{
+    {
+        //Debug.Log("进来了");
+        if (resourcesID != 1009)
+        {
             AIController.creatArmy(resourcesID);
+            return;
+        }
 
         if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1009)
         {
@@ -141,12 +147,12 @@ public class PlayerDevelopState : PlayerFSMState
             //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
             AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_Production>().RunAction(KeyCode.A);
         }
-        if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1002)
-        {
-            //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
-            //AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_ProductionRider>().RunAction(KeyCode.A);
-            //AIController.StartCoroutine(tmpknight());
-        }
+        //if (AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Count > 0 && Time.time > Time.deltaTime && resourcesID == 1002)
+        //{
+        //    //			Debug.Log (AIController.playerInfo.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0].GetComponent<Action_Production> ()==null);
+        //    //AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].GetComponent<Action_ProductionRider>().RunAction(KeyCode.A);
+        //    //AIController.StartCoroutine(tmpknight());
+        //}
     }
     bool isNoArmy()
     {
@@ -183,10 +189,10 @@ public class PlayerDevelopState : PlayerFSMState
             foreach (var unit in armylist)
             {
                 //让这些单位去支援
-                                    MoveUnitAIController control = unit.GetComponent<MoveUnitAIController>();
+                MoveUnitAIController control = unit.GetComponent<MoveUnitAIController>();
                 //control.SetTransition (MoveUnitFSMTransition.GetPatrolCommand);
-                
-                    control.DesPos = pos;
+
+                control.DesPos = pos;
             }
         }
     }

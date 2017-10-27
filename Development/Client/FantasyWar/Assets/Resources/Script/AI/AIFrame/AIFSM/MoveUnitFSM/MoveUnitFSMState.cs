@@ -81,8 +81,8 @@ public abstract class MoveUnitFSMState : FSMState
 
     public MoveUnitFSMStateID GetOutputState(MoveUnitFSMTransition transition)
     {
-		Debug.Log (transition);
-		Debug.Log (AIController.CurrentState.GetType ());
+		//Debug.Log (transition);
+		//Debug.Log (AIController.CurrentState.GetType ());
         return Map[transition];
     }
     //用来确定是否需要转换到其他状态

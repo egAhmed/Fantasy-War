@@ -81,6 +81,8 @@ public class MoveUnitAdvanceFSM : FSM
         //调用切出切入函数
         set
         {
+            if(value==null)
+                return;
             if (value == currentState)
                 return;
             if (currentState != null)
