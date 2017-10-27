@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LoginBtnOfflineGame : MonoBehaviour {
 
+	public GameObject online;
+
     Button loginBtn;
 
     private void Awake()
@@ -17,4 +19,10 @@ public class LoginBtnOfflineGame : MonoBehaviour {
         });
     }
     //
+	void Update()
+	{
+		if (!online .activeSelf ) {
+			loginBtn.gameObject.SetActive (false);
+		}
+	}
 }
