@@ -12,7 +12,13 @@ public class PlayerSettingPlayerRaceController : MonoBehaviour {
 	public Racial SelectedRacial{
         get {
 			//hard code here
-            return Racial.human;
+            switch (SelectedDropListIndex)
+            {
+                case 1:
+                    return Racial.deemo;
+                default:
+                    return Racial.human;
+            }
         }
     }
     Dropdown dropdownList;

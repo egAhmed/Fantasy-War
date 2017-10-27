@@ -14,10 +14,4 @@ public class LoginBtnOnlineGame : MonoBehaviour {
 
         });
     }
-	void Update()
-	{
-		if (Input .GetMouseButtonDown (0)) {
-			loginBtn.gameObject.SetActive (false);
-		}
-	}
 }

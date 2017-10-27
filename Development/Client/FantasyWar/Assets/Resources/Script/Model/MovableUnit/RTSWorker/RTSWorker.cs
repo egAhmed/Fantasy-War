@@ -551,9 +551,12 @@ public virtual void startGoingToBuilding()
         //
         playerInfo.Resources = playerInfo.Resources + 60;
         //
-        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) { 
-        //金币结算
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
+            //金币结算
+            CoinCollect.Current.Money = playerInfo.Resources;
+            //
             CoinCollect.Current.Done(gameObject);
+            //
         }
         //
     }
