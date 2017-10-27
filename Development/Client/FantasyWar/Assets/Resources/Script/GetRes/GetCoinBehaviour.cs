@@ -13,6 +13,7 @@ public class GetCoinBehaviour : MonoBehaviour {
     {
         //启动赚取金币动画
         InvokeRepeating("Working", 0, Frequency);
+        //
     }
     public void WorkDone()
     {

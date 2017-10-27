@@ -6,7 +6,7 @@ public class Action_BuildBarrack : ActionBehaviour {
 		//
 	PlayerInfo pi;
 	RTSWorker rtsw;
-	public string pathh = @"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks";
+	public const string PATH = @"3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/barracks";
 
 	void Awake(){
 		rtsw = gameObject.GetComponent<RTSWorker> ();
@@ -27,115 +27,11 @@ public class Action_BuildBarrack : ActionBehaviour {
 			//
 			//Debug.Log(pi.name);
 			if(pi.Resources>150){
-				buildBarr(pi,pathh);
+				//
+				RTSBuildingManager.ShareInstance.startBuildingMode(PATH,rtsw);
+				//
 			}
 		};
-		//
-	}
-
-	string path;
-
-	private void exitBuildingMode(bool status, Vector3 pos,PlayerInfo info)
-	{
-		RTSBuildingManager.eventUnRegister (exitBuildingMode);
-		//
-		if (status)
-		{
-			beginToBuildTheBuilding(pos,info);
-			Debug.Log (info.name);
-		}
-		else
-		{
-			returnTheBuildingCost();
-		}
-		//
-	}
-
-	/// <summary>
-	/// 真正建出来调用这个
-	/// </summary>
-	/// <param name="pos">Position.</param>
-	/// <param name="info">Info.</param>
-	public void beginToBuildTheBuilding(Vector3 pos,PlayerInfo info)
-	{
-		rtsw.move (pos);
-		StartCoroutine (BuildNew(pos,info));
-
-		if (info == null)
-			return;
-		//
-		StartCoroutine (BuildNew(pos,info));
-	}
-
-    public void AIBuild(Vector3 pos, PlayerInfo info) {
-        RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack>(pathh, pos, Quaternion.identity);
-        gameUnit.GetComponent<RTSBuildingBarrack>().playerInfo = info;
-        if (info.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
-        {
-            gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
-        }
-        if (info.isAI)
-        {
-            info.AICon.registerDelCreatArmy(gameUnit.CreatArmy, gameUnit);
-        }
-    }
-
-	IEnumerator BuildNew(Vector3 pos,PlayerInfo info){
-		while (true) {
-			if (Vector3.Distance (transform.position, pos) < 1) {
-				yield return new WaitForSeconds (5);
-				RTSBuildingBarrack gameUnit = PrefabFactory.ShareInstance.createClone<RTSBuildingBarrack> (pathh, pos, Quaternion.identity);
-				gameUnit.GetComponent<RTSBuildingBarrack> ().playerInfo = info;
-				if (info.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
-					gameUnit.gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberPlayerBuildingUnit;
-				}
-				if (info.isAI) {
-					info.AICon.registerDelCreatArmy (gameUnit.CreatArmy,gameUnit);
-				}
-                //懒得写回调，直接调用建造成功时的函数
-                if (pi.isAI)
-                {
-                    var list = transform.GetComponent<MoveUnitAIController>().fsmStates;
-                    MoveUnitBuildState buildstate = null;
-                    foreach (var item in list)
-                    {
-                        if (item.StateID == MoveUnitFSMStateID.Building)
-                        {
-                            buildstate = item as MoveUnitBuildState;
-                            break;
-                        }
-                    }
-                    if (buildstate != null)
-                        buildstate.buildSuccess();
-                }
-                break;
-			}
-			yield return null;
-		}
-	}
-
-	private void returnTheBuildingCost()
-	{
-		//返回建造资源
-	}
-
-	private void buildBarr(PlayerInfo info,string buildingPrefabPath)
-	{
-		if (info == null) {
-			return;
-		}
-		//
-		if (buildingPrefabPath == null) {
-			return;
-		}
-		//
-		RTSBuildingManager.eventRegister(exitBuildingMode);
-		//
-		path=buildingPrefabPath;
-		//
-		Debug.Log("当前需要建造的建筑："+path);
-		//
-		RTSBuildingManager.ShareInstance.startBuildingMode(path,info);
 		//
 	}
 }

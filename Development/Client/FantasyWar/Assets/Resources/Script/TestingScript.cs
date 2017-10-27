@@ -19,7 +19,7 @@ public class TestingScript : MonoBehaviour {
         //
         Settings.TableManage.Start();
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
-
+        //
         // RTSGamePlayManager.ShareInstance.build();
         //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
@@ -56,6 +56,7 @@ public class TestingScript : MonoBehaviour {
 	}
 
 	void LoadPlayer(){
+        //
 		PlayerInfoManager pim = PlayerInfoManager.ShareInstance;
         //add Player
 		// pim.AddPlayer ("xxixxxlx", Color.cyan);
