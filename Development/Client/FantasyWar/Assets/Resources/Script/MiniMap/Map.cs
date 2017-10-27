@@ -59,7 +59,10 @@ public class Map : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
 
         MapButton.onClick.AddListener(MoveTo);
-       
+       if(MaskCarmera==null){
+            MaskCarmera = GameObject.Find("MaskCamera").GetComponent<Camera>();
+
+        }
     }
     /// <summary>
     /// 发生战斗(受伤害)在小地图出现红圈特效
