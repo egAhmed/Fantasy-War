@@ -8,10 +8,7 @@ public class PlayerSettingPlayerTeamController : MonoBehaviour {
 	public int SelectedTeamNumber{
         get
         {
-            switch (SelectedDropListIndex) { 
-				default:
-                    return 2;
-            }
+            return SelectedDropListIndex + 1;
         }
         set {
             if (dropdownList != null) {
