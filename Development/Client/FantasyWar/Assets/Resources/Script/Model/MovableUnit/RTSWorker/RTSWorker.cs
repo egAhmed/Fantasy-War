@@ -690,7 +690,8 @@ public virtual void startGoingToBuilding()
                  RTSBuilding build=RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_Build.PATH,hitpos,Quaternion.identity,playerInfo);
                     //
                     //础瀚加的
-                    playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
+                    if (!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Contains(build))
+                        playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
                     alertAIControllerThatBuildingIsAlreadySuccess();
                     // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_Build.PATH, pos, Quaternion.identity));
                 }
@@ -708,6 +709,7 @@ public virtual void startGoingToBuilding()
                     RTSBuilding build = RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_BuildBarrack.PATH,hitpos,Quaternion.identity,playerInfo);
                     //
                     //础瀚加的
+                    if(!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Contains(build))
                     playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
 
                     alertAIControllerThatBuildingIsAlreadySuccess();

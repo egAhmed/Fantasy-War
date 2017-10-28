@@ -7,11 +7,11 @@ using System.IO;
 public class ChangeShader : EditorWindow
 {
 
-    [MenuItem("Window/ChangeShader/BuidingDestoryShader")]
+    [MenuItem("Window/ChangeShader/BuidingShader")]
     static void BuidingShader()
     {
         changeShader(0, @"LCH/BuidingProgressShader");
-        changeShader(1, @"LCH/UnitDestoryShader");
+        //changeShader(1, @"LCH/UnitDestoryShader");
     }
 
     //[MenuItem("ChangeShader /BuidingDestoryShader")]

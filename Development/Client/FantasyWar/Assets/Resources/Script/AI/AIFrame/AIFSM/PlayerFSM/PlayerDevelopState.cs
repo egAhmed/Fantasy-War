@@ -114,7 +114,7 @@ public class PlayerDevelopState : PlayerFSMState
     //查找建筑点，然后建建筑的方法
     void build(int id)
     {
-        Debug.Log("兵营数量=>" + AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Count);
+        //Debug.Log("兵营数量=>" + AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Count);
         //找一个农民去建房子
         WorkerAIController farmerAI = AIController.playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type][0].GetComponent<WorkerAIController>();
         farmerAI.SetBuildState(id);
@@ -184,7 +184,11 @@ public class PlayerDevelopState : PlayerFSMState
     {
         foreach (var armylist in AIController.playerInfo.ArmyUnits.Values)
         {
-            if (armylist[0] == null || armylist[0] is RTSWorker)
+            Debug.Log("armylist" + armylist);
+            if (armylist.Count > 0)
+                Debug.Log("armylist[0]" + armylist[0]);
+
+            if (armylist.Count == 0 || armylist[0] is RTSWorker)
                 continue;
             foreach (var unit in armylist)
             {

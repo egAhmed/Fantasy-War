@@ -184,7 +184,7 @@ public class PlayerAIController : PlayerAdvancedFSM
         }
         if (barrack == null)
             return false;
-        Debug.Log("字典中方法的数量=>"+dicCreatArmy.Values.Count);
+        //Debug.Log("字典中方法的数量=>"+dicCreatArmy.Values.Count);
         dicCreatArmy[barrack](ID);
         return true;
         //判断哪个兵营最有空
