@@ -7,6 +7,17 @@ using DG.Tweening;
 public class CoinTweenMove : MonoBehaviour {
     GameObject GameResource_Coin, CoinCount;
     public GameObject worker;
+    //
+    Text _coinNumText;
+    Text CoinNumText{
+        get {
+            if (CoinCount!=null&&_coinNumText == null) {
+                _coinNumText = CoinCount.GetComponent<Text>();
+            }
+            return _coinNumText;
+        }
+    }
+    //
     // Use this for initialization
     private void Awake()
     {       
@@ -24,16 +35,24 @@ public class CoinTweenMove : MonoBehaviour {
         t2.SetEase(Ease.Linear);
         mySequence.Append(t);
         mySequence.Join(t2);
-      
+        //
+        //
+        // CoinNumText.text = 500 + "";
+        //
     }
 
     private void OnComplete()
     {
-        CoinCollect.Current.Money += CoinCollect.Current.CoinValue;
-        CoinCount.GetComponent<Text>().text = CoinCollect.Current.Money + "";
+        // CoinCollect.Current.Money += CoinCollect.Current.CoinValue;
+        // CoinCount.GetComponent<Text>().text = CoinCollect.Current.Money + "";
+        refreshMoneyText();
+        //
         CoinCollect.Current.coin[worker].Remove(gameObject);
         Destroy(gameObject);
-        
+    }
+
+    void refreshMoneyText() { 
+        CoinNumText.text = CoinCollect.Current.Money + "";
     }
 
 }

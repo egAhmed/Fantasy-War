@@ -7,20 +7,22 @@ public class CoinCollect : MonoBehaviour {
     public static CoinCollect Current;
     GameObject coinPre;
     Transform own;
-    private float money = 0f;
-    private float coinValue = 100f;//每个金币的结算价格
+    // private float money = 0f;
+    private float coinValue = 60f;//每个金币的结算价格
 
-    public float Money
+    public int Money
     {
-        get
-        {
-            return money;
-        }
+        // get
+        // {
+        //     return money;
+        // }
 
-        set
-        {
-            money = value;
-        }
+        // set
+        // {
+        //     money = value;
+        // }
+        get;
+        set;
     }
 
     public GameObject CoinPre

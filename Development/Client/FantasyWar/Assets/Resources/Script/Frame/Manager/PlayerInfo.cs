@@ -62,5 +62,5 @@ public class PlayerInfo{
 
 	public bool isAI;
 
-	public float Resources;
+	public int Resources;
 }
