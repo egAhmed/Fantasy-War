@@ -79,6 +79,7 @@ public abstract class PlayerFSMState
         //获得基地对象
 		RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0];
 
+        //Debug.Log("HP"+mainunit.HP);
 		//基地爆炸（问题不大）
         if (mainunit == null || mainunit.HP == 0)
         {

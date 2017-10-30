@@ -60,10 +60,10 @@ public class MoveUnitBuildState : MoveUnitFSMState
             }
             else
                 anchor += Mathf.PI / 4;
-            Debug.Log(count++);
+            //Debug.Log(count++);
         }
         while (!AIController.DelAIBuild(buildPos, buildid).canbuild);
-        Debug.Log(count+=10);
+        //Debug.Log(count+=10);
         //buildPos += new Vector3(30, -100, 0);
         //Debug.Log("开始建造") ;
         //bool test = AIController.DelAIBuild(buildPos, buildid).canbuild;
@@ -100,7 +100,7 @@ public class MoveUnitBuildState : MoveUnitFSMState
     {
         base.SwitchOut();
         buildid = 0;
-        Debug.Log("出去建造状态");
+        //Debug.Log("出去建造状态");
     }
 
     public void buildSuccess()

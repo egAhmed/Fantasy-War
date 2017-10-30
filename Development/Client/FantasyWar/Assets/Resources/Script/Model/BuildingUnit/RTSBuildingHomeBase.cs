@@ -10,6 +10,11 @@ public class RTSBuildingHomeBase : RTSBuilding {
 		//
 		ActionBehaviour apro = gameObject.AddComponent<Action_Production> ();
 		ActionList.Add (apro);
-		//
-	}
+
+        if (!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Contains(this))
+        {
+            playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type].Add(this);
+        }
+        //
+    }
 }

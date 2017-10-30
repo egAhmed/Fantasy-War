@@ -34,7 +34,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState
 
         //Check the distance with player tank
         //When the distance is near, transition to attack state
-        float dist = Vector3.Distance(myself.position, AIController.DesPos);
+        float dist = Vector3.Distance(myself.position, enemy.position);
         if (dist <= attackDistance)
         {
             AIController.SetTransition(MoveUnitFSMTransition.ReachEnemy);
@@ -69,7 +69,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState
                         }
                     }
                     //遍历所有建筑单位
-                    Debug.Log(Settings.ResourcesTable.Get(1102).type + "兵营数量" + playerinfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Count);
+                    //Debug.Log(Settings.ResourcesTable.Get(1102).type + "兵营数量" + playerinfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Count);
                     foreach (string item in playerinfo.BuildingUnits.Keys)
                     {
                         if (item == Settings.ResourcesTable.Get(1101).type)

@@ -31,7 +31,7 @@ public class MoveUnitChaseState : MoveUnitFSMState
         float dist = Vector3.Distance(myself.position, enemy.position);
         if (dist <= attackDistance)
         {
-            Debug.Log("Switch to Attack state");
+            //Debug.Log("Switch to Attack state");
             myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.ReachEnemy);
         }
         //Go back to patrol is it become too far

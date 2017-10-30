@@ -54,6 +54,6 @@ public class MoveUnitCollectingState : MoveUnitFSMState {
 	{
         base.SwitchOut();
         currentMine = null;
-		Debug.Log ("不挖矿了");
+		//Debug.Log ("不挖矿了");
 	}
 }

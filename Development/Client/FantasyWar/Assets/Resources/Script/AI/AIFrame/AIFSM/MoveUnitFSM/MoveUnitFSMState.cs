@@ -58,9 +58,9 @@ public abstract class MoveUnitFSMState : FSMState
     //追逐范围
     public float chaseDistance = originDistance;
     //初始追击范围
-    public static float originDistance = 40.0f;
+    public static float originDistance = 10.0f;
     //攻击距离
-    protected float attackDistance = 20.0f;
+    protected float attackDistance = 3.0f;
     //与巡逻点的距离
     protected float arriveDistance = 3.0f;
 

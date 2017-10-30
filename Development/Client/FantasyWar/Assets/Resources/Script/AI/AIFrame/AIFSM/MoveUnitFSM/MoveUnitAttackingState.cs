@@ -37,7 +37,7 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 		float dist = Vector3.Distance(myself.position, enemy.position);
 		if (dist >= attackDistance)
 		{
-			Debug.Log("Switch to Chase state");
+			//Debug.Log("Switch to Chase state");
 			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.SawEnemy);
 			//AttackTarget = null;
 		}
