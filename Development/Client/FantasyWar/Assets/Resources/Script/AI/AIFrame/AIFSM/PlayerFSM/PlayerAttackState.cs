@@ -13,7 +13,7 @@ public class PlayerAttackState : PlayerFSMState
         get { return nearestPlayer; }
         set
         {
-            if (value.groupTeam == AIController.playerInfo.groupTeam)
+            if (value!=null&&value.groupTeam == AIController.playerInfo.groupTeam)
                 Debug.LogError("选择了同队队友作为目标");
             nearestPlayer = value;
         }
@@ -35,8 +35,16 @@ public class PlayerAttackState : PlayerFSMState
             tempPopulation += AIController.playerInfo.ArmyUnits[item].Count;
         }
 
-        if (NearestPlayer == null)
+        if (NearestPlayer != null)
+            if (!PlayerInfoManager.ShareInstance.Players.Contains(NearestPlayer))
+            {
+                Debug.Log("目标主基地消失");
+            }
+        if (!PlayerInfoManager.ShareInstance.Players.Contains(NearestPlayer))
+            NearestPlayer = null;
+        if (NearestPlayer == null )
         {
+
             //找到最近的主基地
             foreach (PlayerInfo item in PlayerInfoManager.ShareInstance.Players)
             {
@@ -57,7 +65,8 @@ public class PlayerAttackState : PlayerFSMState
                     }
                 }
             }
-
+            if (NearestPlayer == null)
+                return;
             //让小兵打过去
             foreach (string item in AIController.playerInfo.ArmyUnits.Keys)
             {
@@ -100,6 +109,8 @@ public class PlayerAttackState : PlayerFSMState
     public override void Reason(Transform enemy, Transform myself)
     {
         base.Reason(enemy, myself);
+        if (!IsReasonOvrrideRun)
+            return;
         if (population < 10)
         {
             AIController.SetTransition(PlayerFSMTransition.ArmyUseUp);

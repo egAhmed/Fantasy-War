@@ -45,6 +45,9 @@ public class PlayerDevelopState : PlayerFSMState
         //if (Settings.ResourcesTable.idList == null)
         //    Settings.TableManage.Start();
         //士兵已满
+
+        if (!IsReasonOvrrideRun)
+            return;
         if (armyEnough)
         {
             AIController.SetTransition(PlayerFSMTransition.ArmyEnough);

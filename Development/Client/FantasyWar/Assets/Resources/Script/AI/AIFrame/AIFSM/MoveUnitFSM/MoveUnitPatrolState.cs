@@ -46,7 +46,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState
     {
 
 
-        if (AttackTarget == null)
+        if (AttackTarget == null||AttackTarget.HP<=0)
         {
             //遍历所有玩家
             foreach (PlayerInfo playerinfo in PlayerInfoManager.ShareInstance.Players)
@@ -59,7 +59,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState
                     {
                         foreach (RTSGameUnit target in playerinfo.ArmyUnits[item])
                         {
-                            if (Vector3.Distance(target.transform.position, myself.position) < attackDistance)
+                            if (Vector3.Distance(target.transform.position, myself.position) < attackDistance&&target.HP>0)
                             {
                                 AttackTarget = target;
                                 AIController.DesPos = AttackTarget.transform.position;
@@ -76,7 +76,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState
                             continue;
                         foreach (RTSGameUnit target in playerinfo.BuildingUnits[item])
                         {
-                            if (Vector3.Distance(target.transform.position, myself.position) < attackDistance)
+                            if (Vector3.Distance(target.transform.position, myself.position) < attackDistance && target.HP > 0)
                             {
                                 AttackTarget = target;
                                 AIController.DesPos = AttackTarget.transform.position;

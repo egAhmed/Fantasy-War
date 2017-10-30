@@ -19,6 +19,17 @@ public enum PlayerFSMStateID
 }
 public abstract class PlayerFSMState
 {
+    protected bool IsReasonOvrrideRun=true;
+    protected RTSGameUnit mainUnit;
+    protected RTSGameUnit MainUnit
+    {
+        get
+        {
+            if(mainUnit==null)
+                mainUnit = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0];
+            return mainUnit;
+        }
+    }
     protected PlayerAIController AIController;
     //字典，用于保存“转换-状态”的信息
     protected Dictionary<PlayerFSMTransition, PlayerFSMStateID> _map;
@@ -75,17 +86,16 @@ public abstract class PlayerFSMState
     //用来确定是否需要转换到其他状态
     public virtual void Reason(Transform enemy, Transform myself)
     {
-
-        //获得基地对象
-		RTSGameUnit mainunit = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0];
-
         //Debug.Log("HP"+mainunit.HP);
 		//基地爆炸（问题不大）
-        if (mainunit == null || mainunit.HP == 0)
+        if (MainUnit == null || MainUnit.HP <= 0)
         {
             AIController.SetTransition(PlayerFSMTransition.BaseNoHealth);
+            IsReasonOvrrideRun = false;
             return;
         }
+        IsReasonOvrrideRun = true;
+
     }
     //本状态的角色行为
     public abstract void Act(Transform enemy, Transform myself);
