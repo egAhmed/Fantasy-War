@@ -7,7 +7,7 @@ using System.IO;
 public class ChangeShader : EditorWindow
 {
 
-    [MenuItem("Window/ChangeShader/BuidingShader")]
+    [MenuItem("Window/ChangeShader/BuidingDestoryShader")]
     static void BuidingShader()
     {
         changeShader(0, @"LCH/BuidingProgressShader");
@@ -70,15 +70,20 @@ public class ChangeShader : EditorWindow
             return;
         }
         MeshRenderer tmpMeshR = obj.GetComponent<MeshRenderer>();
-        if (tmpMeshR == null)
+        SkinnedMeshRenderer tmpSkinMeshR = obj.GetComponentInChildren<SkinnedMeshRenderer>();
+        if (tmpMeshR == null && tmpSkinMeshR == null)
         {
-            Debug.LogError("该prefab没有MeshRenderer组件");
+            Debug.LogError("该prefab没有MeshRenderer组件或SkinnedMeshRenderer");
             return;
         }
         MeshFilter tmpMeshF = obj.GetComponent<MeshFilter>();
-        if (tmpMeshF == null)
+        Mesh tmpMesh = null;
+        if (tmpSkinMeshR != null)
+            tmpMesh = tmpSkinMeshR.sharedMesh;
+
+        if (tmpMeshF == null && tmpSkinMeshR == null)
         {
-            Debug.LogError("该prefab没有MeshFilter组件");
+            Debug.LogError("该prefab没有MeshFilter组件或SkinnedMeshRenderer");
             return;
         }
 
@@ -87,9 +92,46 @@ public class ChangeShader : EditorWindow
             Debug.LogError("找不到create时用的Shader");
             return;
         }
+        float MaxY = -Mathf.Infinity;
+        float MinY = Mathf.Infinity;
         try
         {
-            tmpMeshR.sharedMaterials[materialIndex].shader = Shader.Find(shaderName);
+            if (tmpMeshF != null)
+            {
+                tmpMeshR.sharedMaterials[materialIndex].shader = Shader.Find(shaderName);
+                foreach (var item in tmpMeshF.sharedMesh.vertices)
+                {
+                    if (item.y > MaxY)
+                    {
+                        MaxY = item.y;
+                    }
+
+                    if (item.y < MinY)
+                    {
+                        MinY = item.y;
+                    }
+                }
+                tmpMeshR.sharedMaterial.SetFloat("_MeshVertexYMax", MaxY);
+                tmpMeshR.sharedMaterial.SetFloat("_MeshVertexYMin", MinY);
+            }
+            if (tmpSkinMeshR != null)
+            {
+                tmpSkinMeshR.sharedMaterials[materialIndex].shader = Shader.Find(shaderName);
+                foreach (var item in tmpSkinMeshR.sharedMesh.vertices)
+                {
+                    if (item.y > MaxY)
+                    {
+                        MaxY = item.y;
+                    }
+
+                    if (item.y < MinY)
+                    {
+                        MinY = item.y;
+                    }
+                }
+                tmpSkinMeshR.sharedMaterial.SetFloat("_MeshVertexYMax", MaxY);
+                tmpSkinMeshR.sharedMaterial.SetFloat("_MeshVertexYMin", MinY);
+            }
 
         }
         catch
@@ -98,22 +140,6 @@ public class ChangeShader : EditorWindow
             return;
         }
 
-        float MaxY = -Mathf.Infinity;
-        float MinY = Mathf.Infinity;
-        foreach (var item in tmpMeshF.sharedMesh.vertices)
-        {
-            if (item.y > MaxY)
-            {
-                MaxY = item.y;
-            }
-
-            if (item.y < MinY)
-            {
-                MinY = item.y;
-            }
-        }
-        tmpMeshR.sharedMaterial.SetFloat("_MeshVertexYMax", MaxY);
-        tmpMeshR.sharedMaterial.SetFloat("_MeshVertexYMin", MinY);
         //如何获取default贴图
         // tmpMeshR.sharedMaterial.SetTexture("",)
         obj = null;
