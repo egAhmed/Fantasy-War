@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(WorkerAnimatorStateController))]
-public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
+public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
 {
     //
     #region building
@@ -28,11 +28,13 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
     public void addPendingBuildTask(RTSBuildingPendingToBuildTempUnit pendingUnit)
     {
         //
-        if (PendingBuildingList == null) {
+        if (PendingBuildingList == null)
+        {
             return;
         }
         //
-        lock (PendingBuildingList) { 
+        lock (PendingBuildingList)
+        {
             PendingBuildingList.Add(pendingUnit);
         }
         //
@@ -45,7 +47,7 @@ public class RTSWorker :RTSMovableUnit, IGameUnitResourceMining
         //
     }
     //
-public virtual void startGoingToBuilding()
+    public virtual void startGoingToBuilding()
     {
         if (isWorking)
         {
@@ -82,14 +84,14 @@ public virtual void startGoingToBuilding()
         }
         //
         int pendingIndex = 0;
-        while (PendingBuildingList.Count>pendingIndex&&PendingBuildingList[pendingIndex] != null)
+        while (PendingBuildingList.Count > pendingIndex && PendingBuildingList[pendingIndex] != null)
         {
             //
             RTSBuildingPendingToBuildTempUnit pendingUnit = PendingBuildingList[pendingIndex];
             //
             move(pendingUnit.transform.position);
             //
-            while (isWorking && currentWorkingJobType == RTSWorkerJobType.OnTheWayToBuilding && pendingUnit != null&&pendingUnit.gameObject.activeSelf)
+            while (isWorking && currentWorkingJobType == RTSWorkerJobType.OnTheWayToBuilding && pendingUnit != null && pendingUnit.gameObject.activeSelf)
             {
                 yield return null;
                 if (Vector3.Distance(transform.position, pendingUnit.transform.position) < BuildingAllowMinDistance)
@@ -133,19 +135,23 @@ public virtual void startGoingToBuilding()
         //
     }
 
-    protected virtual void pendingListRelease() {
+    protected virtual void pendingListRelease()
+    {
         //
-        lock (PendingBuildingList) {
+        lock (PendingBuildingList)
+        {
             //
-            for (int i = 0; i < PendingBuildingList.Count;i++)
+            for (int i = 0; i < PendingBuildingList.Count; i++)
             {
-                RTSBuildingPendingToBuildTempUnit pendingUnit=PendingBuildingList[i];
+                RTSBuildingPendingToBuildTempUnit pendingUnit = PendingBuildingList[i];
                 //
-                if (pendingUnit == null) {
+                if (pendingUnit == null)
+                {
                     continue;
                 }
                 //
-                if (pendingUnit.gameObject == null) {
+                if (pendingUnit.gameObject == null)
+                {
                     continue;
                 }
                 //
@@ -164,39 +170,42 @@ public virtual void startGoingToBuilding()
 
     protected virtual void doActuallyBuild(RTSBuildingPendingToBuildTempUnit pendingUnit)
     {
-        if (currentWorkingJobType == RTSWorkerJobType.Building) {
+        if (currentWorkingJobType == RTSWorkerJobType.Building)
+        {
             //
             string buildingPath = pendingUnit.RealBuildingPrefabPath;
             //
             pendingUnit.gameObject.SetActive(false);
             //
-            RTSBuildingManager.ShareInstance.createRTSRealBuilding(buildingPath,pendingUnit.gameObject.transform.position,Quaternion.identity,playerInfo);
+            RTSBuildingManager.ShareInstance.createRTSRealBuilding(buildingPath, pendingUnit.gameObject.transform.position, Quaternion.identity, playerInfo);
             //
             alertAIControllerThatBuildingIsAlreadySuccess();
             //
         }
     }
 
-    protected virtual void alertAIControllerThatBuildingIsAlreadySuccess() {
-        if (playerInfo == null) {
+    protected virtual void alertAIControllerThatBuildingIsAlreadySuccess()
+    {
+        if (playerInfo == null)
+        {
             return;
         }
         //
         if (playerInfo.isAI)
+        {
+            var list = transform.GetComponent<MoveUnitAIController>().fsmStates;
+            MoveUnitBuildState buildstate = null;
+            foreach (var item in list)
+            {
+                if (item.StateID == MoveUnitFSMStateID.Building)
                 {
-                    var list = transform.GetComponent<MoveUnitAIController>().fsmStates;
-                    MoveUnitBuildState buildstate = null;
-                    foreach (var item in list)
-                    {
-                        if (item.StateID == MoveUnitFSMStateID.Building)
-                        {
-                            buildstate = item as MoveUnitBuildState;
-                            break;
-                        }
-                    }
-                    if (buildstate != null)
-                        buildstate.buildSuccess();
+                    buildstate = item as MoveUnitBuildState;
+                    break;
                 }
+            }
+            if (buildstate != null)
+                buildstate.buildSuccess();
+        }
     }
     //
     //
@@ -211,9 +220,9 @@ public virtual void startGoingToBuilding()
         Mining = 1,
         Building = 1 << 1,
         Repairing = 1 << 2,
-        OnTheWayToMine=1<<3,
-        OnTheWayToBuilding=1<<4,
-        Idle=1<<5,
+        OnTheWayToMine = 1 << 3,
+        OnTheWayToBuilding = 1 << 4,
+        Idle = 1 << 5,
         //
     }
     protected RTSWorkerJobType currentWorkingJobType;
@@ -234,7 +243,8 @@ public virtual void startGoingToBuilding()
             return miningAchievement >= miningAchievementLimit;
         }
     }
-    protected bool IsMiningHarvested{
+    protected bool IsMiningHarvested
+    {
         get
         {
             return miningAchievement > 0;
@@ -260,17 +270,19 @@ public virtual void startGoingToBuilding()
         //
         base.move(pos);
         //
-        if (IsMiningHarvested) {
+        if (IsMiningHarvested)
+        {
             //
             animatorStateController.WorkerAnimator_walkHarvest();
             //
-        }else { 
+        }
+        else
+        {
             //
             animatorStateController.WorkerAnimator_walk();
             //            
         }
     }
-
     //
     protected override void OnSetTargetPosition(Vector3 pos)
     {
@@ -279,7 +291,7 @@ public virtual void startGoingToBuilding()
         if (isWorking)
         {
             stopWork();
-               //
+            //
             pendingListRelease();
             //
         }
@@ -293,7 +305,7 @@ public virtual void startGoingToBuilding()
         if (isWorking)
         {
             stopWork();
-               //
+            //
             pendingListRelease();
             //
         }
@@ -320,7 +332,7 @@ public virtual void startGoingToBuilding()
             //
             if (IsMiningHarvested && homeBuilding != null && building == homeBuilding)
             {
-                Debug.Log("Is home");
+                //Debug.Log("Is home");
                 //
                 startReturning();
                 //
@@ -331,7 +343,7 @@ public virtual void startGoingToBuilding()
                 //
                 if (building.IsNeedRepair)
                 {
-                    Debug.Log("IsNeedRepair");
+                    //Debug.Log("IsNeedRepair");
                     goRepair();
                 }
                 //
@@ -370,7 +382,7 @@ public virtual void startGoingToBuilding()
         isWorking = true;
         StartCoroutine(doMining());
         // getCoinBehaviour = GetComponent<GetCoinBehaviour>();
-       
+
     }
 
     protected virtual void stopMining()
@@ -378,17 +390,18 @@ public virtual void startGoingToBuilding()
         // Debug.Log("stopMining");
         isWorking = false;
         StopCoroutine(doMining());
-        
+
     }
 
     protected virtual IEnumerator doMining()
     {
         // Debug.Log("doMining");
-        if (getCoinBehaviour != null) { 
-        getCoinBehaviour.WorkStart(miningAchievementAddingFrequency); //采集头顶动画
+        if (getCoinBehaviour != null)
+        {
+            getCoinBehaviour.WorkStart(miningAchievementAddingFrequency); //采集头顶动画
         }
         //
-        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningHarvestedFull&&targetGameUnit!=null&&targetGameUnit is RTSResource)
+        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Mining && !IsMiningHarvestedFull && targetGameUnit != null && targetGameUnit is RTSResource)
         {
             // Debug.Log("doMining inside while");
             //
@@ -400,11 +413,16 @@ public virtual void startGoingToBuilding()
                 transform.LookAt(targetGameUnit.transform);
                 //
                 //
-                if (IsMiningHarvested) { 
+                if (IsMiningHarvested)
+                {
                     animatorStateController.WorkerAnimator_digHarvest();
-                }else { 
+                }
+                else
+                {
                     animatorStateController.WorkerAnimator_dig();
                 }
+                //
+                transform.LookAt(targetGameUnit.transform);
                 //
                 miningAchievement++;
                 //
@@ -430,7 +448,8 @@ public virtual void startGoingToBuilding()
                 getCoinBehaviour.WorkDone();//采集完成,取消头顶动画
             }
         }
-        else {
+        else
+        {
             stopWork();
             //
             if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
@@ -456,7 +475,7 @@ public virtual void startGoingToBuilding()
     {
         // Debug.Log("doRepairing");
         //
-        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Repairing &&targetGameUnit!=null&&targetGameUnit is RTSBuilding)
+        while (isWorking && currentWorkingJobType == RTSWorkerJobType.Repairing && targetGameUnit != null && targetGameUnit is RTSBuilding)
         {
             // Debug.Log("doMining inside while");
             //
@@ -467,22 +486,26 @@ public virtual void startGoingToBuilding()
                 //
                 RTSBuilding building = (RTSBuilding)targetGameUnit;
                 //
-                if (building.IsNeedRepair) {
+                if (building.IsNeedRepair)
+                {
                     //
                     Debug.LogError("IsTargetClosingEnoughToWork && IsNeedRepair");
                     //
-                    transform.LookAt(targetGameUnit.transform);
-                //
-                if (IsMiningHarvested) { 
+                    //transform.LookAt(targetGameUnit.transform);
                     //
-                    animatorStateController.WorkerAnimator_digHarvest();
+                    if (IsMiningHarvested)
+                    {
+                        //
+                        animatorStateController.WorkerAnimator_digHarvest();
+                        //
+                    }
+                    else
+                    {
+                        //
+                        animatorStateController.WorkerAnimator_dig();
+                        //
+                    }
                     //
-                }else { 
-                    //
-                    animatorStateController.WorkerAnimator_dig();
-                    //
-                }
-                //
                 }
                 //
             }
@@ -504,7 +527,7 @@ public virtual void startGoingToBuilding()
     }
 
     protected virtual void stopReturning()
-    {       
+    {
         StopCoroutine(doReturning());
     }
 
@@ -545,13 +568,15 @@ public virtual void startGoingToBuilding()
 
     protected virtual void playerResourceAdded()
     {
-        if (playerInfo == null) {
+        if (playerInfo == null)
+        {
             return;
         }
         //
         playerInfo.Resources = playerInfo.Resources + 60;
         //
-        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player) {
+        if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        {
             //金币结算
             CoinCollect.Current.Money = playerInfo.Resources;
             //
@@ -602,15 +627,18 @@ public virtual void startGoingToBuilding()
                 break;
         }
         //
-            if (IsMiningHarvested) {
+        if (IsMiningHarvested)
+        {
             //
             animatorStateController.WorkerAnimator_idleHarvest();
             //
-            }else { 
+        }
+        else
+        {
             //
             animatorStateController.WorkerAnimator_idle();
             //            
-            }
+        }
         //
     }
 
@@ -628,6 +656,27 @@ public virtual void startGoingToBuilding()
         {
             //Debug.Log("IsTargetClosingEnoughToWork");
             startWork();
+            //
+        }
+        else
+        {
+            //
+            if (UnitPathFindingController.ShouldIdle)
+            {
+                if (IsMiningHarvested)
+                {
+                    //
+                    animatorStateController.WorkerAnimator_idleHarvest();
+                    //
+                }
+                else
+                {
+                    //
+                    animatorStateController.WorkerAnimator_idle();
+                    //            
+                }
+            }
+            //
         }
     }
 
@@ -635,20 +684,22 @@ public virtual void startGoingToBuilding()
     {
         base.Start();
         //
-        if(animatorStateController==null)
+        if (animatorStateController == null)
             animatorStateController = GetComponent<WorkerAnimatorStateController>();
         //
         animatorStateController.WorkerAnimator_idle();
         //
-		HPMAX = 100;
-		HP = HPMAX;
-		IconCameraPos = new Vector3 (2000, 5001, 1.167f);
+        HPMAX = 100;
+        HP = HPMAX;
+        IconCameraPos = new Vector3(2000, 5001, 1.167f);
         //
-        if (playerInfo!=null&&playerInfo.gameUnitBelongSide==RTSGameUnitBelongSide.Player) {
+        if (playerInfo != null && playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
+        {
             //
             getCoinBehaviour = gameObject.GetComponent<GetCoinBehaviour>();
-            if (getCoinBehaviour == null) { 
-            getCoinBehaviour = gameObject.AddComponent<GetCoinBehaviour>();
+            if (getCoinBehaviour == null)
+            {
+                getCoinBehaviour = gameObject.AddComponent<GetCoinBehaviour>();
             }
             //
         }
@@ -656,41 +707,44 @@ public virtual void startGoingToBuilding()
     }
 
     //
-    protected override void actionBehaviourInit() {
+    protected override void actionBehaviourInit()
+    {
         base.actionBehaviourInit();
         //
-		playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Add(this);
+        playerInfo.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Add(this);
         //
-		ActionBehaviour ac = gameObject.AddComponent<Action_Collect> ();
-		ActionList.Add (ac);
-		ActionBehaviour ab = gameObject.AddComponent<Action_Build> ();
-		ActionList.Add (ab);
-		ActionBehaviour abb = gameObject.AddComponent<Action_BuildBarrack> ();
-		ActionList.Add (abb);
-		Action_Collect acc=gameObject.GetComponent<Action_Collect> ();
-		acc.collectDelegate += OnSetTargetUnit;
+        ActionBehaviour ac = gameObject.AddComponent<Action_Collect>();
+        ActionList.Add(ac);
+        ActionBehaviour ab = gameObject.AddComponent<Action_Build>();
+        ActionList.Add(ab);
+        ActionBehaviour abb = gameObject.AddComponent<Action_BuildBarrack>();
+        ActionList.Add(abb);
+        Action_Collect acc = gameObject.GetComponent<Action_Collect>();
+        acc.collectDelegate += OnSetTargetUnit;
         //
     }
 
-	public ForAIBuild CreatBuilding(Vector3 pos, int ID){
+    public ForAIBuild CreatBuilding(Vector3 pos, int ID)
+    {
         // Debug.LogError("fuck 1");
-        ForAIBuild foraibuild = new ForAIBuild ();
-		Ray ray = new Ray (pos,Vector3.up);
-		RaycastHit hitinfo;
-		Physics.Raycast (ray,out hitinfo);
-		Vector3 hitpos = hitinfo.point;
-		foraibuild.pos = hitpos;
-		switch (ID) {
-		case 1101:
-        //  Debug.LogError("fuck 2");
-			Action_Build ab = gameObject.GetComponent<Action_Build> ();
-			bool canBuild = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, Action_Build.PATH);
-			foraibuild.canbuild = canBuild;
-			if (canBuild) {
-                //
-                // Debug.LogError("fuck 3");
-                //
-                 RTSBuilding build=RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_Build.PATH,hitpos,Quaternion.identity,playerInfo);
+        ForAIBuild foraibuild = new ForAIBuild();
+        Ray ray = new Ray(pos, Vector3.up);
+        RaycastHit hitinfo;
+        Physics.Raycast(ray, out hitinfo);
+        Vector3 hitpos = hitinfo.point;
+        foraibuild.pos = hitpos;
+        switch (ID)
+        {
+            case 1101:
+                Action_Build ab = gameObject.GetComponent<Action_Build>();
+                bool canBuild = RTSBuildingManager.ShareInstance.isPosValidToBuild(hitpos, Action_Build.PATH1);
+                foraibuild.canbuild = canBuild;
+                if (canBuild)
+                {
+                    //
+                    // Debug.LogError("fuck 3");
+                    //
+                    RTSBuilding build = RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_Build.PATH1, hitpos, Quaternion.identity, playerInfo);
                     //
                     //础瀚加的
                     if (!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Contains(build))
@@ -698,33 +752,34 @@ public virtual void startGoingToBuilding()
                     alertAIControllerThatBuildingIsAlreadySuccess();
                     // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_Build.PATH, pos, Quaternion.identity));
                 }
-			break;
-		case 1102:
-        //  Debug.LogError("fuck 4");
-			Action_BuildBarrack abb = gameObject.GetComponent<Action_BuildBarrack> ();
-			bool canBuildd = RTSBuildingManager.ShareInstance.isPosValidToBuild (hitpos, Action_BuildBarrack.PATH);
-            foraibuild.canbuild = canBuildd;
-			if (canBuildd) {
-                //
-        //  Debug.LogError("fuck 5");
-                
-                //   Debug.LogError("fuck 5 pos =>"+pos);
-                    RTSBuilding build = RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_BuildBarrack.PATH,hitpos,Quaternion.identity,playerInfo);
+                break;
+            case 1102:
+                //  Debug.LogError("fuck 4");
+                Action_BuildBarrack abb = gameObject.GetComponent<Action_BuildBarrack>();
+                bool canBuildd = RTSBuildingManager.ShareInstance.isPosValidToBuild(hitpos, Action_BuildBarrack.PATH1);
+                foraibuild.canbuild = canBuildd;
+                if (canBuildd)
+                {
+                    //
+                    //  Debug.LogError("fuck 5");
+
+                    //   Debug.LogError("fuck 5 pos =>"+pos);
+                    RTSBuilding build = RTSBuildingManager.ShareInstance.createRTSRealBuilding(Action_BuildBarrack.PATH1, hitpos, Quaternion.identity, playerInfo);
                     //
                     //础瀚加的
-                    if(!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Contains(build))
-                    playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
+                    if (!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Contains(build))
+                        playerInfo.BuildingUnits[Settings.ResourcesTable.Get(ID).type].Add(build);
 
                     alertAIControllerThatBuildingIsAlreadySuccess();
-                // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_BuildBarrack.PATH,hitpos, Quaternion.identity));
-                //
-			}
-			break;
-		default:
-			break;
-		}
+                    // addPendingBuildTask(RTSBuildingManager.ShareInstance.createPendingBuildingInstance(Action_BuildBarrack.PATH,hitpos, Quaternion.identity));
+                    //
+                }
+                break;
+            default:
+                break;
+        }
         //  Debug.LogError("fuck 6");
-        
-		return foraibuild;
-	}
+
+        return foraibuild;
+    }
 }

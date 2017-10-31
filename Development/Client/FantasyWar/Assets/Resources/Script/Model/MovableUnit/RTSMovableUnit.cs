@@ -10,22 +10,25 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
 		base.Awake ();
 	}
 
-    protected RTSGameUnitPathFindingController unitPathFindingController;
+    protected RTSGameUnitPathFindingController UnitPathFindingController {
+        get;
+        set;
+    }
 
     public float MovingSpeed { get;set; }
 
     public virtual void move(Vector3 pos)
     {
-		//
-        unitPathFindingController.SetTarget(pos);
-		//
+        //
+        UnitPathFindingController.SetTarget(pos);
+        //
     }
-
-	 protected override void Start()
+    //
+    protected override void Start()
     {
         base.Start();
         //
-        unitPathFindingController = gameObject.GetComponent<RTSGameUnitPathFindingController>();
+        UnitPathFindingController = gameObject.GetComponent<RTSGameUnitPathFindingController>();
 		//
     }
 	//
@@ -33,8 +36,8 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
     {
         base.OnSetTargetPosition(pos);
         //
-       	move(pos);
-		//
+        move(pos);
+        //
     }
 
     protected override void actionBehaviourInit() {

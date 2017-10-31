@@ -7,7 +7,8 @@ using UnityEngine;
 public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManager>
 {
     private bool isTeamingMode = false;
-    private const KeyCode TEAMING_CONTROL_KEY = KeyCode.T;
+    // private const KeyCode TEAMING_CONTROL_KEY = KeyCode.T;
+    private const KeyCode TEAMING_CONTROL_KEY = KeyCode.LeftShift;
     private readonly KeyCode[] TEAMING_TEAM_KEYS = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
     private Dictionary<KeyCode, RTSGameUnit[]> _teamDict;
     private Dictionary<KeyCode, RTSGameUnit[]> TeamDict
@@ -26,9 +27,9 @@ public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManage
         }
     }
 
-    private void setTeam(KeyCode key)
+    void setTeam(KeyCode key)
     {
-        Debug.Log("setting team");
+        // Debug.Log("setting team");
         List<RTSGameUnit> sl = RTSGameUnitManager.ShareInstance.SelectedUnits;
         if (sl == null || sl.Count <= 0)
         {
@@ -39,9 +40,9 @@ public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManage
         TeamDict[key] = copy;
     }
 
-    private void callTeam(KeyCode key)
+    void callTeam(KeyCode key)
     {
-        Debug.Log("calling team");
+        // Debug.Log("calling team");
         //
         RTSGameUnit[] calling = TeamDict[key];
         //
@@ -60,7 +61,7 @@ public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManage
     private void OnTeamingTeamKeyDown(KeyCode key)
     {
 
-        Debug.Log("TEAMING_CONTROL_KEY is down =>" + InputManager.ShareInstance.isKeyDown(TEAMING_CONTROL_KEY));
+        // Debug.Log("TEAMING_CONTROL_KEY is down =>" + InputManager.ShareInstance.isKeyDown(TEAMING_CONTROL_KEY));
         //
         if (isTeamingMode)
         {
@@ -72,32 +73,35 @@ public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManage
         }
     }
 
-    private void OnLeftControlKeyDown(KeyCode keyCode)
+    private void OnControlKeyDown(KeyCode keyCode)
     {
-        Debug.Log("OnLeftControlKeyDown");
+        // Debug.Log("OnLeftControlKeyDown");
         isTeamingMode = true;
     }
 
-    private void OnLeftControlKeyUp(KeyCode keyCode)
+    private void OnControlKeyUp(KeyCode keyCode)
     {
-        Debug.Log("OnLeftControlKeyUp");
+        // Debug.Log("OnLeftControlKeyUp");
         isTeamingMode = false;
     }
 
     // Use this for initialization
-    void Start()
+    public void Start()
     {
         //
-        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(TEAMING_CONTROL_KEY, OnLeftControlKeyDown);
-        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp(TEAMING_CONTROL_KEY, OnLeftControlKeyUp);
+        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(TEAMING_CONTROL_KEY, OnControlKeyDown);
+        InputManager.ShareInstance.InputEventHandlerRegister_GetKeyUp(TEAMING_CONTROL_KEY, OnControlKeyUp);
         //
         if (TEAMING_TEAM_KEYS != null && TEAMING_TEAM_KEYS.Length > 0)
         {
             foreach (KeyCode key in TEAMING_TEAM_KEYS)
             {
-                lock (TeamDict)
+                if (!TeamDict.ContainsKey(key))
                 {
-                    TeamDict.Add(key, null);
+                    lock (TeamDict)
+                    {
+                        TeamDict.Add(key, null);
+                    }
                 }
                 //
                 InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(key, OnTeamingTeamKeyDown);
@@ -108,8 +112,8 @@ public class RTSGameUnitTeamingManager : UnitySingleton<RTSGameUnitTeamingManage
 
     private void OnDestroy()
     {
-        InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown(TEAMING_CONTROL_KEY, OnLeftControlKeyDown);
-        InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyUp(TEAMING_CONTROL_KEY, OnLeftControlKeyUp);
+        InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown(TEAMING_CONTROL_KEY, OnControlKeyDown);
+        InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyUp(TEAMING_CONTROL_KEY, OnControlKeyUp);
         //
         TeamDict.Clear();
         TeamDict = null;

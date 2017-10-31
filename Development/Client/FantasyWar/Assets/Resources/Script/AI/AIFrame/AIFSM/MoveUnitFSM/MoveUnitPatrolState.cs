@@ -85,6 +85,7 @@ public class MoveUnitPatrolState : MoveUnitFSMState
                             }
                         }
                     }
+					if(enemy !=null)
                     AIController.DesPos = enemy.position;
 
                 }

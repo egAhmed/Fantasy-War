@@ -21,10 +21,10 @@ public class MoveUnitChaseState : MoveUnitFSMState
         if (enemy==null)
         {
             Debug.LogError(StateID+"Enemy is null");
+			myself.GetComponent<MoveUnitAIController>().SetTransition(MoveUnitFSMTransition.LostEnemy);
         }
 
         //AICon.DesPos = enemy.position;
-
 
         //Check the distance with player tank
         //When the distance is near, transition to attack state

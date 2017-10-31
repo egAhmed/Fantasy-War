@@ -51,7 +51,8 @@ public class ActionUpdate : Interaction {
                 ActionManager.ShareInstance.AddButton (
 					ab.index,
 					ab.actionIcon, 
-					ab.GetClickAction ());
+					ab.GetClickAction (),
+					ab.info);
 				//TODO
 				//注册快捷键
 				hasIntoDelete.Add (ab);

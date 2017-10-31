@@ -25,6 +25,7 @@ public class ObjectInfoShow : MonoBehaviour {
 	/// 设置单位文本信息
 	/// </summary>
 	public void SetText(string name,string hp,string maxhp,string Atk){
+//		Debug.Log (name);
 		unitName.text = name;
 		HP.text = hp;
 		maxHP.text = maxhp;

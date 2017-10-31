@@ -184,7 +184,6 @@ public class AIPath : MonoBehaviour {
 		if (startHasRun) {
 			//Make sure we receive callbacks when paths complete
 			seeker.pathCallback += OnPathComplete;
-
 			StartCoroutine(RepeatTrySearchPath());
 		}
 	}

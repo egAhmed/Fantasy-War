@@ -10,12 +10,13 @@ public class RTSBuildingBarrack : RTSBuilding {
 		//
 		ActionBehaviour apr = gameObject.AddComponent<Action_ProductionRider> ();
 		ActionList.Add (apr);
-
+        ActionBehaviour carProduction = gameObject.AddComponent<Action_ProductCar>();
+		ActionList.Add (carProduction);
+		//
         if (!playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Contains(this)) {
             playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1102).type].Add(this);
         }
         //
-
     }
 
 	public void CreatArmy(int ID){

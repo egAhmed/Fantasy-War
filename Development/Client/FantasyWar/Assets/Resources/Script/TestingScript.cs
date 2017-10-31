@@ -24,6 +24,9 @@ public class TestingScript : MonoBehaviour {
         //RTSFogSystemManager.ShareInstance.addFogEffectToCamera();
         //
         //RTSManager.ShareInstance.testingCreatePlayInfo();
+        //
+        RTSGameUnitTeamingManager.ShareInstance.Start();
+        //
         RTSGameUnitBloodBarManager.ShareInstance.hideBloodbar();
         //
         // InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.C,open);

@@ -15,7 +15,7 @@ public class ScheduleShowUI : Interaction {
 
 	public override void Select ()
 	{
-		Debug.Log ("进度条激活");
+		//Debug.Log ("进度条激活");
 		isShow = true;
 	}
 
@@ -27,16 +27,15 @@ public class ScheduleShowUI : Interaction {
 
 	void Update(){
 		//if (gameObject.GetComponent<Interactive>().Selected)
-		if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject)
-		{
-			if (rb.isProducting) {
-				ss.unitIcon.fillAmount = rb.schedule;
-			}
-			else {
-				ss.unitIcon.fillAmount = 0;
+		if (gameObject.GetComponent<RTSGameUnit> ().playerInfo == PlayerInfoManager.ShareInstance.currentPlayer) {
+			if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
+				if (rb.isProducting) {
+					ss.unitIcon.fillAmount = rb.schedule;
+				} else {
+					ss.unitIcon.fillAmount = 0;
+				}
 			}
 		}
-
 	}
 
 }

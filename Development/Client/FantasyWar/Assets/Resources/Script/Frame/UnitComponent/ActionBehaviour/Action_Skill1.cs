@@ -13,6 +13,7 @@ public class Action_Skill1 : ActionBehaviour {
 		shortCutKey = KeyCode.Q;
 		actionIcon = Resources.Load<Sprite> ("Texture/Skill1Icon");
 		canRepeat = true;
+		info = "传送" +"\n"+"快捷键:Q";
 	}
 	
 	public override Action GetClickAction ()

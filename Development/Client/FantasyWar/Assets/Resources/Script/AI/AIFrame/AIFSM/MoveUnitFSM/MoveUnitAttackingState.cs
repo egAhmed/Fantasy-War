@@ -53,6 +53,8 @@ public class MoveUnitAttackingState : MoveUnitFSMState {
 	public override void Act(Transform enemy, Transform myself)
 	{
 		//如果攻击目标和传进的目标不同，就A那个目标
+		if (enemy == null)
+			return;
 		if (enemy.GetComponent<RTSGameUnit>() != AttackTarget) {
             if(myself.GetComponent<Action_Attack>().attackDelegate==null)
             {
