@@ -52,7 +52,7 @@ public class MoveUnitBuildState : MoveUnitFSMState
         if (AIController.DelAIBuild == null)
             return;
         buildPos = BasePos + new Vector3(radius * Mathf.Sin(anchor), -100, radius * Mathf.Cos(anchor));
-        if (anchor == 2 * Mathf.PI)
+        if (Mathf.Approximately(anchor,2 * Mathf.PI))
         {
             anchor = 0;
             radius += 5;
@@ -60,7 +60,7 @@ public class MoveUnitBuildState : MoveUnitFSMState
         else
             anchor += Mathf.PI / 4;
         //Debug.Log(count++);
-        building = !AIController.DelAIBuild(buildPos, buildid).canbuild;
+        building = AIController.DelAIBuild(buildPos, buildid).canbuild;
         //Debug.Log(count+=10);
         //buildPos += new Vector3(30, -100, 0);
         //Debug.Log("开始建造") ;

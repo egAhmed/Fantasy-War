@@ -201,7 +201,7 @@ public class RTSCamion : RTSMovableUnit {
         HPMAX = 100;
 		HP = HPMAX;
         //
-        AttackForce = 10;
+        AttackForce = 80;
         //
         IconCameraPos = new Vector3 (1998, 5001, 1.167f);
         //

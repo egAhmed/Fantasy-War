@@ -322,29 +322,38 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
     //
     public bool isPosValidToBuild(Vector3 pos, string path)
     {
+       //
+        Collider[] colliders = Physics.OverlapSphere(pos, 5f);
         //
-        bool flag = false;
+        if (colliders == null || colliders.Length <= 0) {
+            //
+            // Debug.LogError("pos "+pos+ " isPosValidToBuild => "+true);
+            return true;
+            //
+        }else { 
         //
-        try
-        {
-            //
-            RTSBuildingTempUnit unit = PrefabFactory.ShareInstance.createClone<RTSBuildingTempUnit>(path, pos, Quaternion.identity);
-            //
-            if (unit != null && !unit.IsBlocked)
-            {
-                flag = true;
+        foreach (Collider collider in colliders) {
+                //
+                RTSBuilding building=collider.gameObject.GetComponent<RTSBuilding>();
+                RTSResource resource=collider.gameObject.GetComponent<RTSResource>();
+                //
+                if (building == null&&resource==null) {
+                    //
+                    continue;
+                    //
+                }else { 
+                    //
+            // Debug.LogError("pos "+pos+"isPosValidToBuild => "+false);
+                    return false;
+                    //
+                }
+                //
             }
             //
-            unit.gameObject.SetActive(false);
-            Destroy(unit.gameObject);
+            // Debug.LogError("pos "+pos+"isPosValidToBuild => "+true);
+             return true;
             //
         }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-        //
-        return flag;
         //
     }
     //

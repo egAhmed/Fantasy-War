@@ -66,14 +66,14 @@ public class DieInNoLife : MonoBehaviour {
 	}
 
 	IEnumerator UnitDie(){
-		Debug.Log (count);
+		//Debug.Log (count);
 		while (count >= 0) {
 			//Debug.Log (mt == null);
 			if (mt != null) {
 				mt [0].SetFloat ("_Progress", count / 1);
 			}
 			else {
-				Debug.Log (count);
+				//Debug.Log (count);
 				smr.materials [0].SetFloat ("_Progress", count / 1);
 			}
 			count -= Time.deltaTime/3;

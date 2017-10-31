@@ -35,7 +35,7 @@ public class MoveUnitAdvanceFSM : FSM
     {
         get
         {
-            if (_playerInfo == null)
+            if (myUnit!=null&&_playerInfo == null)
                 _playerInfo = myUnit.playerInfo;
             return _playerInfo;
         }
@@ -48,16 +48,22 @@ public class MoveUnitAdvanceFSM : FSM
         set
         {
             RTSGameUnit unit = value.GetComponent<RTSGameUnit>();
-
-            if (unit == null)
-            {
-                Debug.LogError("攻击目标没有RTSGameUnit");
-            }
-            else
-            {
-                if (unit.playerInfo.groupTeam == playerInfo.groupTeam)
-                    Debug.LogError("选择了自己人作为攻击目标");
-            }
+            //
+            // if (unit == null)
+            // {
+            //     Debug.LogError("攻击目标没有RTSGameUnit");
+            // }
+            // else
+            // {
+            //     if (unit != null&&unit.playerInfo != null&&playerInfo!=null) {
+            //         if (unit.playerInfo.groupTeam == playerInfo.groupTeam) { 
+            //             Debug.LogError("选择了自己人作为攻击目标");
+            //         }
+            //     }
+            //     //
+            // }
+            //
+            if(unit!=null)
             enemyTransform = value;
         }
     }

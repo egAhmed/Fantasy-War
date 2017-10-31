@@ -23,9 +23,14 @@ public class RTSGameUnit : MonoBehaviour
     protected List<Interaction> interactionList = new List<Interaction>();
     public List<ActionBehaviour> ActionList = new List<ActionBehaviour>();
     //
+    UnitBloodBar _bloodBar;
     UnitBloodBar BloodBar{
-        get;
-        set;
+        get {
+            if (_bloodBar == null) { 
+                _bloodBar=GetComponent<UnitBloodBar>();
+            }
+            return _bloodBar;
+        }
     }
 
     public string UnitTag
@@ -64,17 +69,9 @@ public class RTSGameUnit : MonoBehaviour
             _hp = value;
             //
             if (BloodBar != null) {
-                //
                 // Debug.LogError("HP:"+HP);
                 // Debug.LogError("HPMAX:"+HPMAX);
-                //
                 BloodBar.SetHp(HP, HPMAX);
-                //
-            }else {
-                //
-                // Debug.LogError("BloodBar null...");
-                //
-                BloodBar=GetComponent<UnitBloodBar>();
                 //
             }
             //
@@ -317,7 +314,7 @@ public class RTSGameUnit : MonoBehaviour
                 }
             }
             //
-            BloodBar = GetComponent<UnitBloodBar>();
+            _bloodBar = GetComponent<UnitBloodBar>();
             //
         }
     }

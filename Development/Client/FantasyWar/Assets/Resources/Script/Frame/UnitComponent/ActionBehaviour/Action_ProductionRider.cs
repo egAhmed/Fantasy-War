@@ -28,7 +28,7 @@ public class Action_ProductionRider : ActionBehaviour {
 				if(pi.Resources>=100){
 					rtsb.isProducting = true;
 					pi.Resources -= 100;
-					Debug.Log(pi.name +"  resources  "+ pi.Resources.ToString());
+					//Debug.Log(pi.name +"  resources  "+ pi.Resources.ToString());
 					StartCoroutine(Producting());
 				}
 			}

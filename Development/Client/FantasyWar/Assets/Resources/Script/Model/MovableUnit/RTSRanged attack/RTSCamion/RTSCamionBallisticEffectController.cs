@@ -5,6 +5,7 @@ using UnityEngine;
 public class RTSCamionBallisticEffectController : MonoBehaviour
 {
     GameObject FireBall;
+    Transform FireBallSaver;
     Vector3 OriginalLocalPos{
         get;
         set;
@@ -28,27 +29,31 @@ public class RTSCamionBallisticEffectController : MonoBehaviour
         //
         if (FireBall == null) {
             FireBall = GetComponentInChildren<ParticleSystem>().gameObject;
+            FireBallSaver = FireBall.transform.parent;
         }
 		//
         if (FireBall != null) { 
-        FireBall.SetActive(false);
-        OriginalLocalPos = FireBall.transform.localPosition;
+            FireBall.SetActive(false);
+            OriginalLocalPos = FireBall.transform.localPosition;
 		}
         //
         if (Camion == null) { 
-        Camion = GetComponent<RTSCamion>();
+            Camion = GetComponent<RTSCamion>();
 		}
-			//
+		//
     }
 	//
     void resetState() { 
+        //
+        FireBall.transform.parent = FireBallSaver;
+        //
 		FireBall.transform.localPosition=OriginalLocalPos;
         //
 		if (FireBall != null) { 
-        FireBall.SetActive(false);
+            FireBall.SetActive(false);
 		}
-		//
-	}
+        //
+    }
 	//
     public void Fire(RTSGameUnit targetUnit,int force)
     {
@@ -60,33 +65,39 @@ public class RTSCamionBallisticEffectController : MonoBehaviour
         if (!DoingFire)
         {
             DoingFire = true;
+            //
+        	FireBall.SetActive(true);
+            FireBall.transform.parent = null;
+            //
             while (DoingFire)
             {
-        		FireBall.SetActive(true);
-				//
                 Vector3 targetPos = targetUnit.transform.position;
                 Vector3 pos = FireBall.transform.position;
                 float distanceToTarget = Vector3.Distance(targetPos, pos);
-
+                //
                 //让始终它朝着目标  
                 FireBall.transform.LookAt(targetPos);
 
                 //计算弧线中的夹角  
-                float angle = Mathf.Min(1, Vector3.Distance(pos, targetPos) / distanceToTarget) * 45;
-                FireBall.transform.rotation = FireBall.transform.rotation * Quaternion.Euler(Mathf.Clamp(-angle, -42, 42), 0, 0);
-                float currentDist = Vector3.Distance(pos, targetPos);
+                // float angle = Mathf.Min(1, Vector3.Distance(pos, targetPos) / distanceToTarget) * 45;
+                // FireBall.transform.rotation = FireBall.transform.rotation * Quaternion.Euler(Mathf.Clamp(-angle, -42, 42), 0, 0);
+                // float currentDist = Vector3.Distance(pos, targetPos);
                 //
-                if (currentDist < 0.5f) { 
-					targetUnit.getHurt(Camion,force);
+                if (distanceToTarget < 3f) { 
                 	break;
 				}
-					//
-                FireBall.transform.Translate(Vector3.forward * Mathf.Min(distanceToTarget * FIRE_SPEED * Time.deltaTime, currentDist));
+				//
+                FireBall.transform.Translate(Vector3.forward * Mathf.Min(distanceToTarget * FIRE_SPEED * Time.deltaTime, distanceToTarget));
 				//
                 yield return null;
+                //
             }
-			//
+            //
+            // Debug.LogError("Fuck here");
+            targetUnit.getHurt(Camion,force);
+            //
             resetState();
+            //
             DoingFire = false;
 			//
         }
