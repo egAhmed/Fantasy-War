@@ -9,3 +9,4 @@ id	type	attack	HP	Range	atkSpeed	moveSpeed	path
 1009	RTSWorker	3	50	3	2	5	Prefab/RTSCharacter/RTSWorker/RTSWorker
 1101	house	0	300	0	0	0	Prefab/RTSBuilding/Human/house
 1102	barrack	0	200	0	0	0	Prefab/RTSBuilding/Human/barracks
+2001	DOG	50	500	3	2	5	Prefab/RTSCharacter/ORC/Dog/DOG
