@@ -5,7 +5,7 @@ using UnityEngine;
 public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
 {
 
-	public List<RTSGameUnit> SelectedUnits = new List<RTSGameUnit> ();
+	// public List<RTSGameUnit> SelectedUnits = new List<RTSGameUnit> ();
 
     Dictionary<RTSGameUnitBelongSide, List<RTSGameUnit>> _gameUnitsDic;
     private Dictionary<RTSGameUnitBelongSide, List<RTSGameUnit>> GameUnitsDic
@@ -30,33 +30,32 @@ public class RTSGameUnitManager : UnitySingleton<RTSGameUnitManager>
 	/// 先注掉，不用这个
 	/// </summary>
 	/// <value>The selected units.</value>
-//    public List<RTSGameUnit> SelectedUnits
-//    {
-//        get
-//        {
-//			if (!GameUnitsDic.ContainsKey (RTSGameUnitBelongSide.Player)) {
-//				return null;
-//			}
-//            List<RTSGameUnit> playerUnits = GameUnitsDic[RTSGameUnitBelongSide.Player];
-//            if (playerUnits == null)
-//            {
-//                return null;
-//            }
-//            List<RTSGameUnit> selectedUnits = new List<RTSGameUnit>();
-//            //
-//
-//            for (int i = 0; i < playerUnits.Count; i++)
-//            {
-//                RTSGameUnit unit = playerUnits[i];
-//                if (unit != null && unit.IsSelected)
-//                {
-//                    selectedUnits.Add(unit);
-//                }
-//            }
-//            return selectedUnits;
-//        }
-//    }
+   public List<RTSGameUnit> SelectedUnits
+   {
+       get
+       {
+			if (!GameUnitsDic.ContainsKey (RTSGameUnitBelongSide.Player)) {
+				return null;
+			}
+           List<RTSGameUnit> playerUnits = GameUnitsDic[RTSGameUnitBelongSide.Player];
+           if (playerUnits == null)
+           {
+               return null;
+           }
+           List<RTSGameUnit> selectedUnits = new List<RTSGameUnit>();
+           //
 
+           for (int i = 0; i < playerUnits.Count; i++)
+           {
+               RTSGameUnit unit = playerUnits[i];
+               if (unit != null && unit.IsSelected)
+               {
+                   selectedUnits.Add(unit);
+               }
+           }
+           return selectedUnits;
+       }
+   }
 
 
     //

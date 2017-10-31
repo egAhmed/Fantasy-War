@@ -68,7 +68,6 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         animatorStateController.doWalk();
         //
     }
-
     //
     protected override void OnSetTargetPosition(Vector3 pos)
     {
@@ -100,7 +99,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         currentState = RTSMeleeActionType.Attacking;
         isDoingAction = true;
         //
-        Debug.Log("startAttacking");
+        //Debug.Log("startAttacking");
         StartCoroutine(attacking());
         //
         }
@@ -117,7 +116,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
     {
         // Debug.Log("doMining");
         //
-        while (isDoingAction && currentState == RTSMeleeActionType.Attacking&&targetGameUnit!=null)
+		while (targetGameUnit.HP>=0 && isDoingAction && currentState == RTSMeleeActionType.Attacking&&targetGameUnit!=null)
         {
             // Debug.Log("doMining inside while");
             //
@@ -164,6 +163,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
     {
         isDoingAction = false;
         move(transform.position);
+        //
         currentState = RTSMeleeActionType.Idle;
         animatorStateController.doIdle();
         //
@@ -206,6 +206,18 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
         AttackForce = 10;
         //
         IconCameraPos = new Vector3 (1998, 5001, 1.167f);
+        //
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        //
+        if (UnitPathFindingController.ShouldIdle) {
+            //
+            animatorStateController.doIdle();
+            //
+        }
         //
     }
 

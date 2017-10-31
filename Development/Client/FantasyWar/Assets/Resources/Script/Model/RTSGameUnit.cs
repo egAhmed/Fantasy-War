@@ -309,6 +309,14 @@ public class RTSGameUnit : MonoBehaviour
                 aiBehaviourDelegateRegister();
             }
             //
+            if (PlayerInfoManager.ShareInstance != null) {
+                if (PlayerInfoManager.ShareInstance.currentPlayer != null) {
+                    if (playerInfo.groupTeam != PlayerInfoManager.ShareInstance.currentPlayer.groupTeam) {
+                        gameObject.layer = RTSLayerManager.ShareInstance.LayerNumberEnemyGameUnit;
+                    }
+                }
+            }
+            //
             BloodBar = GetComponent<UnitBloodBar>();
             //
         }
@@ -347,37 +355,29 @@ public class RTSGameUnit : MonoBehaviour
     protected virtual void actionBehaviourInit()
     {
         //
-        //Debug.LogError ("playerInfo =>" + playerInfo.name);
-        //
         playerInfo.AllUnits.Add(this);
-        //Debug.Log ("我是" + this.GetType ().ToString());
         //
         gameObject.AddComponent<DieInNoLife>();
         gameObject.AddComponent<MapBip>();
-        // gameObject.AddComponent<MarkColor> ();
-        //
-        // Debug.Log ("我是" + this.GetType ().ToString());
 
 		Interaction us = gameObject.AddComponent<ShowInfoUI> ();
 		interactionList.Add (us);
 
         if (playerInfo.gameUnitBelongSide == RTSGameUnitBelongSide.Player)
         {
-            //			Debug.Log (this.GetType () + "是自己人");
             Interaction au = gameObject.AddComponent<ActionUpdate>();
             interactionList.Add(au);
         }
-        //
+
         if (IsAllowSingleSelection || IsAllowMultipleSelection)
         {
             gameObject.AddComponent<Interactive>();
         }
-        //
+
         Interaction hl = gameObject.AddComponent<HightLight>();
         interactionList.Add(hl);
-        // Interaction si = gameObject.AddComponent<ShowInfoUI> ();
-        // interactionList.Add (si);
-        //
+
+
     }
     //
     public void ActiveInteractions()
@@ -404,19 +404,19 @@ public class RTSGameUnit : MonoBehaviour
         if (IsSelected)
         {
             //activate
-            RTSGameUnitManager.ShareInstance.SelectedUnits.Add(this);
+            // RTSGameUnitManager.ShareInstance.SelectedUnits.Add(this);
             ActiveInteractions();
             //
         }
         else
         {
             //
-            if (RTSGameUnitManager.ShareInstance.SelectedUnits.Contains(this))
-            {
-                //
-                RTSGameUnitManager.ShareInstance.SelectedUnits.Remove(this);
-                //
-            }
+            // if (RTSGameUnitManager.ShareInstance.SelectedUnits.Contains(this))
+            // {
+            //     //
+            //     RTSGameUnitManager.ShareInstance.SelectedUnits.Remove(this);
+            //     //
+            // }
             //
             InactiveInteractions();
             //

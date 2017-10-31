@@ -11,9 +11,9 @@ public class CamionAnimatorStateController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Test ();
+		// Test ();
 	}
-	public void Camion_Idle()
+	public void doIdle()
 	{
 		if (CamionAnimator .GetInteger ("Speed")==0&&!CamionAnimator .GetBool ("Attacking")) {
 			return;
@@ -22,7 +22,7 @@ public class CamionAnimatorStateController : MonoBehaviour {
 		CamionAnimator.SetBool ("Attacking", false);
 		CamionAnimator.SetTrigger ("DoIdle");
 	}
-	public void Camion_Move()
+	public void doWalk()
 	{
 		if (CamionAnimator .GetInteger ("Speed")==1&&!CamionAnimator .GetBool ("Attacking")) {
 			return;
@@ -31,7 +31,7 @@ public class CamionAnimatorStateController : MonoBehaviour {
 		CamionAnimator.SetBool ("Attacking", false);
 		CamionAnimator.SetTrigger ("DoMove");
 	}
-	public void Camion_Attack()
+	public void doAttack()
 	{
 		if (CamionAnimator.GetBool ("Attacking")) {
 			return;
@@ -40,7 +40,7 @@ public class CamionAnimatorStateController : MonoBehaviour {
 			CamionAnimator.SetBool ("Attacking", true);
 		}
 	}
-	public void Camion_Death()
+	public void doDeath()
 	{
 		if (CamionAnimator.GetBool("Death"))
 		{
@@ -50,19 +50,19 @@ public class CamionAnimatorStateController : MonoBehaviour {
 		CamionAnimator.SetBool("Death", true);
 		CamionAnimator.SetTrigger ("DoDead");
 	}
-	void Test()
-	{
-		if (Input .GetKeyDown (KeyCode .Q )) {
-			Camion_Idle ();
-		}
-		if (Input .GetKeyDown (KeyCode .W )) {
-			Camion_Move ();
-		}
-		if (Input .GetKeyDown (KeyCode .J )) {
-			Camion_Attack ();
-		}
-		if (Input .GetKeyDown (KeyCode .D )) {
-			Camion_Death ();
-		}
-	}
+	// void Test()
+	// {
+	// 	if (Input .GetKeyDown (KeyCode .Q )) {
+	// 		doIdle ();
+	// 	}
+	// 	if (Input .GetKeyDown (KeyCode .W )) {
+	// 		doWalk ();
+	// 	}
+	// 	if (Input .GetKeyDown (KeyCode .J )) {
+	// 		doAttack ();
+	// 	}
+	// 	if (Input .GetKeyDown (KeyCode .D )) {
+	// 		doDeath ();
+	// 	}
+	// }
 }
