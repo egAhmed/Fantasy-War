@@ -9,7 +9,7 @@ public class HightLight : Interaction {
 
 	public override void Select ()
 	{
-		Debug.Log ("显示圈圈");
+		//Debug.Log ("显示圈圈");
 		circle.gameObject.SetActive (true);
 	}
 

@@ -14,11 +14,12 @@ public class Action_Attack : ActionBehaviour {
 		actionIcon = Resources.Load<Sprite> ("Texture/AtkIcon");
 		attackDelegate += DebugAttack;
 		canRepeat = true;
+		info = "攻击" +"\n"+"快捷键:A";
 		//
 	}
 
 	void DebugAttack(RTSGameUnit attackTarget){
-		Debug.Log ("要攻击了");
+		//Debug.Log ("要攻击了");
 	}
 
 	public override Action GetClickAction ()
@@ -38,7 +39,7 @@ public class Action_Attack : ActionBehaviour {
         // InputManager.ShareInstance.InputEventHandlerUnRegister_GetKeyDown (KeyCode.Mouse0, RTSOperations.PointSelect);
         //
         //
-        Debug.Log ("寻找攻击目标");
+        //Debug.Log ("寻找攻击目标");
 	}
 
 	public void FindAttackTarget(KeyCode k){

@@ -9,13 +9,11 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 	public PlayerInfo currentPlayer = null;
 
 	void Awake(){
-		//
 		initialPos.Add (GameObject.FindWithTag ("P1pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P2pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P3pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P4pos").transform.position);
 		initialPos.Add (GameObject.FindWithTag ("P5pos").transform.position);
-		//
 	}
 
 	public List<RTSResource> resourceses = new List<RTSResource> ();
@@ -44,7 +42,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 //
 //			if (Settings.ResourcesTable.idList == null)
 //				Settings.TableManage.Start ();
-
+			//item.racial = Racial.deemo;
 			//添加playerinfo单位列表
 			for (int j= 0; j < Settings.ResourcesTable.idList.Count; j++) {
 				int id = Settings.ResourcesTable.Get (Settings.ResourcesTable.idList [j]).id;
@@ -67,7 +65,7 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 //			item.ArmyUnits.Add ("Melee", new List<RTSGameUnit> ());
 //			item.ArmyUnits.Add ("Rider", new List<RTSGameUnit> ());
 
-			item.Resources = 500;
+			item.Resources = 500000;
 			item.location = initialPos[i];
 
 			//敌人或是自己
@@ -94,8 +92,13 @@ public class PlayerInfoManager : UnitySingleton<PlayerInfoManager> {
 			//GameObject buildPrefab = Resources.Load<GameObject> ("3rdPartyAssetPackage/Bitgem_RTS_Pack/Human_Buildings/Prefabs/house");
 			//GameObject go = GameObject.Instantiate (buildPrefab, item.location, Quaternion.identity);
 			//go.SetActive (true);
-			RTSBuilding rb =PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase> ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
-
+			RTSBuilding rb = null;
+			if (item.racial == Racial.human) {
+				rb = PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase> ("Prefab/RTSBuilding/Human/house", item.location, Quaternion.identity);
+			}
+			if (item.racial == Racial.deemo) {
+				rb = PrefabFactory.ShareInstance.createClone<RTSBuildingHomeBase> ("Prefab/RTSBuilding/Orc/house", item.location, Quaternion.identity);
+			}
 			rb.playerInfo = item;
 			//item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (go.GetComponent<RTSBuilding> ());
 			item.BuildingUnits [Settings.ResourcesTable.Get(1101).type].Add (rb);

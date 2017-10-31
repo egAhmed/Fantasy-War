@@ -95,10 +95,12 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         //
         switch (path)
         {
-            case Action_Build.PATH:
+            case Action_Build.PATH1:
                 // Debug.LogError("Build home");
                 return createRTSRealBuilding<RTSBuildingHomeBase>(path, pos, quaternion, info);
-            case Action_BuildBarrack.PATH:
+			case Action_Build.PATH2:
+				return createRTSRealBuilding<RTSBuildingHomeBase>(path, pos, quaternion, info);
+            case Action_BuildBarrack.PATH1:
                 // Debug.LogError("Build home");
                 RTSBuildingBarrack barrackUnit = createRTSRealBuilding<RTSBuildingBarrack>(path, pos, quaternion, info);
                 //
@@ -108,6 +110,15 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
                 }
                 //
                 return barrackUnit;
+			case Action_BuildBarrack.PATH2:
+				RTSBuildingBarrack barrackUnitt = createRTSRealBuilding<RTSBuildingBarrack>(path, pos, quaternion, info);
+			//
+				if (info.isAI)
+				{
+					info.AICon.registerDelCreatArmy(barrackUnitt.CreatArmy, barrackUnitt);
+				}
+			//
+			return barrackUnitt;
             default:
                 // Debug.LogError("fuck here");
                 return null;
@@ -163,7 +174,7 @@ public class RTSBuildingManager : UnitySingleton<RTSBuildingManager>
         }
         else
         {
-            Debug.LogError("Can't build here...");
+            //Debug.LogError("Can't build here...");
         }
         //
     }

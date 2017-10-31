@@ -14,6 +14,8 @@ public abstract class ActionBehaviour : MonoBehaviour {
 
 	public Sprite actionIcon;	//图标图片
 
+	public string info;
+
 	public void RunAction(KeyCode d){
 		Action ac = GetClickAction ();
 //        Debug.Log(ac == null);

@@ -15,6 +15,7 @@ public class Action_ProductionRider : ActionBehaviour {
 		shortCutKey = KeyCode.R;
 		actionIcon = Resources.Load<Sprite> ("Texture/RiderIcon");
 		canRepeat = false;
+		info = "生产兵" +"\n"+"快捷键:R";
 	}
 
 	public override Action GetClickAction ()
@@ -37,23 +38,39 @@ public class Action_ProductionRider : ActionBehaviour {
 
 	IEnumerator Producting(){
 		scheduleTime = 0;
-		while (scheduleTime < 5) {
+		while (scheduleTime < 1) {
 			scheduleTime += 0.2f;
 			yield return new WaitForSeconds(0.2f);
-			rtsb.schedule = scheduleTime / 5;
+			rtsb.schedule = scheduleTime / 1;
 		}
 		rtsb.schedule = 0;
-		RTSMelee rtsm = PrefabFactory.ShareInstance.createClone<RTSMelee>("Prefab/RTSCharacter/RTSCavalryman/RTSCavalryman", transform.position + new Vector3(6, 0, 0), Quaternion.identity);
-		GameObject go = rtsm.gameObject;
-		// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
-		// RTSWorker rtsw = go.GetComponent<RTSWorker>();
-		rtsm.playerInfo = pi;
-		//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
-		//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
-		if(pi.isAI){
-			//Debug.Log("是AI");
-			go.AddComponent<MeleeAIController>();
-			//Debug.Log("AI添加成功");
+		if (pi.racial == Racial.deemo) {
+			RTSMelee rtsm = PrefabFactory.ShareInstance.createClone<RTSMelee> ("Prefab/RTSCharacter/ORC/deemo1", transform.position + new Vector3 (6, 0, 0), Quaternion.identity);
+			GameObject go = rtsm.gameObject;
+			// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
+			// RTSWorker rtsw = go.GetComponent<RTSWorker>();
+			rtsm.playerInfo = pi;
+			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
+			//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
+			if (pi.isAI) {
+				//Debug.Log("是AI");
+				go.AddComponent<MeleeAIController> ();
+				//Debug.Log("AI添加成功");
+			}
+		}
+		if (pi.racial == Racial.human) {
+			RTSMelee rtsm = PrefabFactory.ShareInstance.createClone<RTSMelee> ("Prefab/RTSCharacter/RTSHeavyInfanty/RTSHeavyInfanty", transform.position + new Vector3 (6, 0, 0), Quaternion.identity);
+			GameObject go = rtsm.gameObject;
+			// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
+			// RTSWorker rtsw = go.GetComponent<RTSWorker>();
+			rtsm.playerInfo = pi;
+			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
+			//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
+			if (pi.isAI) {
+				//Debug.Log("是AI");
+				go.AddComponent<MeleeAIController> ();
+				//Debug.Log("AI添加成功");
+			}
 		}
 		rtsb.isProducting = false;
 	}

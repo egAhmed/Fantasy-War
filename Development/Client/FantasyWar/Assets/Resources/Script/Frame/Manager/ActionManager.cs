@@ -39,7 +39,7 @@ public class ActionManager : UnitySingleton<ActionManager> {
 	}
 
 	//为按钮添加图标，在委托列表注册相应事件
-	public void AddButton(int index, Sprite pic, Action onClick)
+	public void AddButton(int index, Sprite pic, Action onClick,string theinfo)
 	{
 		for (int i = 0; i < Board.Length; i++) {
 			Board [i].SetActive (true);
@@ -47,6 +47,7 @@ public class ActionManager : UnitySingleton<ActionManager> {
 		//Debug.Log ("添加按键");
 		Buttons [index].gameObject.SetActive (true);
 		Buttons [index].GetComponent<Image> ().sprite = pic;
+		Buttons [index].GetComponent<ShowSkillInfo> ().info = theinfo;
 		//actionCalls.Add (onClick);
 		actionCalls [index] = onClick;
 	}

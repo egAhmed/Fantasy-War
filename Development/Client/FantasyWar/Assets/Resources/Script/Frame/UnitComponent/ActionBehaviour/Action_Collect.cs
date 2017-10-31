@@ -12,6 +12,7 @@ public class Action_Collect : ActionBehaviour {
 		shortCutKey = KeyCode.G;
 		actionIcon = Resources.Load<Sprite> ("Texture/CollectIcon");
 		canRepeat = true;
+		info = "采集" +"\n"+"快捷键:G";
 	}
 
 	public override Action GetClickAction ()

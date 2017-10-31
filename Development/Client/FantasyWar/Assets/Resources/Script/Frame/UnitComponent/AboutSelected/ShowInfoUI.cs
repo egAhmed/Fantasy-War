@@ -14,26 +14,31 @@ public class ShowInfoUI : Interaction {
 		isShow = false;
 	}
 	void Update(){
-        //if (isShow && TeamManager.ShareInstance.currentSelections [0] == this.gameObject) {
-//        Debug.Log(RTSGameUnitManager.ShareInstance.SelectedUnits.Count);
-        //
-//        if (gameObject.GetComponent<Interactive>().Selected)
-//        {
-		//Debug.Log("循环");
-		if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
-			//Debug.Log ("显示信息");
-			showPanel.gameObject.SetActive (true);
-			showPanel.Camerax.transform.position = RtsGameUnit.IconCameraPos;
-			Action_Attack atkf = gameObject.GetComponent<Action_Attack> ();
-			if (atkf == null) {
-				showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), null);
-			}
-			else {
-				showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), "10");
+		if (RtsGameUnit.playerInfo == PlayerInfoManager.ShareInstance.currentPlayer) {
+			if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
+				//Debug.Log ("显示信息");
+				showPanel.gameObject.SetActive (true);
+				showPanel.Camerax.transform.position = RtsGameUnit.IconCameraPos;
+				Action_Attack atkf = gameObject.GetComponent<Action_Attack> ();
+				if (atkf == null) {
+					showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), null);
+				} else {
+					showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), "10");
+				}
 			}
 		}
-
-        //}
+		else {
+			if (isShow) {
+				showPanel.gameObject.SetActive (true);
+				showPanel.Camerax.transform.position = RtsGameUnit.IconCameraPos;
+				Action_Attack atkf = gameObject.GetComponent<Action_Attack> ();
+				if (atkf == null) {
+					showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), null);
+				} else {
+					showPanel.SetText (RtsGameUnit.playerInfo.name, RtsGameUnit.HP.ToString (), RtsGameUnit.HPMAX.ToString (), "10");
+				}
+			}
+		}
     }
 
 	public override void Select ()

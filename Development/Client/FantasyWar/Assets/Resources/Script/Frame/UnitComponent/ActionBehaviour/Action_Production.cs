@@ -17,6 +17,7 @@ public class Action_Production : ActionBehaviour  {
 		actionIcon = Resources.Load<Sprite> ("Texture/WorkerIcon");
 		canRepeat = false;
 		workerPrefeb = Resources.Load<GameObject> ("Prefab/RTSCharacter/RTSWorker/RTSWorker");
+		info = "生产农民" +"\n"+"快捷键:W";
 	}
 
 	public override Action GetClickAction ()
@@ -38,24 +39,40 @@ public class Action_Production : ActionBehaviour  {
 
 	IEnumerator Producting(){
 		scheduleTime = 0;
-		while(scheduleTime < 5)
+		while(scheduleTime < 1)
 		{
 			scheduleTime += 0.2f;
 			yield return new WaitForSeconds(0.2f);
-			rtsb.schedule = scheduleTime / 5;
+			rtsb.schedule = scheduleTime / 1;
 		}
 		rtsb.schedule = 0;
-		RTSWorker rtsw = PrefabFactory.ShareInstance.createClone<RTSWorker>("Prefab/RTSCharacter/RTSWorker/RTSWorker", transform.position + new Vector3(3, 0, 0), Quaternion.identity);
-		GameObject go = rtsw.gameObject;
-		// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
-		// RTSWorker rtsw = go.GetComponent<RTSWorker>();
-		rtsw.playerInfo = pi;
-		rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0];
-		//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
-		//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
-		if(pi.isAI){
-			WorkerAIController AICon = go.AddComponent<WorkerAIController>();
-			AICon.DelAIBuild += rtsw.CreatBuilding;
+		if (pi.racial == Racial.human) {
+			RTSWorker rtsw = PrefabFactory.ShareInstance.createClone<RTSWorker> ("Prefab/RTSCharacter/RTSWorker/RTSWorker", transform.position + new Vector3 (3, 0, 0), Quaternion.identity);
+			GameObject go = rtsw.gameObject;
+			// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
+			// RTSWorker rtsw = go.GetComponent<RTSWorker>();
+			rtsw.playerInfo = pi;
+			rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0];
+			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
+			//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
+			if (pi.isAI) {
+				WorkerAIController AICon = go.AddComponent<WorkerAIController> ();
+				AICon.DelAIBuild += rtsw.CreatBuilding;
+			}
+		}
+		if (pi.racial == Racial.deemo) {
+			RTSWorker rtsw = PrefabFactory.ShareInstance.createClone<RTSWorker> ("Prefab/RTSCharacter/ORC/CERBERUS_PBR", transform.position + new Vector3 (3, 0, 0), Quaternion.identity);
+			GameObject go = rtsw.gameObject;
+			// GameObject go = GameObject.Instantiate(workerPrefeb,transform.position+new Vector3 (2,0,0),Quaternion.identity);
+			// RTSWorker rtsw = go.GetComponent<RTSWorker>();
+			rtsw.playerInfo = pi;
+			rtsw.homeBuilding = (RTSBuilding)pi.BuildingUnits [Settings.ResourcesTable.Get (1101).type] [0];
+			//pi.ArmyUnits["worker"].Add(go.GetComponent<RTSGameUnit>());
+			//			Debug.Log(pi.ArmyUnits[Settings.ResourcesTable.Get(1009).type].Count);
+			if (pi.isAI) {
+				WorkerAIController AICon = go.AddComponent<WorkerAIController> ();
+				AICon.DelAIBuild += rtsw.CreatBuilding;
+			}
 		}
 		rtsb.isProducting = false;
 	}
