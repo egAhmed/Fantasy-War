@@ -9,12 +9,16 @@ public class MoveUnitBuildState : MoveUnitFSMState
     bool buildsucess = false;
     //建造中
     bool building = false;
+    Vector3 buildPos;
+    float anchor = 0;
+    float radius = 5;
+    int count = 0;
     Vector3 BasePos
     {
         get
         {
-            if(basePos==default(Vector3))
-                basePos= AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
+            if (basePos == default(Vector3))
+                basePos = AIController.playerInfo.BuildingUnits[Settings.ResourcesTable.Get(1101).type][0].transform.position;
             return basePos;
         }
     }
@@ -44,32 +48,25 @@ public class MoveUnitBuildState : MoveUnitFSMState
         if (building)
             return;
         //获取基地坐标
-        Vector3 buildPos = BasePos;
-        float anchor = 0;
-        float radius = 5;
-        int count = 0;
+
         if (AIController.DelAIBuild == null)
             return;
-        do
+        buildPos = BasePos + new Vector3(radius * Mathf.Sin(anchor), -100, radius * Mathf.Cos(anchor));
+        if (anchor == 2 * Mathf.PI)
         {
-            buildPos = BasePos + new Vector3(radius * Mathf.Sin(anchor), -100, radius * Mathf.Cos(anchor));
-            if (anchor == 2 * Mathf.PI)
-            {
-                anchor = 0;
-                radius += 5;
-            }
-            else
-                anchor += Mathf.PI / 4;
-            //Debug.Log(count++);
+            anchor = 0;
+            radius += 5;
         }
-        while (!AIController.DelAIBuild(buildPos, buildid).canbuild);
+        else
+            anchor += Mathf.PI / 4;
+        //Debug.Log(count++);
+        building = !AIController.DelAIBuild(buildPos, buildid).canbuild;
         //Debug.Log(count+=10);
         //buildPos += new Vector3(30, -100, 0);
         //Debug.Log("开始建造") ;
         //bool test = AIController.DelAIBuild(buildPos, buildid).canbuild;
         //Debug.Log("能否建造" + test);
 
-        building = true;
         //以基地为圆心，在一个圆上寻找建筑点
         //以基地坐标为初始值，计算水平增量后的坐标，
         //在此坐标上，发射一条垂直的射线，射线与地面相交的一点，即使建造点
@@ -101,6 +98,9 @@ public class MoveUnitBuildState : MoveUnitFSMState
         base.SwitchOut();
         buildid = 0;
         //Debug.Log("出去建造状态");
+        anchor = 0;
+        radius = 5;
+        count = 0;
     }
 
     public void buildSuccess()
