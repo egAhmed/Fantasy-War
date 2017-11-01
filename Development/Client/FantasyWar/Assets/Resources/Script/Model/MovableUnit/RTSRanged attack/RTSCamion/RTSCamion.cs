@@ -121,7 +121,7 @@ public class RTSCamion : RTSMovableUnit {
             //
             if (IsTargetClosingEnough)
             {
-                move(transform.position);
+                pathFindingDisable();
                 //
                 transform.LookAt(targetGameUnit.transform);
                 //
@@ -164,7 +164,8 @@ public class RTSCamion : RTSMovableUnit {
     protected virtual void stop()
     {
         isDoingAction = false;
-        move(transform.position);
+        //
+        pathFindingDisable();
         //
         currentState = RTSMeleeActionType.Idle;
         animatorStateController.doIdle();
@@ -203,7 +204,7 @@ public class RTSCamion : RTSMovableUnit {
         //
         AttackForce = 80;
         //
-        IconCameraPos = new Vector3 (1998, 5001, 1.167f);
+        IconCameraPos = new Vector3 (1991, 5001, 1.167f);
         //
     }
     //

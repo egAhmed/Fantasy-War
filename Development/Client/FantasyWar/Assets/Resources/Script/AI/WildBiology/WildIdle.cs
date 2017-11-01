@@ -16,10 +16,16 @@ public class WildIdle : WildFSMState {
 
 	public override void ActUpdate ()
 	{
-		if (Vector3.Distance (wcon.transform.position, wcon.oriPos) < 1) {
+		//Debug.Log ("IDLE:  "+(Vector3.Distance (wcon.transform.position, wcon.oriPos)));
+		//Debug.Log ("回去1");
+		if (Vector3.Distance (wcon.transform.position, wcon.oriPos) > 0.1f) {
+			//Debug.Log ("回去1");
 			if (!isMove) {
 				isMove = true;
-				wcon.GetComponent<RTSWild> ().move (wcon.oriPos);
+				//Debug.Log ("回去2");
+				RTSWild rw = wcon.GetComponent<RTSWild> ();
+				rw.stop ();
+				rw.move (wcon.oriPos);
 			}
 		}
 		else {

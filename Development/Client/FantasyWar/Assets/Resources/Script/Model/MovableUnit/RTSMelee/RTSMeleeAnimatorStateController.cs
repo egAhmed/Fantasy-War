@@ -43,6 +43,7 @@ public class RTSMeleeAnimatorStateController : MonoBehaviour {
 	}
 	public void doAttack()
 	{
+		//Debug.Log ("攻击！");
 		if (meleeAnimator.GetBool ("Attacking")) {
 			return;
 		} else {

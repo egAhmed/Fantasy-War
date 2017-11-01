@@ -16,7 +16,6 @@ public class ShowInfoUI : Interaction {
 	void Update(){
 		if (RtsGameUnit.playerInfo == PlayerInfoManager.ShareInstance.currentPlayer) {
 			if (isShow && RTSGameUnitManager.ShareInstance.SelectedUnits [0].gameObject == this.gameObject) {
-				//Debug.Log ("显示信息");
 				showPanel.gameObject.SetActive (true);
 				showPanel.Camerax.transform.position = RtsGameUnit.IconCameraPos;
 				Action_Attack atkf = gameObject.GetComponent<Action_Attack> ();

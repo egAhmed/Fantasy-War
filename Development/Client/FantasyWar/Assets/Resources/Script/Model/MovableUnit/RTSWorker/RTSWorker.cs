@@ -96,6 +96,9 @@ public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
                 yield return null;
                 if (Vector3.Distance(transform.position, pendingUnit.transform.position) < BuildingAllowMinDistance)
                 {
+                    //
+                    pathFindingDisable();
+                    //
                     transform.LookAt(pendingUnit.transform);
                     //
                     if (IsMiningHarvested)
@@ -195,6 +198,7 @@ public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
         {
             var list = transform.GetComponent<MoveUnitAIController>().fsmStates;
             MoveUnitBuildState buildstate = null;
+            //
             foreach (var item in list)
             {
                 if (item.StateID == MoveUnitFSMStateID.Building)
@@ -407,8 +411,8 @@ public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
             //
             if (IsTargetClosingEnough)
             {
-                //
-                move(transform.position);
+               //
+                pathFindingDisable();
                 //
                 transform.LookAt(targetGameUnit.transform);
                 //
@@ -482,14 +486,14 @@ public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
             if (IsTargetClosingEnough)
             {
                 //
-                move(transform.position);
+                pathFindingDisable();
                 //
                 RTSBuilding building = (RTSBuilding)targetGameUnit;
                 //
                 if (building.IsNeedRepair)
                 {
                     //
-                    Debug.LogError("IsTargetClosingEnoughToWork && IsNeedRepair");
+                    //Debug.LogError("IsTargetClosingEnoughToWork && IsNeedRepair");
                     //
                     //transform.LookAt(targetGameUnit.transform);
                     //
@@ -608,6 +612,8 @@ public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
     protected virtual void stopWork()
     {
         //
+        pathFindingDisable();
+        //
         currentWorkingJobType = RTSWorkerJobType.Idle;
         //
         isWorking = false;
@@ -649,6 +655,7 @@ public class RTSWorker : RTSMovableUnit, IGameUnitResourceMining
         if (isWorking)
         {
             //Debug.Log("isWorking, return update");
+            //
             return;
         }
         //

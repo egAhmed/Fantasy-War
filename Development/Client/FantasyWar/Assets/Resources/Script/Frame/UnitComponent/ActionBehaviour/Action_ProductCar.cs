@@ -18,7 +18,7 @@ public class Action_ProductCar : ActionBehaviour {
 		actionIcon = Resources.Load<Sprite> ("Texture/WorkerIcon");
 		canRepeat = false;
 		//workerPrefeb = Resources.Load<GameObject> ("Prefab/RTSCharacter/RTSWorker/RTSWorker");
-		// info = "生产投石车" +"\n"+"快捷键:C";
+		info = "生产投石车" +"\n"+"快捷键:C";
 	}
 
 	public override Action GetClickAction ()

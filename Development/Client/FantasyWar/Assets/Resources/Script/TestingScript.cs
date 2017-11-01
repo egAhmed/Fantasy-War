@@ -14,10 +14,13 @@ public class TestingScript : MonoBehaviour {
     public static List<PlayerInfo> playerInfos = null;
     //
 
+	void Awake()
+	{
+		Settings.TableManage.Start();
 
+	}
     void Start () {
         //
-        Settings.TableManage.Start();
         //InputManager.ShareInstance.InputEventHandlerRegister_GetKeyDown(KeyCode.V,AIFunction.BuildTest);
         //
         // RTSGamePlayManager.ShareInstance.build();

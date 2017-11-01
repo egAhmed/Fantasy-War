@@ -20,7 +20,21 @@ public class RTSMovableUnit : RTSGameUnit,IGameUnitMovable {
     public virtual void move(Vector3 pos)
     {
         //
+        pathFindingEnable();
+        //
         UnitPathFindingController.SetTarget(pos);
+        //
+    }
+    //
+    protected virtual void pathFindingEnable() {
+        //
+        UnitPathFindingController.ShouldIdle = false;
+        //
+    }
+    //
+    protected virtual void pathFindingDisable() {
+        //
+        UnitPathFindingController.ShouldIdle = true;
         //
     }
     //

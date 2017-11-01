@@ -24,7 +24,14 @@ public class WildChase : WildFSMState {
 
 	public override void Reason ()
 	{
-		if (Vector3.Distance (target.transform.position, wcon.oriPos) > 10) {
+		//Debug.Log ("条件1  "+target == null);
+		//Debug.Log ("条件2  "+(Vector3.Distance (target.transform.position, wcon.oriPos)));
+		if (target == null) {
+			Debug.Log ("目标为空");
+			wcon.state = new WildIdle (wcon);
+		}
+		if (Vector3.Distance (target.transform.position, wcon.oriPos) > 20) {
+			Debug.Log ("目标太远");
 			wcon.state = new WildIdle (wcon);
 		}
 	}

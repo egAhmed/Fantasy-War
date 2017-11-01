@@ -71,7 +71,7 @@ public class CoinCollect : MonoBehaviour {
         coin[worker].Add(momney);
        
     }
-    public void Awake()
+    public CoinCollect()
     {
         Current=this;
     }

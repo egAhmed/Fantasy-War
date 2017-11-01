@@ -122,7 +122,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
             //
             if (IsTargetClosingEnough)
             {
-                move(transform.position);
+                pathFindingDisable();
                 //
                 transform.LookAt(targetGameUnit.transform);
                 //
@@ -162,7 +162,7 @@ public class RTSMelee : RTSMovableUnit, IGameUnitAttackableMelee
     protected virtual void stop()
     {
         isDoingAction = false;
-        move(transform.position);
+        pathFindingDisable();
         //
         currentState = RTSMeleeActionType.Idle;
         animatorStateController.doIdle();

@@ -8,7 +8,7 @@ public class RTSWild : RTSMovableUnit {
 	protected bool isDoingAction;
 	protected RTSMeleeActionType currentState;
 
-	public float AttackDistance = 3;
+	public float AttackDistance = 7;
 	public int AttackForce = 10;
 	public float AttackFrequency = 1;
 
@@ -67,7 +67,7 @@ public class RTSWild : RTSMovableUnit {
 			currentState = RTSMeleeActionType.Attacking;
 			isDoingAction = true;
 			//
-			Debug.Log("startAttacking");
+			//Debug.Log("startAttacking");
 			StartCoroutine(attacking());
 			//
 		}
@@ -83,7 +83,7 @@ public class RTSWild : RTSMovableUnit {
 			//
 			if (IsTargetClosingEnough)
 			{
-				move(transform.position);
+				pathFindingDisable();
 				//
 				transform.LookAt(targetGameUnit.transform);
 				//
@@ -107,10 +107,10 @@ public class RTSWild : RTSMovableUnit {
 		//
 	}
 
-	protected virtual void stop()
+	public virtual void stop()
 	{
 		isDoingAction = false;
-		move(transform.position);
+		pathFindingDisable();
 		currentState = RTSMeleeActionType.Idle;
 		animatorStateController.doIdle();
 		//
@@ -133,8 +133,11 @@ public class RTSWild : RTSMovableUnit {
 		HPMAX = 100;
 		HP = HPMAX;
 
+		playerInfo = new PlayerInfo ();
+		playerInfo.accentColor = Color.cyan;
+
 		if(animatorStateController==null)
-			animatorStateController = GetComponent<RTSMeleeAnimatorStateController>();
+			animatorStateController = gameObject.AddComponent<RTSMeleeAnimatorStateController>();
 	}
 
 	protected override void Start()
@@ -146,7 +149,7 @@ public class RTSWild : RTSMovableUnit {
 		HPMAX = 100;
 		HP = HPMAX;
 		//
-		IconCameraPos = new Vector3 (1998, 5001, 1.167f);
+		IconCameraPos = new Vector3 (1988, 5001, 1.167f);
 		//
 	}
 

@@ -29,6 +29,7 @@ public sealed class PrefabFactory : UnitySingleton<PrefabFactory>
     /// </summary>
     private void resourcePrefabPathsInitialization()
     {
+		Debug.Log (Settings.ResourcesTable.idList == null);
 		resourcePrefabPaths = new string[Settings.ResourcesTable.idList.Count];
 		for (int i = 0; i < resourcePrefabPaths.Length; i++)
         {

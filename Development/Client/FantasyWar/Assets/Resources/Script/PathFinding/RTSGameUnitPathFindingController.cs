@@ -21,6 +21,7 @@ public class RTSGameUnitPathFindingController : AIPath
         //
         SetTarget(GetFeetPosition());
         repathRate = 2f;
+        //
     }
 
     public void SetTarget(Vector3 target)
@@ -113,9 +114,11 @@ public class RTSGameUnitPathFindingController : AIPath
            }
        }
        //
+       if(!ShouldIdle)
         RotateTowards(targetPos-pos);
        //
        rvoController.Move(dir);
+       //
     }
 
     const float ReachedDistance = 1f;
@@ -142,7 +145,7 @@ public class RTSGameUnitPathFindingController : AIPath
     {
         base.OnTargetReached();
         //
-        Debug.LogError("Fuck here");
+       // Debug.LogError("Fuck here");
         //
         Vector3 pos = GetFeetPosition();
         //
